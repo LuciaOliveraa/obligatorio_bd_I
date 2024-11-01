@@ -79,4 +79,4 @@ CREATE TABLE base_datos.enrollments(
     PRIMARY KEY (student_ci, lesson_id, equipment_id)
 );
 
-
+ALTER TABLE base_datos.enrollments ADD COLUMN date date not null;
