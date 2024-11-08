@@ -20,7 +20,8 @@
 div.loginDiv {
   padding: 2rem;
   width: 500px;
-  height: 600px;
+  height: 550px;
+  border-radius: 20px;
 }
 
 .loginLabel {
@@ -41,4 +42,10 @@ div.loginDiv {
   background-color: rgb(53 98 224);
   height: 47px;
   color: white;
+  margin-top: 3rem;
+  border-radius: 20px;
+}
+
+input.input {
+  border-radius: 20px;
 }
