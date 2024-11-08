@@ -1,9 +1,16 @@
 .homePage {
     background-image: url(../../assets/fondoHomePage.png);
     min-width: 100%;
-    height: 100vh;
+    height: 100%;
 }
 
 .home-container {
     padding: 50px;
+}
+
+.selection-p {
+    margin-bottom: 50px;
+    color: rgb(52 92 173); 
+    font-weight: bold;
+    font-size: 20px;
 }
