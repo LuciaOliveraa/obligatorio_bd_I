@@ -14,7 +14,7 @@ export default function SportCard({image,title,description}) {
                     </figure>
                 </div>
                 <div class="card-content">
-                    <h1>{title}</h1>
+                    <h1 className='title is-3'>{title}</h1>
                     <p className='description'>{description}</p>
                 </div>
                 </div>
