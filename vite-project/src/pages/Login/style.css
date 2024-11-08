@@ -1,0 +1,51 @@
+.login {
+  background-image: url(../../assets/fondoLogin.png);
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.ucuLogo {
+  width: 180px;
+}
+
+.logoTitulo {
+  margin-bottom: 4rem;
+  margin-top: 2rem;
+}
+
+div.loginDiv {
+  padding: 2rem;
+  width: 500px;
+  height: 550px;
+  border-radius: 20px;
+}
+
+.loginLabel {
+  text-align: left;
+  margin-top: 2rem;
+}
+
+.passwordEye {
+  position: absolute;
+  right: 12px;
+  top: 70%;
+  transform: translateY(-70%);
+  cursor: pointer;
+}
+
+.botonSiguiente {
+  width: 100%;
+  background-color: rgb(53 98 224);
+  height: 47px;
+  color: white;
+  margin-top: 3rem;
+  border-radius: 20px;
+}
+
+input.input {
+  border-radius: 20px;
+}
