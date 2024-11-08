@@ -1,7 +1,9 @@
-export function Login() {
+import "./style.css";
+
+export default function Login() {
   return (
-    <div>
-      <p> hola </p>
+    <div className="login">
+      <div className="box">Hola</div>
     </div>
   );
 }
