@@ -1,0 +1,24 @@
+nav.custom-navbar {
+    min-height: 80px; 
+    align-items: center; 
+    background-color: rgb(53 98 224);
+    padding-left: 30px;
+    padding-right: 30px;
+}
+
+.logo {
+    min-height: 45px;
+}
+
+.user-icon {
+    height: 30px;
+    color:#ccdbfd; 
+}
+
+.custom-navbar .navbar-item {
+    color: #ccdbfd; 
+}
+
+.custom-navbar .navbar-item:hover {
+    color: rgb(53 98 224); 
+}
