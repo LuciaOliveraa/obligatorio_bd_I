@@ -1,13 +1,9 @@
 use base_datos;
 
-DELETE from base_datos.activities;
-
 INSERT INTO base_datos.activities (name, description, age_min,price) VALUES
     ('Snowmobile', 'High-speed adventure on snow trails', 21, 16000),
     ('Snowboard', 'Freestyle and downhill on snowy slopes', 18, 9000),
     ('Sky', 'Classic skiing for all experience levels', 18, 18000);
-
-DELETE from base_datos.equipment;
 
 INSERT INTO base_datos.equipment (description, price) VALUES
     ('Ski set (skis, boots, and poles)', 6150.00),
@@ -80,12 +76,12 @@ INSERT INTO base_datos.login (ci, password) VALUES
     (65738191, 'K9t@Wp4%Xl5Jy&8k');
 
 INSERT INTO base_datos.lesson (instructor_ci, activity_id, shift_id, capacity) VALUES
-    (54968022, 16, 1, 10),
-    (59603358, 16, 2, 1),
-    (59603358, 16, 3, 8),
-    (54967822, 17, 1, 12),
-    (54968022, 17, 2, 10),
-    (54186632, 17, 3, 1),
-    (54186632, 18, 1, 1),
-    (54968992, 18, 2, 20),
-    (59246687, 18, 3, 18);
+    (54968022, 1, 1, 10),
+    (59603358, 1, 2, 1),
+    (59603358, 1, 3, 8),
+    (54967822, 2, 1, 12),
+    (54968022, 2, 2, 10),
+    (54186632, 2, 3, 1),
+    (54186632, 3, 1, 1),
+    (54968992, 3, 2, 20),
+    (59246687, 3, 3, 18);
