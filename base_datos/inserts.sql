@@ -1,13 +1,9 @@
 use base_datos;
 
-DELETE from base_datos.activities;
-
 INSERT INTO base_datos.activities (name, description, age_min,price) VALUES
     ('Snowmobile', 'High-speed adventure on snow trails', 21, 16000),
     ('Snowboard', 'Freestyle and downhill on snowy slopes', 18, 9000),
     ('Sky', 'Classic skiing for all experience levels', 18, 18000);
-
-DELETE from base_datos.equipment;
 
 INSERT INTO base_datos.equipment (description, price) VALUES
     ('Ski set (skis, boots, and poles)', 6150.00),
