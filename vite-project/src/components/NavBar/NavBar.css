@@ -1,7 +1,7 @@
 nav.custom-navbar {
     min-height: 80px; 
     align-items: center; 
-    background-color: rgb(53 98 224);
+    background-color: rgb(52 92 173);
     padding-left: 30px;
     padding-right: 30px;
 }
@@ -20,5 +20,5 @@ nav.custom-navbar {
 }
 
 .custom-navbar .navbar-item:hover {
-    color: rgb(53 98 224); 
+    color: rgb(52 92 173); 
 }
