@@ -1,7 +1,6 @@
-import './SportCard.css'
+import './EquipmentCard.css'
 
-export default function SportCard({image,title,description}) {
-
+export default function EquipmentCard({image,title}) {
     return (
         <>
             <div class="card custom-card">
@@ -14,8 +13,7 @@ export default function SportCard({image,title,description}) {
                     </figure>
                 </div>
                 <div class="card-content">
-                    <h1 className='title is-3'>{title}</h1>
-                    <p className='description'>{description}</p>
+                    <p className='title'>{title}</p>
                 </div>
                 </div>
         </>

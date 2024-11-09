@@ -2,7 +2,8 @@
 import Navbar from "../../components/NavBar"
 import './HomePage.css'
 import SportCard from "../../components/SportCard"
-import motorbikeImage from '../../assets/motorbike.png';
+import SportsContainer from "../../components/SportsContainer";
+
 
 export default function HomePage () {
 
@@ -11,11 +12,10 @@ export default function HomePage () {
         <div className='homePage'>
             <Navbar></Navbar>
             <div className="home-container">
-                <SportCard 
-                    image={motorbikeImage}
-                    title='motorbike'
-                    description='locura maximaaaaa ekjfkfnañlksñldkndnfdfknvldnldknflkdnfslkdnf'
-                />
+            <h1 className="title is-2">Actividades 2024</h1>
+            <p className="selection-p">Seleccione una actividad</p>
+            <SportsContainer></SportsContainer>
+
             </div>
         </div>
     )
