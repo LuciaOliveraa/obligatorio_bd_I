@@ -1,8 +1,17 @@
 .summary {
   background-image: url(../../assets/fondoHomePage.png);
   height: 100vh;
+  overflow: hidden;
+}
+
+.summary::-webkit-scrollbar {
+  display: none;
 }
 
 .content {
-  padding: 50px;
+  padding: 5rem;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
 }
