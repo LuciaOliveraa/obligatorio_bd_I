@@ -1,0 +1,18 @@
+.boxHorario {
+  height: 300px;
+  width: 350px;
+  background-color: rgb(207 218 241);
+  border-radius: 20px;
+  transition: 0.5s;
+  padding: 3rem;
+}
+
+.boxHorario:hover {
+  box-shadow: 0 0 0px 3px rgb(16, 74, 149);
+}
+
+.infoSummary {
+  text-align: left;
+  font-size: 18px;
+  margin-top: 2rem;
+}

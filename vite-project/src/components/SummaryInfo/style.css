@@ -1,0 +1,48 @@
+.summaryBox {
+  background-color: rgb(207 218 241);
+  border-radius: 20px;
+  height: 400px;
+  width: 500px;
+  margin-top: 2rem;
+  padding: 3rem;
+}
+
+.info {
+  text-align: left;
+  font-size: 18px;
+}
+
+.costo {
+  font-size: 30px;
+  font-weight: 800;
+  color: rgb(52 92 173);
+  margin-top: 2rem;
+}
+
+p {
+  margin: 0px;
+}
+
+.botonSiguienteLogin {
+  width: 140px;
+  background-color: rgb(53 98 224);
+  height: 40px;
+  color: white;
+  border-radius: 20px;
+}
+
+.botonCancelarLogin {
+  width: 140px;
+  background-color: rgb(242 246 255);
+  height: 40px;
+  color: rgb(85 85 85);
+  border-radius: 20px;
+}
+
+.botones {
+  margin-top: 2rem;
+  width: 75%;
+  justify-self: center;
+  display: flex;
+  justify-content: space-between;
+}

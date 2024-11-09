@@ -1,24 +1,39 @@
 nav.custom-navbar {
-    min-height: 80px; 
-    align-items: center; 
-    background-color: rgb(52 92 173);
-    padding-left: 30px;
-    padding-right: 30px;
+  min-height: 80px;
+  align-items: center;
+  background-color: rgb(52 92 173);
+  padding-left: 30px;
+  padding-right: 0;
 }
 
 .logo {
-    min-height: 45px;
+  min-height: 45px;
 }
 
 .user-icon {
-    height: 30px;
-    color:#ccdbfd; 
+  height: 30px;
+  color: #ccdbfd;
+  transition: 0.5s;
 }
 
 .custom-navbar .navbar-item {
-    color: #ccdbfd; 
+  color: #ccdbfd;
+  transition: 0.5s;
 }
 
-.custom-navbar .navbar-item:hover {
-    color: rgb(52 92 173); 
+.item {
+  height: 80px;
+  width: 170px;
+  align-items: center;
+  justify-content: center;
+}
+
+.item:hover {
+  color: rgb(52 92 173);
+  transition: 1s;
+
+  .user-icon {
+    color: rgb(52 92 173);
+    transition: 1s;
+  }
 }
