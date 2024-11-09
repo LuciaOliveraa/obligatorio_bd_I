@@ -15,7 +15,7 @@ export default function SportsContainer() {
             />
             <SportCard 
                 image={snowboardImage}
-                title='Snowmobile'
+                title='Snowboard'
                 description='Freestyle and downhill on snowy slopes'
             />
             <SportCard 
