@@ -12,7 +12,7 @@ export default function HomePage () {
         <div className='homePage'>
             <Navbar></Navbar>
             <div className="home-container">
-            <h1 className="title is-1">Actividades 2024</h1>
+            <h1 className="title is-2">Actividades 2024</h1>
             <p className="selection-p">Seleccione una actividad</p>
             <SportsContainer></SportsContainer>
 

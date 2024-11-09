@@ -1,0 +1,9 @@
+.admin-page {
+    background-image: url(../../assets/fondoHomePage.png);
+    min-width: 100%;
+    height: 100vh;
+}
+
+.admin-container {
+    padding: 50px;
+}
