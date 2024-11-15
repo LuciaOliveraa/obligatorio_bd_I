@@ -11,7 +11,7 @@ export default function Summary() {
         <SummaryInfo
           actividad="Snowboarding"
           horario="9:00 a 11:00"
-          profesor="Sergio"
+          instructor="Sergio"
           equipamiento="Cascos, Lentes"
           costoTotal="2500"
         />
