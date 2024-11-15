@@ -233,11 +233,10 @@ def editActivity(id):
 
     try:
         if age_min < 18:
-            #raise ValueError("age_min must be greater than or equal to 18")
             return jsonify({"error": "age_min must be greater than or equal to 18"}), 400
 
-        cursor.execute("UPDATE activities SET name = %s, description = %s, age_min = %s, price = %s WHERE id = %s",
-                       (name, description, age_min, price, id))
+        cursor.execute("UPDATE activities SET description = %s, age_min = %s, price = %s WHERE id = %s",
+                       (description, age_min, price, id))
         db.commit()
         return jsonify({"message": "Activity updated successfully"})
     except Error as error:
