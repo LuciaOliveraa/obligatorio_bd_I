@@ -226,7 +226,7 @@ def getActivity(id):
 @app.route('/activities/edit/<int:id>', methods=['PUT'])
 def editActivity(id):
     cursor = db.cursor(dictionary=True)
-    name = request.json['name']
+    #name = request.json['name']
     description = request.json['description']
     age_min = request.json['age_min']
     price = request.json['price']
