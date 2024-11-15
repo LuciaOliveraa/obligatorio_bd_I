@@ -4,6 +4,7 @@ import Students from '../../components/Students'
 import StadisticsContainer from '../../components/StadisticsContainer'
 import Instructors from '../../components/Instructors'
 import Activities from '../../components/Activities'
+import Shifts from '../../components/Shifts'
 
 export default function Administration() {
   return (
@@ -15,6 +16,7 @@ export default function Administration() {
         <Students></Students>
         <Instructors></Instructors>
         <Activities></Activities>
+        <Shifts></Shifts>
       </div>
     </div>
   )
