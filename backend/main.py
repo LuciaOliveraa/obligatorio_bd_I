@@ -6,14 +6,14 @@ from datetime import datetime, timedelta
 
 
 app = Flask(__name__)
-cors = CORS(app, origins='http://localhost:5173') # con el * se acepta todas las 
+cors = CORS(app, origins='http://localhost:5173') # con el * se acepta todas las conexiones
 
 
 try:
     db = mysql.connector.connect(
-        host="localhost",
-        user="root",
-        password="rootpassword",
+        host="localhost", 
+        user="root", #admin
+        password="rootpassword", #adminpassword
         database="base_datos"
     )
 except Error as e:
@@ -275,10 +275,11 @@ def editEquipment(id):
     cursor = db.cursor(dictionary=True)
     description = request.json['description']
     price = request.json['price']
+    activity_id = request.json['activity_id']
 
     try:
-        cursor.execute("UPDATE equipment SET description = %s, price = %s WHERE id = %s",
-                       (description, price, id))
+        cursor.execute("UPDATE equipment SET description = %s, price = %s, activity_id = %s WHERE id = %s",
+                       (description, price, activity_id, id))
         db.commit()
         return jsonify({"message": "Equipment updated successfully"})
     except Error as error:
@@ -286,6 +287,43 @@ def editEquipment(id):
         return jsonify({"error": str(error)}), 500
     finally:
         cursor.close()
+
+@app.route('/activity_revenue', methods=['GET'])
+def getActivityRevenue():
+    try:
+        cursor = db.cursor(dictionary=True)
+        cursor.execute("SELECT * FROM activity_revenue_view")
+        result = cursor.fetchall()
+        return jsonify(result), 200
+    except Error as error:
+        return jsonify({"error": str(error)}), 500
+    finally:
+        cursor.close()
+
+@app.route('/activities_with_most_students', methods=['GET'])
+def getActivitiesWithMostStudents():
+    try:
+        cursor = db.cursor(dictionary=True)
+        cursor.execute("SELECT * FROM activities_with_most_students")
+        result = cursor.fetchall()
+        return jsonify(result), 200
+    except Error as error:
+        return jsonify({"error": str(error)}), 500
+    finally:
+        cursor.close()
+
+@app.route('/shifts_with_most_classes', methods=['GET'])
+def getShiftsWithMostClasses():
+    try:
+        cursor = db.cursor(dictionary=True)
+        cursor.execute("SELECT * FROM shifts_with_most_classes")
+        result = cursor.fetchall()
+        return jsonify(result), 200
+    except Error as error:
+        return jsonify({"error": str(error)}), 500
+    finally:
+        cursor.close()
+
 
 
 if __name__ == "__main__":
