@@ -12,6 +12,8 @@
   font-size: 18px;
   display: flex;
   flex-direction: column;
+  align-items: flex-start;
+  align-content: flex-start;
 }
 
 .costo {
