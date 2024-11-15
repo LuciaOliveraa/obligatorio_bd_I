@@ -5,6 +5,7 @@ import StadisticsContainer from '../../components/StadisticsContainer'
 import Instructors from '../../components/Instructors'
 import Activities from '../../components/Activities'
 import Shifts from '../../components/Shifts'
+import Lessons from '../../components/Lessons'
 
 export default function Administration() {
   return (
@@ -17,6 +18,7 @@ export default function Administration() {
         <Instructors></Instructors>
         <Activities></Activities>
         <Shifts></Shifts>
+        <Lessons></Lessons>
       </div>
     </div>
   )

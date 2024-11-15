@@ -1,0 +1,13 @@
+
+.allLessons {
+    margin-top: 10px;
+    gap: 10px; 
+    overflow: auto;
+    max-height: 300px;
+}
+
+.lessonsTitle{
+    font-weight: 800;
+    font-size: 35px;
+    justify-self: flex-start;
+}
