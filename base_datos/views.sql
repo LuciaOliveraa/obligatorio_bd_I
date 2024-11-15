@@ -7,18 +7,20 @@ SELECT
     SUM(a.price) + IFNULL(SUM(eq.price), 0)  AS total_revenue 
 FROM 
     base_datos.activities a
-JOIN 
+LEFT JOIN 
     base_datos.lesson l ON a.id = l.activity_id
 LEFT JOIN 
     base_datos.enrollments e ON l.id = e.lesson_id
 LEFT JOIN 
-    base_datos.equipment eq ON e.equipment_id = eq.id
+    base_datos.rent r ON r.student_ci = e.student_ci
 LEFT JOIN 
-    base_datos.enrollments_without_equipment ew ON l.id = ew.lesson_id
+    base_datos.equipment eq ON eq.id = r.equipment_id
 GROUP BY 
     a.id, a.name
 ORDER BY 
     total_revenue DESC;
+
+
 
 
 CREATE VIEW activities_with_most_students AS
