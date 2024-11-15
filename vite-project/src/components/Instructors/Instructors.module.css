@@ -1,11 +1,11 @@
-.students-and-add{
+.instructorsAndAdd{
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
 }
 
-.all-students {
+.allInstructors {
     margin-top: 10px;
     gap: 10px; 
     overflow: auto;
@@ -15,15 +15,19 @@
 .add {
     font-size: 20px;
     color: white;
+    justify-self: center;
+    align-self: center;
 }
 
-.button.add-button {
+.addButton {
     background-color: #669bbc;
     border-radius: 50px;
     padding: 10px;
+    width: 40px; 
+    height: 40px 
 }
 
-.students-title{
+.instructorsTitle{
     font-weight: 800;
     font-size: 35px;
 }

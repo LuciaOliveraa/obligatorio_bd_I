@@ -15,8 +15,10 @@ CREATE TABLE base_datos.activities(
 
 CREATE TABLE base_datos.equipment(
     id integer auto_increment not null,
+    activity_id integer not null,
     description varchar(50),
     price numeric(10),
+    FOREIGN KEY (activity_id) REFERENCES base_datos.activities(id),
     PRIMARY KEY (id)
 );
 
@@ -37,7 +39,7 @@ CREATE TABLE base_datos.shifts(
 
 
 CREATE TABLE base_datos.students(
-    ci integer(10) not null,
+    ci integer(8) not null,
     CHECK ( ci REGEXP '^[0-9]{8}$'),
     name varchar(20),
     lastname varchar(20),
@@ -50,7 +52,7 @@ CREATE TABLE base_datos.students(
 ALTER TABLE base_datos.students MODIFY COLUMN email varchar(60) NOT NULL;
 
 CREATE TABLE base_datos.login(
-    ci integer(10) not null,
+    ci integer(8) not null,
     password varchar(20) not null,
     FOREIGN KEY (ci) REFERENCES base_datos.students(ci),
     PRIMARY KEY (ci)
@@ -58,7 +60,7 @@ CREATE TABLE base_datos.login(
 
 CREATE TABLE base_datos.lesson(
     id integer auto_increment not null,
-    instructor_ci integer(10) not null,
+    instructor_ci integer(8) not null,
     activity_id integer not null,
     shift_id integer not null,
     capacity int(3),
@@ -68,15 +70,29 @@ CREATE TABLE base_datos.lesson(
     PRIMARY KEY (id)
 );
 
-CREATE TABLE base_datos.enrollments(
-    student_ci integer(10) not null,
-    lesson_id integer not null,
+
+CREATE TABLE base_datos.rent(
+    student_ci integer(8) not null,
     equipment_id integer not null,
-    total_price numeric(10),
+    date date not null,
     FOREIGN KEY (student_ci) REFERENCES base_datos.students(ci),
-    FOREIGN KEY (lesson_id) REFERENCES base_datos.lesson(id),
     FOREIGN KEY (equipment_id) REFERENCES base_datos.equipment(id),
-    PRIMARY KEY (student_ci, lesson_id, equipment_id)
+    PRIMARY KEY (student_ci, equipment_id)
 );
 
-ALTER TABLE base_datos.enrollments ADD COLUMN date date not null;
+
+
+CREATE TABLE base_datos.enrollments(
+    student_ci integer(8) not null,
+    lesson_id integer not null,
+    date date not null,
+    FOREIGN KEY (student_ci) REFERENCES base_datos.students(ci),
+    FOREIGN KEY (lesson_id) REFERENCES base_datos.lesson(id),
+    PRIMARY KEY (student_ci, lesson_id)
+);
+
+
+
+
+
+
