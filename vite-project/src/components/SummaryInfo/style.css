@@ -10,6 +10,8 @@
 .info {
   text-align: left;
   font-size: 18px;
+  display: flex;
+  flex-direction: column;
 }
 
 .costo {
@@ -19,7 +21,7 @@
   margin-top: 2rem;
 }
 
-p {
+div.info p.text {
   margin: 0px;
 }
 
