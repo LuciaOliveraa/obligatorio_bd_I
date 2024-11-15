@@ -7,7 +7,7 @@ export default function Students(){
     return (
         <div>
             <div className="students-and-add">
-                <h1 className="title is-3 students-title">Alumnos</h1>
+                <h1 className="students-title">Alumnos</h1>
                 <button className="button add-button"><Add className='add'></Add> </button>
             </div>
             <div className='all-students'>
