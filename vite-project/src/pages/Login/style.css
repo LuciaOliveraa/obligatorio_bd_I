@@ -44,6 +44,13 @@ div.loginDiv {
   color: white;
   margin-top: 3rem;
   border-radius: 20px;
+  transition: 0.5s;
+}
+
+.botonSiguiente:hover {
+  background-color: rgb(67, 117, 255);
+  transform: scale(1.05);
+  transition: 0.5ss;
 }
 
 input.input {

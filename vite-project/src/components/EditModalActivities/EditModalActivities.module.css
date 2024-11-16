@@ -4,10 +4,12 @@
   position: fixed;
   display: flex;
   align-items: center;
-  place-content: center;
+  place-content: center !important;
+  align-content: center;
   background-color: rgba(0, 0, 0, 0.582);
   top: 0;
   z-index: 30;
+  transition: 1s;
 }
 
 .modalContent {
@@ -55,6 +57,7 @@
 
 .form label {
   font-size: 20px;
+  font-weight: 800;
 }
 .form input {
   height: 40px;

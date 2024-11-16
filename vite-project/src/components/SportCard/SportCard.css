@@ -1,11 +1,18 @@
-
 .custom-card {
-    width: 250px;
-    height: 350px;
+  width: 250px;
+  height: 350px;
+  transition: 0.5s;
+  filter: grayscale();
+}
+
+.custom-card:hover {
+  transform: scale(1.08);
+  transition: 0.5s;
+  filter: none;
 }
 
 .description {
-    word-wrap: break-word; 
-    overflow-wrap: break-word; 
-    white-space: normal; 
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  white-space: normal;
 }
