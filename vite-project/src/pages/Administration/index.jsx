@@ -9,6 +9,9 @@ import Activities from "../../components/Activities";
 import { useState } from "react";
 import { EditModalActivities } from "../../components/EditModalActivities";
 import { EditModalInstructors } from "../../components/EditModalInstructors";
+import "./Administration.css";
+import Shifts from "../../components/Shifts";
+import Lessons from "../../components/Lessons";
 
 export default function Administration() {
   const [visible, setVisible] = useState(false);
@@ -25,7 +28,10 @@ export default function Administration() {
           setVisibleInstructors={setVisibleInstructors}
         ></Instructors>
         <Activities setVisibleActivities={setVisibleActivities}></Activities>
+        <Shifts></Shifts>
+        <Lessons></Lessons>
       </div>
+
       {visible && <EditModalStudent setVisible={setVisible} />}
       {visibleActivities && (
         <EditModalActivities setVisibleActivities={setVisibleActivities} />
