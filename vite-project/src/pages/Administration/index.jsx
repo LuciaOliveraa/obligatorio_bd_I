@@ -12,11 +12,15 @@ import { EditModalInstructors } from "../../components/EditModalInstructors";
 import "./Administration.css";
 import Shifts from "../../components/Shifts";
 import Lessons from "../../components/Lessons";
+import { EditModalShifts } from "../../components/EditModalShifts";
+import { EditModalLessons } from "../../components/EditModalLessons";
 
 export default function Administration() {
   const [visible, setVisible] = useState(false);
   const [visibleActivities, setVisibleActivities] = useState(false);
   const [visibleInstructors, setVisibleInstructors] = useState(false);
+  const [visibleShifts, setVisibleShifts] = useState(false);
+  const [visibleLessons, setVisibleLessons] = useState(false);
 
   return (
     <div className="admin-page">
@@ -28,8 +32,8 @@ export default function Administration() {
           setVisibleInstructors={setVisibleInstructors}
         ></Instructors>
         <Activities setVisibleActivities={setVisibleActivities}></Activities>
-        <Shifts></Shifts>
-        <Lessons></Lessons>
+        <Shifts setVisibleShifts={setVisibleShifts}></Shifts>
+        <Lessons setVisibleLessons={setVisibleLessons}></Lessons>
       </div>
 
       {visible && <EditModalStudent setVisible={setVisible} />}
@@ -38,6 +42,10 @@ export default function Administration() {
       )}
       {visibleInstructors && (
         <EditModalInstructors setVisibleInstructors={setVisibleInstructors} />
+      )}
+      {visibleShifts && <EditModalShifts setVisibleShifts={setVisibleShifts} />}
+      {visibleLessons && (
+        <EditModalLessons setVisibleLessons={setVisibleLessons} />
       )}
     </div>
   );
