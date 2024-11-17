@@ -45,6 +45,7 @@ def postStudent():
     phone_number = request.json['phone_number']
 
     try:
+        
         # Ejecuta la consulta de inserción
         cursor.execute("INSERT INTO students (ci, name, lastname, birthdate, email, phone_number) VALUES (%s, %s, %s, %s, %s, %s)", 
                        (ci, name, lastname, birthdate, email, phone_number))
