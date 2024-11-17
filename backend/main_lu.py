@@ -155,15 +155,15 @@ def getLessonByActivity(id):
 @app.route("/lessons/edit/<int:id>", methods=['PUT'])
 def editLesson(id):
     cursor = db.cursor(dictionary=True)
-    instructor = request.json['instructor']
-    activity = request.json['activity']
-    shift = request.json['shift']
+    instructor_ci = request.json['instructor_ci']
+    activity_id = request.json['activity_id']
+    shift_id = request.json['shift_id']
     capacity = request.json['capacity']
 
     try:
         current_time = datetime.now().time()
         
-        cursor.execute("SELECT starting_time, end_time FROM shifts WHERE id = %s", (shift,))
+        cursor.execute("SELECT starting_time, end_time FROM shifts WHERE id = %s", (shift_id,))
         shift_data = cursor.fetchone()
         
         if not shift_data:
@@ -176,8 +176,22 @@ def editLesson(id):
         if shift_start <= current_time <= shift_end:
             return jsonify({"error": "Cannot update during the specified shift"}), 403
 
+
+        # Verifica si el instructor ya está asignado a otra clase en el mismo turno
+        cursor.execute("""
+            SELECT id 
+            FROM lesson 
+            WHERE instructor_ci = %s AND shift_id = %s AND id != %s
+        """, (instructor_ci, shift_id, id))
+        
+        conflicting_lesson = cursor.fetchone()
+        
+        if conflicting_lesson:
+            return jsonify({"error": "Instructor is already teaching another class in this shift"}), 409
+
+
         cursor.execute("UPDATE instructors SET instructor_ci = %s, activity_id = %s, shift_id = %s, capacity = %s WHERE id = %s",
-                       (instructor, activity, shift, capacity, id))
+                       (instructor_ci, activity_id, shift_id, capacity, id))
         db.commit()
         return jsonify({"message": "Lesson updated successfully"})
     except Error as error:
@@ -205,44 +219,53 @@ def postEnrollment(id):
     date = request.json['date']
 
     try: 
-        # Se obtiene el turno de la clase a la que se quiere inscribir
+        # Obtiene datos de la clase a la que se quiere inscribir
         cursor.execute("""
-            SELECT shifts.starting_time, s.end_time 
+            SELECT shifts.starting_time, shifts.end_time, lesson.capacity, 
+                   (SELECT COUNT(*) FROM enrollments WHERE lesson_id = %s) AS current_enrollments
             FROM lesson
-            JOIN shifts ON lesson.shift_id = shift.id
+            JOIN shifts ON lesson.shift_id = shifts.id
             WHERE lesson.id = %s
-        """, (lesson_id,))
-        newEnrollmentShift = cursor.fetchone()
+        """, (lesson_id, lesson_id))
+        lesson_data = cursor.fetchone()
 
-        if not newEnrollmentShift:
-            return jsonify({"error": "Enrollment shift not found"})
+        if not lesson_data:
+            return jsonify({"error": "Lesson not found"}), 404
         
-        newStartingTime = newEnrollmentShift['starting_time']
-        newEndTime = newEnrollmentShift['end_time']
+        new_start_time = lesson_data['starting_time']
+        new_end_time = lesson_data['end_time']
+        capacity = lesson_data['capacity']
+        current_enrollments = lesson_data['current_enrollments']
 
-        # Inscripciones existentes del estudiante para ese día
+        # Verificaa capacidad suficiente para inscripción
+        if current_enrollments >= capacity:
+            return jsonify({"error": "Lesson capacity exceeded"}), 403
+
+        # Inscripciones existentes del estudiante para el mismo día
         cursor.execute("""
             SELECT shifts.starting_time, shifts.end_time 
             FROM enrollments
-            JOIN lessons ON enrollments.lesson_id = lesson.id
+            JOIN lesson ON enrollments.lesson_id = lesson.id
             JOIN shifts ON lesson.shift_id = shifts.id
             WHERE enrollments.student_ci = %s AND enrollments.date = %s
         """, (id, date))
-        existingInscriptions = cursor.fetchall()
+        existing_inscriptions = cursor.fetchall()
 
         # Verifica solapamiento de horarios
-        for shift in existingInscriptions:
+        for shift in existing_inscriptions:
             existing_start_time = shift['starting_time']
             existing_end_time = shift['end_time']
             
-            if not (newEndTime <= existing_start_time or newStartingTime >= existing_end_time):
+            if not (new_end_time <= existing_start_time or new_start_time >= existing_end_time):
                 return jsonify({"error": "Schedule conflict: already enrolled in another class at the same time"}), 409
 
 
-        cursor.execute("INSERT INTO enrollments (ci, lesson_id, date) VALUES (%s, %s, %s)", 
+        # Inscripción
+        cursor.execute("INSERT INTO enrollments (student_ci, lesson_id, date) VALUES (%s, %s, %s)", 
                        (id, lesson_id, date))
         db.commit()
         return jsonify({"message": "Student registered successfully"}), 201
+
     except Error as error:
         db.rollback()
         return jsonify({"error": str(error)}), 500

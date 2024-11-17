@@ -18,7 +18,7 @@ CREATE TABLE base_datos.equipment(
     activity_id integer not null,
     description varchar(50),
     price numeric(10),
-    FOREIGN KEY (activity_id) REFERENCES base_datos.activities(id),
+    FOREIGN KEY (activity_id) REFERENCES base_datos.activities(id) ON DELETE SET NULL,
     PRIMARY KEY (id)
 );
 
@@ -64,9 +64,9 @@ CREATE TABLE base_datos.lesson(
     activity_id integer not null,
     shift_id integer not null,
     capacity int(3),
-    FOREIGN KEY (instructor_ci) REFERENCES instructors(ci),
-    FOREIGN KEY (activity_id) REFERENCES activities(id),
-    FOREIGN KEY (shift_id) REFERENCES shifts(id),
+    FOREIGN KEY (instructor_ci) REFERENCES instructors(ci) ON DELETE SET NULL,
+    FOREIGN KEY (activity_id) REFERENCES activities(id) ON DELETE CASCADE,
+    FOREIGN KEY (shift_id) REFERENCES shifts(id) ON DELETE CASCADE,
     PRIMARY KEY (id)
 );
 
@@ -75,8 +75,8 @@ CREATE TABLE base_datos.rent(
     student_ci integer(8) not null,
     equipment_id integer not null,
     date date not null,
-    FOREIGN KEY (student_ci) REFERENCES base_datos.students(ci),
-    FOREIGN KEY (equipment_id) REFERENCES base_datos.equipment(id),
+    FOREIGN KEY (student_ci) REFERENCES base_datos.students(ci) ON DELETE CASCADE,
+    FOREIGN KEY (equipment_id) REFERENCES base_datos.equipment(id) ON DELETE CASCADE,
     PRIMARY KEY (student_ci, equipment_id)
 );
 
@@ -86,9 +86,9 @@ CREATE TABLE base_datos.enrollments(
     student_ci integer(8) not null,
     lesson_id integer not null,
     date date not null,
-    FOREIGN KEY (student_ci) REFERENCES base_datos.students(ci),
-    FOREIGN KEY (lesson_id) REFERENCES base_datos.lesson(id),
-    PRIMARY KEY (student_ci, lesson_id)
+    FOREIGN KEY (student_ci) REFERENCES base_datos.students(ci) ON DELETE CASCADE,
+    FOREIGN KEY (lesson_id) REFERENCES base_datos.lesson(id) ON DELETE CASCADE,
+    PRIMARY KEY (student_ci, lesson_id, date)
 );
 
 
