@@ -1,15 +1,12 @@
-import style from "./Student.module.css";
+import style from "./Instructor.module.css";
 import { TbPencil as Pencil } from "react-icons/tb";
 import { GoTrash as Trash } from "react-icons/go";
 
-export default function Student({
+export default function Instructor({
   ci,
-  email,
   name,
   lastname,
-  birthdate,
-  phone_number,
-  setVisible,
+  setVisibleInstructors,
 }) {
   return (
     <div className={style.infoandbuttons}>
@@ -22,10 +19,6 @@ export default function Student({
           <strong>Nombre: </strong>
           {name} {lastname}
         </span>
-        <span>
-          <strong>Email: </strong>
-          {email}
-        </span>
       </div>
       <div className="buttons">
         <button className={style.deletebutton}>
@@ -34,7 +27,7 @@ export default function Student({
         <button
           className={style.editbutton}
           onClick={() => {
-            setVisible(true);
+            setVisibleInstructors(true);
           }}
         >
           <Pencil className={style.pencil}></Pencil>

@@ -3,19 +3,23 @@ use base_datos;
 INSERT INTO base_datos.activities (name, description, age_min,price) VALUES
     ('Snowmobile', 'High-speed adventure on snow trails', 21, 16000),
     ('Snowboard', 'Freestyle and downhill on snowy slopes', 18, 9000),
-    ('Sky', 'Classic skiing for all experience levels', 18, 18000);
+    ('Ski', 'Classic skiing for all experience levels', 18, 18000);
 
-INSERT INTO base_datos.equipment (description, price) VALUES
-    ('Ski set (skis, boots, and poles)', 6150.00),
-    ('Snowboard set (board and boots)', 8200.00),
-    ('Snowmobile rental (2 hour)', 9840.00),
-    ('Protective helmet', 1230.00),
-    ('Ski goggles', 1025.00),
-    ('Skis', 3690.00),
-    ('Ski boots', 2460.00),
-    ('Ski poles', 820.00),
-    ('Snowboard', 5740.00),
-    ('Snowboard boots', 2870.00);
+INSERT INTO base_datos.equipment (description, activity_id, price) VALUES
+    ('Ski set (skis, boots, and poles)', 3, 6150.00),
+    ('Snowboard set (board and boots)', 2, 8200.00),
+    ('Snowmobile rental (2 hour)', 1, 9840.00),
+    ('Protective helmet', 1, 1230.00),
+    ('Protective helmet', 2, 1230.00),
+    ('Protective helmet', 3, 1230.00),
+    ('Snowmobile goggles', 1, 1025.00),
+    ('Snowboard goggles', 2, 1025.00),
+    ('Ski goggles', 3, 1025.00),
+    ('Skis', 3,3690.00),
+    ('Ski boots', 3,  2460.00),
+    ('Ski poles', 3, 820.00),
+    ('Snowboard', 2, 5740.00),
+    ('Snowboard boots', 2, 2870.00);
 
 INSERT INTO base_datos.instructors (ci, name, lastname) VALUES
     (54968022, 'Armando', 'Paredes'),

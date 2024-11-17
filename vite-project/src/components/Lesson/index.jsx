@@ -1,30 +1,32 @@
-import style from "./Student.module.css";
+import style from "./Lesson.module.css";
 import { TbPencil as Pencil } from "react-icons/tb";
 import { GoTrash as Trash } from "react-icons/go";
 
-export default function Student({
-  ci,
-  email,
-  name,
-  lastname,
-  birthdate,
-  phone_number,
-  setVisible,
+export default function Lesson({
+  instructor,
+  activity,
+  shift,
+  capacity,
+  setVisibleLessons,
 }) {
   return (
     <div className={style.infoandbuttons}>
       <div className={style.info}>
         <span>
-          <strong>CI: </strong>
-          {ci}
+          <strong>Instructor: </strong>
+          {instructor}
         </span>
         <span>
-          <strong>Nombre: </strong>
-          {name} {lastname}
+          <strong>Actividad: </strong>
+          {activity}
         </span>
         <span>
-          <strong>Email: </strong>
-          {email}
+          <strong>Turno: </strong>
+          {shift}
+        </span>
+        <span>
+          <strong>Capacidad: </strong>
+          {capacity}
         </span>
       </div>
       <div className="buttons">
@@ -34,7 +36,7 @@ export default function Student({
         <button
           className={style.editbutton}
           onClick={() => {
-            setVisible(true);
+            setVisibleLessons(true);
           }}
         >
           <Pencil className={style.pencil}></Pencil>

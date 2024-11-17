@@ -1,11 +1,11 @@
-.students-and-add {
+.shiftsAndAdd {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
 }
 
-.all-students {
+.allShifts {
   margin-top: 10px;
   gap: 10px;
   overflow: auto;
@@ -17,7 +17,7 @@
   color: white;
 }
 
-.add-button {
+.addButton {
   background-color: #3b91c4;
   border-radius: 50px;
   padding: 10px;
@@ -26,13 +26,13 @@
   height: 40px;
 }
 
-.add-button:hover {
+.addButton:hover {
   background-color: #4bb0ea;
   transform: scale(1.1);
   transition: 0.5s;
 }
 
-.students-title {
+.shiftsTitle {
   font-weight: 800;
   font-size: 35px;
 }

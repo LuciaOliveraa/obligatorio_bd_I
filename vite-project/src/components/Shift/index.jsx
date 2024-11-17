@@ -1,30 +1,18 @@
-import style from "./Student.module.css";
+import style from "./Shift.module.css";
 import { TbPencil as Pencil } from "react-icons/tb";
 import { GoTrash as Trash } from "react-icons/go";
 
-export default function Student({
-  ci,
-  email,
-  name,
-  lastname,
-  birthdate,
-  phone_number,
-  setVisible,
-}) {
+export default function Shift({ startsAt, endsAt, setVisibleShifts }) {
   return (
     <div className={style.infoandbuttons}>
       <div className={style.info}>
         <span>
-          <strong>CI: </strong>
-          {ci}
+          <strong>Horario incio: </strong>
+          {startsAt}
         </span>
         <span>
-          <strong>Nombre: </strong>
-          {name} {lastname}
-        </span>
-        <span>
-          <strong>Email: </strong>
-          {email}
+          <strong>Horario fin: </strong>
+          {endsAt}
         </span>
       </div>
       <div className="buttons">
@@ -34,7 +22,7 @@ export default function Student({
         <button
           className={style.editbutton}
           onClick={() => {
-            setVisible(true);
+            setVisibleShifts(true);
           }}
         >
           <Pencil className={style.pencil}></Pencil>

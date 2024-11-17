@@ -5,19 +5,19 @@ export function SummaryInfo(props) {
   return (
     <div className="summaryBox">
       <div className="info">
-        <p>
+        <p className="text">
           {" "}
           <strong>Actividad: </strong> {props.actividad}
         </p>
-        <p>
+        <p className="text">
           {" "}
           <strong>Horario:</strong> {props.horario}
         </p>
-        <p>
+        <p className="text">
           {" "}
           <strong>Profesor:</strong> {props.instructor}
         </p>
-        <p>
+        <p className="text">
           {" "}
           <strong>Equipamiento:</strong> {props.equipamiento}
         </p>
