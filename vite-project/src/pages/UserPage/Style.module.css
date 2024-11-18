@@ -1,0 +1,72 @@
+.title {
+  font-size: 38px;
+  font-weight: 700px;
+  font-weight: bold;
+  border-bottom: 2px solid rgb(37, 76, 175);
+}
+
+.pageContent {
+  padding: 5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-image: url(../../assets/fondoHomePage.png);
+  min-width: 100%;
+  height: 100vh;
+}
+
+.userData {
+  text-align: left;
+  width: 100%;
+  margin: 3rem;
+}
+
+.userDataItem {
+  font-size: 18px;
+}
+
+.boxContent {
+  display: flex;
+  flex-direction: column;
+  height: fit-content;
+  height: 87%;
+  justify-content: space-between;
+}
+
+.cancelInscription {
+  width: 200px;
+  background-color: rgb(37, 76, 175);
+  height: 60px;
+  color: rgb(255, 255, 255);
+  align-self: flex-end;
+  align-self: center;
+  justify-self: center;
+  width: 100%;
+  border-top: 2px solid rgb(37, 76, 175);
+  font-weight: bold;
+}
+
+.box {
+  background-color: white;
+  width: 50%;
+  height: 75%;
+  border: 2px solid rgb(37, 76, 175);
+  border-radius: 20px;
+  overflow: hidden;
+}
+
+.classItem {
+  background-color: rgba(123, 165, 219, 0.513);
+  margin: 0.5rem;
+  padding: 0.5rem;
+  width: 85%;
+  border-radius: 20px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  font-weight: 400;
+}
+
+.trashIcon {
+  font-weight: bold;
+}

@@ -30,7 +30,7 @@ export default function Navbar() {
             </Link>
           </div>
           <div className="item">
-            <Link className="navbar-item item">
+            <Link className="navbar-item item" to="/user">
               Usuario
               <UserIcon className="user-icon"></UserIcon>
             </Link>
