@@ -1,10 +1,10 @@
 from flask import jsonify, request
-from database import get_db_connection
+from config import get_db_connection
 from datetime import datetime
 
 db = get_db_connection()
 
-def register_lessons_routes(app):
+def lessonsRoutes(app):
     @app.route("/lessons", methods=['GET'])
     def getAllLessons():
         try:
@@ -86,7 +86,7 @@ def register_lessons_routes(app):
             cursor.execute("UPDATE instructors SET instructor_ci = %s, activity_id = %s, shift_id = %s, capacity = %s WHERE id = %s",
                         (instructor_ci, activity_id, shift_id, capacity, id))
             db.commit()
-            return jsonify({"message": "Lesson updated successfully"})
+            return jsonify({"message": "Lesson updated successfully"}), 201
         except Error as error:
             db.rollback()
             return jsonify({"error": str(error)}), 500

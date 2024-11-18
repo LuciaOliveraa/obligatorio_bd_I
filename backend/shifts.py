@@ -1,10 +1,10 @@
 from flask import jsonify, request
-from database import get_db_connection
+from config import get_db_connection
 from datetime import datetime, timedelta
 
 db = get_db_connection()
 
-def register_shifts_routes(app):
+def shiftsRoutes(app):
     @app.route("/shifts", methods=['GET'])
     def getAllShifts():
         try:
@@ -73,7 +73,7 @@ def register_shifts_routes(app):
         try:
             cursor.execute("DELETE FROM shifts WHERE id = %s", (id,))
             db.commit()
-            return jsonify({"message": "Shift deleted successfully"})
+            return jsonify({"message": "Shift deleted successfully"}), 201
         except Error as error:
             db.rollback()
             return jsonify({"error": str(error)}), 500
@@ -96,7 +96,7 @@ def register_shifts_routes(app):
             cursor.execute("UPDATE shifts SET starting_time = %s, end_time = %s  WHERE id = %s",
                         (starting_time, end_time, id))
             db.commit()
-            return jsonify({"message": "Shift updated successfully"})
+            return jsonify({"message": "Shift updated successfully"}), 201
         except Error as error:
             db.rollback()
             return jsonify({"error": str(error)}), 500

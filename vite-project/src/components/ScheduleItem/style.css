@@ -5,6 +5,7 @@
   border-radius: 20px;
   transition: 0.5s;
   padding: 3rem;
+  margin: 20px
 }
 
 .boxHorario:hover {
