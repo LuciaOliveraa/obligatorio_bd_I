@@ -1,12 +1,27 @@
 import Navbar from "../../components/NavBar";
 import { ScheduleItem } from "../../components/ScheduleItem";
 import "./style.css";
+import { useState } from "react";
 
 export default function Schedule() {
+  const [selectedDate, setSelectedDate] = useState('');
+
+  const handleChange = (e) => {
+    setSelectedDate(e.target.value);
+  };
+
   return (
     <div className="schedule">
       <Navbar />
       <div className="content">
+        <h1 className='title is-1'>Seleccione una fecha</h1>
+        <input
+          id="dateInput"
+          type="date"
+          value={selectedDate}
+          onChange={handleChange}
+          className="date-input"
+        />
         <h1 className="title is-1">Seleccione un horario</h1>
         <div className="horarios">
           <ScheduleItem
