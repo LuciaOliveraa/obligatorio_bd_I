@@ -32,7 +32,7 @@ CREATE TABLE base_datos.administrators(
     email varchar(60),
     FOREIGN KEY (email) REFERENCES base_datos.login(user) ON DELETE SET NULL,
     PRIMARY KEY (email)
-)
+);
 
 CREATE TABLE base_datos.students(
     ci integer(8) not null,
@@ -94,6 +94,6 @@ CREATE TABLE base_datos.enrollments(
     lesson_id integer not null,
     date date not null,
     FOREIGN KEY (student_ci) REFERENCES base_datos.students(ci) ON DELETE CASCADE,
-    FOREIGN KEY (lesson_id) REFERENCES base_datos.lesson(id) ON DELETE CASCADE,
+    FOREIGN KEY (lesson_id) REFERENCES base_datos.lessons(id) ON DELETE CASCADE,
     PRIMARY KEY (student_ci, lesson_id, date)
 );
