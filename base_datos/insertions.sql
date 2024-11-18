@@ -21,19 +21,53 @@ INSERT INTO base_datos.equipment (description, activity_id, price) VALUES
     ('Snowboard', 2, 5740.00),
     ('Snowboard boots', 2, 2870.00);
 
-INSERT INTO base_datos.instructors (ci, name, lastname) VALUES
-    (54968022, 'Armando', 'Paredes'),
-    (59603358, 'Jonny', 'Mebaño'),
-    (54967822, 'Chapu', 'Zon'),
-    (54186631, 'Elba', 'Lazo'),
-    (54186632, 'Elsa', 'Capunta'),
-    (54968992, 'Susana', 'Horia'),
-	(59246687, 'Dolores', 'Fuertes');
+INSERT INTO base_datos.shifts (name, starting_time, end_time) VALUES
+    ('Matutino', '09:00:00', '11:00:00'),
+    ('Mediodía', '12:00:00', '14:00:00'),
+    ('Vespertino', '16:00:00', '18:00:00');
 
-INSERT INTO base_datos.shifts (starting_time, end_time) VALUES
-    ('09:00:00', '11:00:00'),
-    ('12:00:00', '14:00:00'),
-    ('16:00:00', '18:00:00');
+INSERT INTO base_datos.login (user, password) VALUES
+    ('julian.bevc@correo.ucu.edu.uy', 'A1x$hFg9L*mQzS8p'),
+    ('belen.tellechea@correo.ucu.edu.uy', 'R3t@5Df8Gh!lX9k2'),
+    ('paulina.vidal@correo.ucu.edu.uy', 'G5y%Pz8X!wEr2Tn4'),
+    ('lucia.olivera@correo.ucu.edu.uy', 'J6f#Qb9@LnX2Oe3z'),
+    ('gunther.german@correo.ucu.edu.uy', 'Z8h&Wr2X!yHp9Lv6'),
+    ('roberto.mcclane@correo.ucu.edu.uy', 'M3v!Tw7#YlR5Op2x'),
+    ('simba.disney@correo.ucu.edu.uy', 'Q4x*Zl9!Rt5Uh3#k'),
+    ('haythor.tilla@correo.ucu.edu.uy', 'L5v$Fh8@Jt2Wo6*q'),
+    ('ba.zurita@correo.ucu.edu.uy', 'E7g#Pl3!Xo9Ht5$y'),
+    ('estela.garto@correo.ucu.edu.uy', 'R2n!Mf8%Zl7Xv#3j'),
+    ('manuela.guedez@correo.ucu.edu.uy', 'S9k@Yh4!Qb2Wm5#v'),
+    ('lucia.amor@correo.ucu.edu.uy', 'H3t!Pz8#Lx6Wn9&y'),
+    ('fusun.pepe@correo.ucu.edu.uy', 'D5l@Qy9$Wr2Tp8*v'),
+    ('gladys.garcia@correo.ucu.edu.uy', 'X7k!Nv3%Zp5Jt#2w'),
+    ('marcos.benites@correo.ucu.edu.uy', 'V2l@Rt9!Kp6Xo4#y'),
+    ('esteban.quito@correo.ucu.edu.uy', 'U9m!Zt5%Ql3Jw@7x'),
+    ('sombrerero.loco@correo.ucu.edu.uy', 'T4x#Jn8!Hp2Wl$3k'),
+    ('mileva.maric@correo.ucu.edu.uy', 'B5y*Qn9!Mv3Wr#7x'),
+    ('juan.perezoso@correo.ucu.edu.uy', 'C2z#Lf8!Xv6Rj%4y'),
+    ('roma.vidal@correo.ucu.edu.uy', 'K9t@Wp4%Xl5Jy&8k'),
+    ('armando.paredes@ucu.edu.uy', 'ArP@1234567890'),
+    ('jonny.mebaño@ucu.edu.uy', 'JoM@0987654321'),
+    ('chapu.zon@ucu.edu.uy', 'ChZ@5678901234'),
+    ('elba.lazo@ucu.edu.uy', 'ElL@4567890123'),
+    ('elsa.capunta@ucu.edu.uy', 'ElC@2345678901'),
+    ('susana.horia@ucu.edu.uy', 'SuH@7890123456'),
+    ('dolores.fuertes@ucu.edu.uy', 'DoF@8901234567')
+    ('admin@admin.ucu.edu.uy');
+
+INSERT INTO base_datos.administrators(email) VALUES
+    ('admin@admin.ucu.edu.uy');
+
+INSERT INTO base_datos.instructors (ci, name, lastname, email) VALUES
+    (54968022, 'Armando', 'Paredes', 'armando.paredes@ucu.edu,uy'),
+    (59603358, 'Jonny', 'Mebaño', 'jonny.mebaño@ucu.edu.uy'),
+    (54967822, 'Chapu', 'Zon', 'chapu.zon@ucu.edu.uy'),
+    (54186631, 'Elba', 'Lazo', 'elba.lazo@ucu.edu.uy'),
+    (54186632, 'Elsa', 'Capunta', 'elsa.capunta@ucu.edu.uy'),
+    (54968992, 'Susana', 'Horia', 'susana.horia@ucu.edu.uy'),
+	(59246687, 'Dolores', 'Fuertes', 'dolores.fuertes@ucu.edu.uy');
+
 
 INSERT INTO base_datos.students (ci, name, lastname, birthdate, email, phone_number) VALUES
     (54957902, 'Julián', 'Bevc', '2005-01-27', 'julian.bevc@correo.ucu.edu.uy', 092959305),
@@ -57,29 +91,8 @@ INSERT INTO base_datos.students (ci, name, lastname, birthdate, email, phone_num
     (12930932, 'Juan', 'Perezoso', '2002-12-03', 'juan.perezoso@correo.ucu.edu.uy', 094583123),
     (65738191, 'Roma', 'Vidal', '2003-09-26', 'roma.vidal@correo.ucu.edu.uy', 097845723);
 
-INSERT INTO base_datos.login (ci, password) VALUES
-    (54957902, 'A1x$hFg9L*mQzS8p'),
-    (54789023, 'R3t@5Df8Gh!lX9k2'),
-    (56728902, 'G5y%Pz8X!wEr2Tn4'),
-    (54627894, 'J6f#Qb9@LnX2Oe3z'),
-    (34892812, 'Z8h&Wr2X!yHp9Lv6'),
-    (12938232, 'M3v!Tw7#YlR5Op2x'),
-    (43287298, 'Q4x*Zl9!Rt5Uh3#k'),
-    (23498726, 'L5v$Fh8@Jt2Wo6*q'),
-    (23489102, 'E7g#Pl3!Xo9Ht5$y'),
-    (56738291, 'R2n!Mf8%Zl7Xv#3j'),
-    (56472192, 'S9k@Yh4!Qb2Wm5#v'),
-    (32494012, 'H3t!Pz8#Lx6Wn9&y'),
-    (59427383, 'D5l@Qy9$Wr2Tp8*v'),
-    (28291389, 'X7k!Nv3%Zp5Jt#2w'),
-    (38920121, 'V2l@Rt9!Kp6Xo4#y'),
-    (43726128, 'U9m!Zt5%Ql3Jw@7x'),
-    (39302012, 'T4x#Jn8!Hp2Wl$3k'),
-    (23903928, 'B5y*Qn9!Mv3Wr#7x'),
-    (12930932, 'C2z#Lf8!Xv6Rj%4y'),
-    (65738191, 'K9t@Wp4%Xl5Jy&8k');
 
-INSERT INTO base_datos.lesson (instructor_ci, activity_id, shift_id, capacity) VALUES
+INSERT INTO base_datos.lessons (instructor_ci, activity_id, shift_id, capacity) VALUES
     (54968022, 1, 1, 10),
     (59603358, 1, 2, 1),
     (59603358, 1, 3, 8),

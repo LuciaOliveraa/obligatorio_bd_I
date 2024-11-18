@@ -22,21 +22,17 @@ CREATE TABLE base_datos.equipment(
     PRIMARY KEY (id)
 );
 
-CREATE TABLE base_datos.instructors (
-    ci integer(8) not null,
-    CHECK ( ci REGEXP '^[0-9]{8}$'),
-    name varchar(20) not null,
-    lastname varchar(20) not null,
-    PRIMARY KEY (ci)
+CREATE TABLE base_datos.login(
+    user varchar(60) not null,
+    password varchar(20) not null,
+    PRIMARY KEY (user)
 );
 
-CREATE TABLE base_datos.shifts(
-    id integer auto_increment not null,
-    starting_time time not null,
-    end_time time not null,
-    PRIMARY KEY (id)
-);
-
+CREATE TABLE base_datos.administrators(
+    email varchar(60),
+    FOREIGN KEY (email) REFERENCES base_datos.login(user) ON DELETE SET NULL,
+    PRIMARY KEY (email)
+)
 
 CREATE TABLE base_datos.students(
     ci integer(8) not null,
@@ -44,21 +40,32 @@ CREATE TABLE base_datos.students(
     name varchar(20),
     lastname varchar(20),
     birthdate date not null,
-    email varchar(30) not null,
+    email varchar(60),
     phone_number integer(9),
+    FOREIGN KEY (email) REFERENCES base_datos.login(user) ON DELETE SET NULL,
     PRIMARY KEY (ci)
 );
 
-ALTER TABLE base_datos.students MODIFY COLUMN email varchar(60) NOT NULL;
-
-CREATE TABLE base_datos.login(
+CREATE TABLE base_datos.instructors (
     ci integer(8) not null,
-    password varchar(20) not null,
-    FOREIGN KEY (ci) REFERENCES base_datos.students(ci),
+    CHECK ( ci REGEXP '^[0-9]{8}$'),
+    name varchar(20) not null,
+    lastname varchar(20) not null,
+    email varchar(60) not null,
+    FOREIGN KEY (email) REFERENCES base_datos.login(user) ON DELETE SET NULL,
     PRIMARY KEY (ci)
 );
 
-CREATE TABLE base_datos.lesson(
+CREATE TABLE base_datos.shifts(
+    id integer auto_increment not null,
+    name varchar(30), 
+    starting_time time not null,
+    end_time time not null,
+    PRIMARY KEY (id)
+);
+
+
+CREATE TABLE base_datos.lessons(
     id integer auto_increment not null,
     instructor_ci integer(8) not null,
     activity_id integer not null,
@@ -90,9 +97,3 @@ CREATE TABLE base_datos.enrollments(
     FOREIGN KEY (lesson_id) REFERENCES base_datos.lesson(id) ON DELETE CASCADE,
     PRIMARY KEY (student_ci, lesson_id, date)
 );
-
-
-
-
-
-

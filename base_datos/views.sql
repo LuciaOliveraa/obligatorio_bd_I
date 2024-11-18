@@ -19,8 +19,7 @@ GROUP BY
     a.id, a.name
 ORDER BY 
     total_revenue DESC;
-
-
+    
 
 
 CREATE VIEW activities_with_most_students AS
