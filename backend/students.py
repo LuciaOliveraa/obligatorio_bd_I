@@ -1,9 +1,9 @@
 from flask import jsonify, request
-from database import get_db_connection
+from config import get_db_connection
 
 db = get_db_connection()
 
-def register_student_routes(app):
+def studentsRoutes(app):
     @app.route("/students", methods=['GET'])
     def getAllStudents():
         try:

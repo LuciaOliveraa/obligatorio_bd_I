@@ -1,9 +1,9 @@
 from flask import jsonify, request
-from database import get_db_connection
+from config import get_db_connection
 
 db = get_db_connection()
 
-def register_enrollments_routes(app):
+def enrollmentsRoutes(app):
     @app.route("/enrollments", methods=['GET'])
     def getAllEnrollments():
         try:
@@ -11,7 +11,7 @@ def register_enrollments_routes(app):
             cursor.execute("SELECT * FROM enrollments union enrollments_without_equipment")
             lessons = cursor.fetchall()
             cursor.close()
-            return jsonify(lessons)
+            return jsonify(lessons), 200
         except Error as error:
             return jsonify({"error": str(error)}), 500
         finally:

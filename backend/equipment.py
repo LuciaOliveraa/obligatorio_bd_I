@@ -1,10 +1,10 @@
 from flask import jsonify, request
-from database import get_db_connection
+from config import get_db_connection
 
 db = get_db_connection()
 
 
-def register_equipment_routes(app):
+def equipmentRoutes(app):
     @app.route('/equipment', methods=['GET'])
     def getAllEquipment():
         try:
@@ -17,7 +17,7 @@ def register_equipment_routes(app):
         finally:
             cursor.close()
 
-    @app.route('equipment/activity/<int:id>', methods=['GET'])
+    @app.route('/equipment/activity/<int:id>', methods=['GET'])
     def getEquipmentByActivity(id):
         try:
             cursor = db.cursor(dictionary=True)
@@ -53,7 +53,7 @@ def register_equipment_routes(app):
             cursor.execute("UPDATE equipment SET description = %s, price = %s, activity_id = %s WHERE id = %s",
                         (description, price, activity_id, id))
             db.commit()
-            return jsonify({"message": "Equipment updated successfully"})
+            return jsonify({"message": "Equipment updated successfully"}), 200
         except Error as error:
             db.rollback()
             return jsonify({"error": str(error)}), 500
