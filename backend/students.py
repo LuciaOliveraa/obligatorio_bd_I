@@ -6,6 +6,20 @@ import json
 
 db = get_db_connection()
 
+def getStudent(id):
+        try:
+            cursor = db.cursor(dictionary=True)
+            cursor.execute("SELECT * FROM students where ci=%s", (id,))
+            student = cursor.fetchone()
+            enrollments = getStudentEnrollments(id)
+            rents = getStudentRents(id)
+            return jsonify(student),enrollments, rents, 200
+        except Error as error:
+            return jsonify({"error": str(error)}), 500
+        finally:
+            cursor.close()
+
+
 def studentsRoutes(app):
     @app.route("/students", methods=['GET'])
     def getAllStudents():
