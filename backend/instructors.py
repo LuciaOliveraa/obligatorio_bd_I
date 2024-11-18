@@ -3,6 +3,19 @@ from config import get_db_connection
 
 db = get_db_connection()
 
+def getInstructor(id):
+        try:
+            cursor = db.cursor(dictionary=True)
+            cursor.execute("SELECT * FROM instructors where ci=%s", (id,))
+            instructor = cursor.fetchone()
+            lessons = getInstructorLessons(id)
+            return jsonify(instructor), lessons, 200
+        except Error as error:
+            return jsonify({"error": str(error)}), 500
+        finally:
+            cursor.close()
+            
+
 def instructorsRoutes(app):
     @app.route("/instructors", methods=['GET'])
     def getAllInstructors():
