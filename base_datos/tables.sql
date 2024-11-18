@@ -15,7 +15,7 @@ CREATE TABLE base_datos.activities(
 
 CREATE TABLE base_datos.equipment(
     id integer auto_increment not null,
-    activity_id integer not null,
+    activity_id integer,
     description varchar(50),
     price numeric(10),
     FOREIGN KEY (activity_id) REFERENCES base_datos.activities(id) ON DELETE SET NULL,
@@ -30,9 +30,9 @@ CREATE TABLE base_datos.login(
 
 CREATE TABLE base_datos.administrators(
     email varchar(60),
-    FOREIGN KEY (email) REFERENCES base_datos.login(user) ON DELETE SET NULL,
+    FOREIGN KEY (email) REFERENCES base_datos.login(user) ON DELETE CASCADE,
     PRIMARY KEY (email)
-)
+);
 
 CREATE TABLE base_datos.students(
     ci integer(8) not null,
@@ -51,14 +51,14 @@ CREATE TABLE base_datos.instructors (
     CHECK ( ci REGEXP '^[0-9]{8}$'),
     name varchar(20) not null,
     lastname varchar(20) not null,
-    email varchar(60) not null,
+    email varchar(60),
     FOREIGN KEY (email) REFERENCES base_datos.login(user) ON DELETE SET NULL,
     PRIMARY KEY (ci)
 );
 
 CREATE TABLE base_datos.shifts(
     id integer auto_increment not null,
-    name varchar(30), 
+    name varchar(30),
     starting_time time not null,
     end_time time not null,
     PRIMARY KEY (id)
@@ -67,7 +67,7 @@ CREATE TABLE base_datos.shifts(
 
 CREATE TABLE base_datos.lessons(
     id integer auto_increment not null,
-    instructor_ci integer(8) not null,
+    instructor_ci integer(8),
     activity_id integer not null,
     shift_id integer not null,
     capacity int(3),
@@ -87,13 +87,11 @@ CREATE TABLE base_datos.rent(
     PRIMARY KEY (student_ci, equipment_id)
 );
 
-
-
 CREATE TABLE base_datos.enrollments(
     student_ci integer(8) not null,
     lesson_id integer not null,
     date date not null,
     FOREIGN KEY (student_ci) REFERENCES base_datos.students(ci) ON DELETE CASCADE,
-    FOREIGN KEY (lesson_id) REFERENCES base_datos.lesson(id) ON DELETE CASCADE,
+    FOREIGN KEY (lesson_id) REFERENCES base_datos.lessons(id) ON DELETE CASCADE,
     PRIMARY KEY (student_ci, lesson_id, date)
 );

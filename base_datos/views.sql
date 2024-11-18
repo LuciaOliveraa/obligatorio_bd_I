@@ -8,7 +8,7 @@ SELECT
 FROM 
     base_datos.activities a
 LEFT JOIN 
-    base_datos.lesson l ON a.id = l.activity_id
+    base_datos.lessons l ON a.id = l.activity_id
 LEFT JOIN 
     base_datos.enrollments e ON l.id = e.lesson_id
 LEFT JOIN 
@@ -30,7 +30,7 @@ SELECT
 FROM 
     base_datos.activities a
 JOIN 
-    base_datos.lesson l ON a.id = l.activity_id
+    base_datos.lessons l ON a.id = l.activity_id
 LEFT JOIN 
     base_datos.enrollments e ON l.id = e.lesson_id
 GROUP BY 
@@ -49,7 +49,7 @@ SELECT
 FROM 
     base_datos.shifts s
 LEFT JOIN 
-    base_datos.lesson l ON s.id = l.shift_id
+    base_datos.lessons l ON s.id = l.shift_id
 GROUP BY 
     s.id, s.starting_time, s.end_time
 ORDER BY 
