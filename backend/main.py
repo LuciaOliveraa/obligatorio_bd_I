@@ -9,7 +9,6 @@ from lessons import lessonsRoutes
 from enrollments import enrollmentsRoutes
 from reports import reportsRoutes
 
-
 app = Flask(__name__)
 CORS(app, origins='http://localhost:5173')
 

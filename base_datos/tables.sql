@@ -7,7 +7,7 @@ CREATE DATABASE `base_datos` DEFAULT CHARACTER SET utf8 COLLATE utf8_spanish_ci;
 CREATE TABLE base_datos.activities(
     id integer auto_increment not null,
     name varchar(20),
-    description varchar(50),
+    description varchar(100),
     age_min int(3),
     price numeric(10) not null,
     PRIMARY KEY (id)
@@ -16,7 +16,7 @@ CREATE TABLE base_datos.activities(
 CREATE TABLE base_datos.equipment(
     id integer auto_increment not null,
     activity_id integer,
-    description varchar(50),
+    description varchar(100),
     price numeric(10),
     FOREIGN KEY (activity_id) REFERENCES base_datos.activities(id) ON DELETE SET NULL,
     PRIMARY KEY (id)
