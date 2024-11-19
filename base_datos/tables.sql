@@ -84,7 +84,7 @@ CREATE TABLE base_datos.rent(
     date date not null,
     FOREIGN KEY (student_ci) REFERENCES base_datos.students(ci) ON DELETE CASCADE,
     FOREIGN KEY (equipment_id) REFERENCES base_datos.equipment(id) ON DELETE CASCADE,
-    PRIMARY KEY (student_ci, equipment_id)
+    PRIMARY KEY (student_ci, equipment_id, date)
 );
 
 CREATE TABLE base_datos.enrollments(
