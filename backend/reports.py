@@ -1,5 +1,7 @@
 from flask import jsonify, request
 from config import get_db_connection
+from datetime import datetime, timedelta
+from mysql.connector import Error
 
 db = get_db_connection()
 
@@ -19,7 +21,17 @@ def reportsRoutes(app):
 
             for key, query in queries.items():
                 cursor.execute(query)
-                reports[key] = cursor.fetchall()
+                #reports[key] = cursor.fetchall()
+                result = cursor.fetchall()
+
+                for row in result:
+                    for column, value in row.items():
+                        if isinstance(value, datetime):
+                            row[column] = value.isoformat()  
+                        elif isinstance(value, timedelta):
+                            row[column] = str(value)
+
+                reports[key] = result
 
             return jsonify(reports), 200
 
@@ -58,8 +70,16 @@ def reportsRoutes(app):
         try:
             cursor = db.cursor(dictionary=True)
             cursor.execute("SELECT * FROM shifts_with_most_classes")
-            result = cursor.fetchall()
-            return jsonify(result), 200
+            results = cursor.fetchall()
+
+            for shift in results:
+                for key, value in shift.items():
+                    if isinstance(value, datetime):
+                        shift[key] = value.isoformat()  
+                    elif isinstance(value, timedelta):
+                        shift[key] = str(value)
+
+            return jsonify(results), 200
         except Error as error:
             return jsonify({"error": str(error)}), 500
         finally:

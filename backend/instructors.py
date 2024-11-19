@@ -1,5 +1,7 @@
 from flask import jsonify, request
 from config import get_db_connection
+from mysql.connector import Error
+import json
 
 db = get_db_connection()
 
@@ -8,8 +10,19 @@ def getInstructor(id):
             cursor = db.cursor(dictionary=True)
             cursor.execute("SELECT * FROM instructors where ci=%s", (id,))
             instructor = cursor.fetchone()
-            lessons = getInstructorLessons(id)
-            return jsonify(instructor), lessons, 200
+
+            if not instructor:
+                return jsonify({"error": "Instructor not found"}), 404
+
+            lessons_response = getInstructorLessons(id)
+            lessons = lessons_response[0].get_json()
+            
+            response = {
+                "instructor": instructor,
+                "lessons": lessons
+            }
+
+            return jsonify(response), 200
         except Error as error:
             return jsonify({"error": str(error)}), 500
         finally:
@@ -33,7 +46,7 @@ def instructorsRoutes(app):
     def getInstructorLessons(id):
         try :
             cursor = db.cursor(dictionary=True)
-            cursor.execute("SELECT * FROM enrollments where instructor_ci=%s", (id,))
+            cursor.execute("SELECT * FROM lessons where instructor_ci=%s", (id,))
             instructorLessons = cursor.fetchall()
             return jsonify(instructorLessons), 200
         except Error as error:
@@ -48,8 +61,18 @@ def instructorsRoutes(app):
             cursor = db.cursor(dictionary=True)
             cursor.execute("SELECT * FROM instructors where ci=%s", (id,))
             instructor = cursor.fetchone()
-            lessons = getInstructorLessons(id)
-            return jsonify(instructor), lessons, 200
+            if not instructor:
+                return jsonify({"error": "Instructor not found"}), 404
+
+            lessons_response = getInstructorLessons(id)
+            lessons = lessons_response[0].get_json()
+            
+            response = {
+                "instructor": instructor,
+                "lessons": lessons
+            }
+
+            return jsonify(response), 200
         except Error as error:
             return jsonify({"error": str(error)}), 500
         finally:
@@ -80,7 +103,7 @@ def instructorsRoutes(app):
     def deleteInstructor(id):
         cursor = db.cursor(dictionary=True)
         try:
-            cursor.execute("DELETE FROM instructor WHERE ci = %s", (id,))
+            cursor.execute("DELETE FROM instructors WHERE ci = %s", (id,))
             db.commit()
             return jsonify({"message": "Instructor deleted successfully"})
         except Error as error:

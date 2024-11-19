@@ -1,5 +1,6 @@
 from flask import jsonify, request
 from config import get_db_connection
+from mysql.connector import Error
 from students import getStudent
 from instructors import getInstructor
 

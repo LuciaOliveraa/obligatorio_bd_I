@@ -1,5 +1,7 @@
 from flask import jsonify, request
 from config import get_db_connection
+from datetime import datetime, timedelta, time
+from mysql.connector import Error
 
 db = get_db_connection()
 
@@ -8,14 +10,29 @@ def enrollmentsRoutes(app):
     def getAllEnrollments():
         try:
             cursor = db.cursor(dictionary=True)
-            cursor.execute("SELECT * FROM enrollments union enrollments_without_equipment")
-            lessons = cursor.fetchall()
-            cursor.close()
-            return jsonify(lessons), 200
+            cursor.execute("SELECT * FROM enrollments")
+            enrollments = cursor.fetchall()
+            return jsonify(enrollments), 200
         except Error as error:
             return jsonify({"error": str(error)}), 500
         finally:
             cursor.close()
+
+        @app.route("/enrollments/<int:id>", methods=['GET'])
+        def getEnrollmentsByStudent():
+            try:
+                cursor = db.cursor(dictionary=True)
+                cursor.execute("SELECT * FROM enrollments WHERE student_ci=%s", (id,))
+                enrollments = cursor.fetchall()
+
+                if not enrollments:
+                    return jsonify({"error": "  Enrollments not found"}), 404
+
+                return jsonify(enrollments), 200
+            except Error as error:
+                return jsonify({"error": str(error)}), 500
+            finally:
+                cursor.close()
 
     @app.route("/enrollments/new/<int:id>", methods=['POST'])
     def postEnrollment(id):
@@ -26,11 +43,11 @@ def enrollmentsRoutes(app):
         try: 
             # Obtiene datos de la clase a la que se quiere inscribir
             cursor.execute("""
-                SELECT shifts.starting_time, shifts.end_time, lesson.capacity, 
+                SELECT shifts.starting_time, shifts.end_time, lessons.capacity, 
                     (SELECT COUNT(*) FROM enrollments WHERE lesson_id = %s) AS current_enrollments
-                FROM lesson
-                JOIN shifts ON lesson.shift_id = shifts.id
-                WHERE lesson.id = %s
+                FROM lessons
+                JOIN shifts ON lessons.shift_id = shifts.id
+                WHERE lessons.id = %s
             """, (lesson_id, lesson_id))
             lesson_data = cursor.fetchone()
 
@@ -50,10 +67,11 @@ def enrollmentsRoutes(app):
             cursor.execute("""
                 SELECT shifts.starting_time, shifts.end_time 
                 FROM enrollments
-                JOIN lesson ON enrollments.lesson_id = lesson.id
-                JOIN shifts ON lesson.shift_id = shifts.id
+                JOIN lessons ON enrollments.lesson_id = lessons.id
+                JOIN shifts ON lessons.shift_id = shifts.id
                 WHERE enrollments.student_ci = %s AND enrollments.date = %s
             """, (id, date))
+
             existing_inscriptions = cursor.fetchall()
 
             # Verifica solapamiento de horarios
@@ -69,7 +87,7 @@ def enrollmentsRoutes(app):
             cursor.execute("INSERT INTO enrollments (student_ci, lesson_id, date) VALUES (%s, %s, %s)", 
                         (id, lesson_id, date))
             db.commit()
-            return jsonify({"message": "Student registered successfully"}), 201
+            return jsonify({"message": "Student successfully enrolled"}), 201
 
         except Error as error:
             db.rollback()

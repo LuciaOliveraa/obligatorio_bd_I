@@ -1,6 +1,7 @@
 from flask import jsonify, request
 from config import get_db_connection
 from datetime import datetime, timedelta
+from mysql.connector import Error
 
 db = get_db_connection()
 
@@ -31,6 +32,9 @@ def shiftsRoutes(app):
             cursor = db.cursor(dictionary=True)
             cursor.execute("SELECT * FROM shifts where id=%s", (id,))
             shift = cursor.fetchone()
+
+            if not shift:
+                    return jsonify({"error": "  Shift not found"}), 404
 
             for key, value in shift.items():
                     if isinstance(value, datetime):

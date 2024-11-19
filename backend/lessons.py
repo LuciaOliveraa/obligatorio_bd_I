@@ -1,6 +1,7 @@
 from flask import jsonify, request
 from config import get_db_connection
-from datetime import datetime
+from datetime import datetime, timedelta, time
+from mysql.connector import Error
 
 db = get_db_connection()
 
@@ -22,8 +23,12 @@ def lessonsRoutes(app):
     def getLesson(id):
         try:
             cursor = db.cursor(dictionary=True)
-            cursor.execute("SELECT * FROM lesson where id=%s", (id,))
+            cursor.execute("SELECT * FROM lessons where id=%s", (id,))
             lesson = cursor.fetchone()
+
+            if not lesson:
+                    return jsonify({"error": "  Lesson not found"}), 404
+
             return jsonify(lesson), 200
         except Error as error:
             return jsonify({"error": str(error)}), 500
@@ -33,10 +38,10 @@ def lessonsRoutes(app):
 
 
     @app.route("/lessons/activity/<int:id>", methods=['GET'])
-    def getLessonByActivity(id):
+    def getLessonsByActivity(id):
         try:
             cursor = db.cursor(dictionary=True)
-            cursor.execute("SELECT * FROM lesson where activity_id=%s", (id,))
+            cursor.execute("SELECT * FROM lessons where activity_id=%s", (id,))
             lessons = cursor.fetchall()
             return jsonify(lessons), 200
         except Error as error:
@@ -62,8 +67,13 @@ def lessonsRoutes(app):
             if not shift_data:
                 return jsonify({"error": "Shift not found"}), 404
             
-            shift_start = shift_data['start_time']
+            shift_start = shift_data['starting_time']
             shift_end = shift_data['end_time']
+
+            if isinstance(shift_start, timedelta):
+                shift_start = (datetime.min + shift_start).time()
+            if isinstance(shift_end, timedelta):
+                shift_end = (datetime.min + shift_end).time()
 
             # Verifica si la hora actual está dentro del rango del turno.
             if shift_start <= current_time <= shift_end:
@@ -73,7 +83,7 @@ def lessonsRoutes(app):
             # Verifica si el instructor ya está asignado a otra clase en el mismo turno
             cursor.execute("""
                 SELECT id 
-                FROM lesson 
+                FROM lessons 
                 WHERE instructor_ci = %s AND shift_id = %s AND id != %s
             """, (instructor_ci, shift_id, id))
             
@@ -83,7 +93,7 @@ def lessonsRoutes(app):
                 return jsonify({"error": "Instructor is already teaching another class in this shift"}), 409
 
 
-            cursor.execute("UPDATE instructors SET instructor_ci = %s, activity_id = %s, shift_id = %s, capacity = %s WHERE id = %s",
+            cursor.execute("UPDATE lessons SET instructor_ci = %s, activity_id = %s, shift_id = %s, capacity = %s WHERE id = %s",
                         (instructor_ci, activity_id, shift_id, capacity, id))
             db.commit()
             return jsonify({"message": "Lesson updated successfully"}), 201

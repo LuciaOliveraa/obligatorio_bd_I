@@ -9,11 +9,25 @@ db = get_db_connection()
 def getStudent(id):
         try:
             cursor = db.cursor(dictionary=True)
-            cursor.execute("SELECT * FROM students where ci=%s", (id,))
+            cursor.execute("SELECT * FROM students WHERE ci=%s", (id,))
             student = cursor.fetchone()
-            enrollments = getStudentEnrollments(id)
-            rents = getStudentRents(id)
-            return jsonify(student),enrollments, rents, 200
+
+            if not student:
+                return jsonify({"error": "Student not found"}), 404
+
+            enrollments_response = getStudentEnrollments(id) 
+            rents_response = getStudentRents(id) 
+
+            enrollments = enrollments_response[0].get_json() 
+            rents = rents_response[0].get_json()  
+
+            response = {
+                "student": student,
+                "enrollments": enrollments,
+                "rents": rents
+            }
+
+            return jsonify(response), 200
         except Error as error:
             return jsonify({"error": str(error)}), 500
         finally:
@@ -90,26 +104,36 @@ def studentsRoutes(app):
             cursor.close()
         
 
-    @app.route("/students/register", methods=['POST'])
-    def postStudent():
-        cursor = db.cursor(dictionary=True)
-        ci = request.json['ci']
-        name = request.json['name']
-        lastname = request.json['lastname']
-        birthdate = request.json['birthdate']
-        email = request.json['email']
-        phone_number = request.json['phone_number']
+    # @app.route("/students/register", methods=['POST'])
+    # def postStudent():
+    #     cursor = db.cursor(dictionary=True)
+    #     try:
+    #         if not request.json:
+    #             return jsonify({"error": "Missing JSON in request"}), 400
+            
+    #         ci = request.json.get('ci')
+    #         name = request.json.get('name')
+    #         lastname = request.json.get('lastname')
+    #         birthdate = request.json.get('birthdate')
+    #         email = request.json.get('email')
+    #         phone_number = request.json.get('phone_number')
 
-        try:
-            cursor.execute("INSERT INTO students (ci, name, lastname, birthdate, email, phone_number) VALUES (%s, %s, %s, %s, %s, %s)", 
-                        (ci, name, lastname, birthdate, email, phone_number))
-            db.commit()
-            return jsonify({"message": "Student registered successfully"}), 201
-        except Error as error:
-            db.rollback()
-            return jsonify({"error": str(error)}), 500
-        finally:
-            cursor.close()
+    #         if not all([ci, name, lastname, birthdate, email, phone_number]):
+    #             return jsonify({"error": "Missing required fields"}), 400
+            
+    #         cursor.execute(
+    #             "INSERT INTO students (ci, name, lastname, birthdate, email, phone_number) VALUES (%s, %s, %s, %s, %s, %s)", 
+    #             (ci, name, lastname, birthdate, email, phone_number)
+    #         )
+    #         db.commit()
+    #         return jsonify({"message": "Student registered successfully"}), 201
+
+    #     except Error as error:
+    #         db.rollback()
+    #         return jsonify({"error": str(error)}), 500
+    #     finally:
+    #         cursor.close()
+
 
     @app.route("/students/delete/<int:id>", methods=['DELETE'])
     def deleteStudent(id):
@@ -130,12 +154,11 @@ def studentsRoutes(app):
         name = request.json['name']
         lastname = request.json['lastname']
         birthdate = request.json['birthdate']
-        email = request.json['email']
         phone_number = request.json['phone_number']
 
         try:
-            cursor.execute("UPDATE students SET name = %s, lastname = %s, birthdate = %s, email = %s, phone_number = %s WHERE ci = %s",
-                        (name, lastname, birthdate, email, phone_number, id))
+            cursor.execute("UPDATE students SET name = %s, lastname = %s, birthdate = %s, phone_number = %s WHERE ci = %s",
+                        (name, lastname, birthdate, phone_number, id))
             db.commit()
             return jsonify({"message": "Student updated successfully"}), 200
         except Error as error:
