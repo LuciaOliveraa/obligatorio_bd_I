@@ -95,3 +95,4 @@ CREATE TABLE base_datos.enrollments(
     FOREIGN KEY (lesson_id) REFERENCES base_datos.lessons(id) ON DELETE CASCADE,
     PRIMARY KEY (student_ci, lesson_id, date)
 );
+

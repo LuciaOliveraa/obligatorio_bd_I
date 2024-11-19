@@ -33,6 +33,29 @@ def getStudent(id):
         finally:
             cursor.close()
 
+def getStudentEnrollments(id):
+        try:
+            cursor = db.cursor(dictionary=True)
+            cursor.execute("SELECT * FROM enrollments where student_ci=%s", (id,))
+            studentEnrollments = cursor.fetchall()
+            return jsonify(studentEnrollments), 200
+        except Error as error:
+            return jsonify({"error": str(error)}), 500
+        finally:
+            cursor.close()
+        
+
+def getStudentRents(id):
+    try:
+        cursor = db.cursor(dictionary=True)
+        cursor.execute("SELECT * FROM rent where student_ci=%s", (id,))
+        studentRents = cursor.fetchall()
+        return jsonify(studentRents), 200
+    except Error as error:
+        return jsonify({"error": str(error)}), 500
+    finally:
+        cursor.close()
+
 
 def studentsRoutes(app):
     @app.route("/students", methods=['GET'])
@@ -46,6 +69,7 @@ def studentsRoutes(app):
             return jsonify({"error": str(error)}), 500
         finally:
             cursor.close()
+
 
     @app.route("/students/<int:id>", methods=['GET'])
     def getStudent(id):
@@ -104,35 +128,35 @@ def studentsRoutes(app):
             cursor.close()
         
 
-    # @app.route("/students/register", methods=['POST'])
-    # def postStudent():
-    #     cursor = db.cursor(dictionary=True)
-    #     try:
-    #         if not request.json:
-    #             return jsonify({"error": "Missing JSON in request"}), 400
+    @app.route("/students/register", methods=['POST'])
+    def postStudent():
+        cursor = db.cursor(dictionary=True)
+        try:
+            if not request.json:
+                return jsonify({"error": "Missing JSON in request"}), 400
             
-    #         ci = request.json.get('ci')
-    #         name = request.json.get('name')
-    #         lastname = request.json.get('lastname')
-    #         birthdate = request.json.get('birthdate')
-    #         email = request.json.get('email')
-    #         phone_number = request.json.get('phone_number')
+            ci = request.json.get('ci')
+            name = request.json.get('name')
+            lastname = request.json.get('lastname')
+            birthdate = request.json.get('birthdate')
+            email = request.json.get('email')
+            phone_number = request.json.get('phone_number')
 
-    #         if not all([ci, name, lastname, birthdate, email, phone_number]):
-    #             return jsonify({"error": "Missing required fields"}), 400
+            if not all([ci, name, lastname, birthdate, email, phone_number]):
+                return jsonify({"error": "Missing required fields"}), 400
             
-    #         cursor.execute(
-    #             "INSERT INTO students (ci, name, lastname, birthdate, email, phone_number) VALUES (%s, %s, %s, %s, %s, %s)", 
-    #             (ci, name, lastname, birthdate, email, phone_number)
-    #         )
-    #         db.commit()
-    #         return jsonify({"message": "Student registered successfully"}), 201
+            cursor.execute(
+                "INSERT INTO students (ci, name, lastname, birthdate, email, phone_number) VALUES (%s, %s, %s, %s, %s, %s)", 
+                (ci, name, lastname, birthdate, email, phone_number)
+            )
+            db.commit()
+            return jsonify({"message": "Student registered successfully"}), 201
 
-    #     except Error as error:
-    #         db.rollback()
-    #         return jsonify({"error": str(error)}), 500
-    #     finally:
-    #         cursor.close()
+        except Error as error:
+            db.rollback()
+            return jsonify({"error": str(error)}), 500
+        finally:
+            cursor.close()
 
 
     @app.route("/students/delete/<int:id>", methods=['DELETE'])

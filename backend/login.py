@@ -1,20 +1,20 @@
 from flask import jsonify, request
 from config import get_db_connection
-from mysql.connector import Error
 from students import getStudent
 from instructors import getInstructor
+from mysql.connector import Error
 
 db = get_db_connection()
 
 def loginRoutes(app):
-    @app.route('/login', methods=['POST'])
-    def login(user):
+    @app.route('/login', methods=['GET'])
+    def login():
         cursor = db.cursor(dictionary=True)
         user = request.json['user']
         password = request.json['password']
 
         try:
-            cursor.execute("SELECT * FROM login WHERE user = %s", (user))
+            cursor.execute("SELECT * FROM login WHERE user = %s", (user,))
             login_data = cursor.fetchone()
             
             # Corroboro errores base.
@@ -35,15 +35,19 @@ def loginRoutes(app):
             # Defino return según el tipo de usuario
 
             if user_termination == 'correo.ucu.edu.uy':
-                cursor.execute("SELECT ci FROM students WHERE email = %s", (user))
-                id = cursor.fetchone()
-                return getStudent(id), 200
+                cursor.execute("SELECT ci FROM students WHERE email = %s", (user,))
+                id_data = cursor.fetchone()
+                if id_data:
+                    ci = id_data['ci']  
+                    return getStudent(ci)
             
 
             if user_termination == 'ucu.edu.uy':
-                cursor.execute("SELECT ci FROM instructors WHERE email = %s", (user))
-                id = cursor.fetchone()
-                return getInstructor(id), 200
+                cursor.execute("SELECT ci FROM instructors WHERE email = %s", (user,))
+                id_data = cursor.fetchone()
+                if id_data:
+                    ci = id_data['ci']  
+                return getInstructor(ci)
             
 
             if user_termination == 'admin.ucu.edu.uy':
@@ -81,7 +85,7 @@ def loginRoutes(app):
                 cursor.execute("INSERT INTO students(ci, name, lastname, birthdate, email, phone_number) VALUES (%s, %s, %s, %s, %s, %s)", 
                                 (ci, name, lastname, birthdate, user, phone_number))
                 db.commit()
-                return getStudent(ci), 200
+                return getStudent(ci)
             
 
             if user_termination == 'ucu.edu.uy':
@@ -89,7 +93,7 @@ def loginRoutes(app):
                 cursor.execute("INSERT INTO instructors(ci, name, lastname, email) VALUES (%s, %s, %s, %s)", 
                                 (ci, name, lastname, user))
                 db.commit()
-                return getInstructor(ci), 200
+                return getInstructor(ci)
         
 
             if user_termination == 'admin.ucu.edu.uy':
@@ -112,23 +116,25 @@ def loginRoutes(app):
         cursor = db.cursor(dictionary=True)
 
         try:
-            cursor.execute("SELECT email FROM students WHERE ci = %s", (ci))
-            student_email = cursor.fetchone()
+            cursor.execute("SELECT email FROM students WHERE ci = %s", (ci,))
+            student = cursor.fetchone()
+            student_email = student['email'] if student else None
 
-            cursor.execute("SELECT email FROM instructors WHERE ci = %s", (ci))
-            instructor_email = cursor.fetchone()
+            cursor.execute("SELECT email FROM instructors WHERE ci = %s", (ci,))
+            instructor = cursor.fetchone()
+            instructor_email = instructor['email'] if instructor else None
 
             if student_email:
-                cursor.execute("DELETE * FROM students WHERE ci = %s", (ci))
-                cursor.execute("DELETE * FROM login WHERE user = %s", (student_email))
+                cursor.execute("DELETE FROM students WHERE ci = %s", (ci,))
+                cursor.execute("DELETE FROM login WHERE user = %s", (student_email,))
                 db.commit()
-                return jsonify({"Result":"student deleted successfully"}), 200
+                return jsonify({"Result":"student deleted successfully"})
             
             if instructor_email:
-                cursor.execute("DELETE * FROM instructors WHERE ci = %s", (ci))
-                cursor.execute("DELETE * FROM login WHERE user = %s", (instructor_email))
+                cursor.execute("DELETE FROM instructors WHERE ci = %s", (ci,))
+                cursor.execute("DELETE FROM login WHERE user = %s", (instructor_email,))
                 db.commit()
-                return jsonify({"Result":"instructor deleted successfully"}), 200
+                return jsonify({"Result":"instructor deleted successfully"})
             else:
                 return jsonify({"Result":"user not found"})
 
