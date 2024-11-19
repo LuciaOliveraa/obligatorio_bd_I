@@ -11,8 +11,28 @@ import Equipment from "../src/pages/Equipment";
 import HomePage from "../src/pages/HomePage";
 import Schedule from "../src/pages/Schedule";
 import Summary from "../src/pages/Summary";
+import { UserPage } from "./pages/UserPage";
 
 function App() {
+  const user = {
+    name: "Julián",
+    age: 25,
+    email: "julian.bevc05@correo.ucu.com",
+    clase: ["ski", "patines", "moto"],
+    horario: "Vespertino",
+    fecha: "23/04/14",
+  };
+
+  const instructor = {
+    ci: 54785012,
+    name: "Susana",
+    apellido: "Horia",
+    email: "julian.bevc05@gmail.com",
+    clasesDictando: "Ski",
+    horario: "matutino",
+    fecha: "12/06/24",
+  };
+
   return (
     <>
       <Router>
@@ -25,6 +45,10 @@ function App() {
             <Route path="/equipment" element={<Equipment></Equipment>} />
             <Route path="/summary" element={<Summary></Summary>} />
             <Route path="/admin" element={<Administration></Administration>} />
+            <Route
+              path="/user"
+              element={<UserPage user={instructor}></UserPage>}
+            />
           </Routes>
         </div>
       </Router>
