@@ -1,6 +1,6 @@
 .custom-card {
   width: 250px;
-  height: 350px;
+  height: 380px;
   transition: 0.5s;
   filter: grayscale();
 }
@@ -16,3 +16,4 @@
   overflow-wrap: break-word;
   white-space: normal;
 }
+
