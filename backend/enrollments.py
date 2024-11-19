@@ -1,0 +1,113 @@
+from flask import jsonify, request
+from config import get_db_connection
+from datetime import datetime, timedelta, time
+from mysql.connector import Error
+
+db = get_db_connection()
+
+def enrollmentsRoutes(app):
+    @app.route("/enrollments", methods=['GET'])
+    def getAllEnrollments():
+        try:
+            cursor = db.cursor(dictionary=True)
+            cursor.execute("SELECT * FROM enrollments")
+            enrollments = cursor.fetchall()
+            return jsonify(enrollments), 200
+        except Error as error:
+            return jsonify({"error": str(error)}), 500
+        finally:
+            cursor.close()
+
+        @app.route("/enrollments/<int:id>", methods=['GET'])
+        def getEnrollmentsByStudent():
+            try:
+                cursor = db.cursor(dictionary=True)
+                cursor.execute("SELECT * FROM enrollments WHERE student_ci=%s", (id,))
+                enrollments = cursor.fetchall()
+
+                if not enrollments:
+                    return jsonify({"error": "  Enrollments not found"}), 404
+
+                return jsonify(enrollments), 200
+            except Error as error:
+                return jsonify({"error": str(error)}), 500
+            finally:
+                cursor.close()
+
+    @app.route("/enrollments/new/<int:id>", methods=['POST'])
+    def postEnrollment(id):
+        cursor = db.cursor(dictionary=True)
+        lesson_id = request.json['lesson_id']
+        date = request.json['date']
+
+        try: 
+            # Obtiene datos de la clase a la que se quiere inscribir
+            cursor.execute("""
+                SELECT shifts.starting_time, shifts.end_time, lessons.capacity, 
+                    (SELECT COUNT(*) FROM enrollments WHERE lesson_id = %s) AS current_enrollments
+                FROM lessons
+                JOIN shifts ON lessons.shift_id = shifts.id
+                WHERE lessons.id = %s
+            """, (lesson_id, lesson_id))
+            lesson_data = cursor.fetchone()
+
+            if not lesson_data:
+                return jsonify({"error": "Lesson not found"}), 404
+            
+            new_start_time = lesson_data['starting_time']
+            new_end_time = lesson_data['end_time']
+            capacity = lesson_data['capacity']
+            current_enrollments = lesson_data['current_enrollments']
+
+            # Verificaa capacidad suficiente para inscripción
+            if current_enrollments >= capacity:
+                return jsonify({"error": "Lesson capacity exceeded"}), 403
+
+            # Inscripciones existentes del estudiante para el mismo día
+            cursor.execute("""
+                SELECT shifts.starting_time, shifts.end_time 
+                FROM enrollments
+                JOIN lessons ON enrollments.lesson_id = lessons.id
+                JOIN shifts ON lessons.shift_id = shifts.id
+                WHERE enrollments.student_ci = %s AND enrollments.date = %s
+            """, (id, date))
+
+            existing_inscriptions = cursor.fetchall()
+
+            # Verifica solapamiento de horarios
+            for shift in existing_inscriptions:
+                existing_start_time = shift['starting_time']
+                existing_end_time = shift['end_time']
+                
+                if not (new_end_time <= existing_start_time or new_start_time >= existing_end_time):
+                    return jsonify({"error": "Schedule conflict: already enrolled in another class at the same time"}), 409
+
+
+            # Inscripción
+            cursor.execute("INSERT INTO enrollments (student_ci, lesson_id, date) VALUES (%s, %s, %s)", 
+                        (id, lesson_id, date))
+            db.commit()
+            return jsonify({"message": "Student successfully enrolled"}), 201
+
+        except Error as error:
+            db.rollback()
+            return jsonify({"error": str(error)}), 500
+        finally:
+            cursor.close()
+
+
+    @app.route("/enrollments/delete/<int:id>", methods=['DELETE'])
+    def deleteEnrollment(id):
+        cursor = db.cursor(dictionary=True)
+        lesson_id = request.json['lesson_id']
+        date = request.json['date']
+
+        try:
+            cursor.execute("DELETE FROM enrollments where student_ci = %s AND lesson_id = %s AND date = %s", (id, lesson_id, date))
+            db.commit()
+            return jsonify({"message": "Enrollment deleted successfully"}), 201
+        except Error as error:
+            db.rollback()
+            return jsonify({"error": str(error)}), 500
+        finally:
+            cursor.close()
