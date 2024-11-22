@@ -2,6 +2,7 @@ import style from "./Instructor.module.css";
 import { TbPencil as Pencil } from "react-icons/tb";
 import { GoTrash as Trash } from "react-icons/go";
 import { EditModalInstructors } from "../EditModalInstructors";
+import { useState } from "react";
 
 export default function Instructor({ ci, name, lastname }) {
   const [modalVisible, setModalVisible] = useState(false);

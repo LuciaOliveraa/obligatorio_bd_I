@@ -2,6 +2,7 @@ import style from "./Student.module.css";
 import { TbPencil as Pencil } from "react-icons/tb";
 import { GoTrash as Trash } from "react-icons/go";
 import { EditModalStudent } from "../EditModalStudent";
+import { useState } from "react";
 
 export default function Student({
   ci,
