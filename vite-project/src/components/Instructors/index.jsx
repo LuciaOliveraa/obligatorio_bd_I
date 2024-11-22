@@ -19,7 +19,7 @@ export default function Instructors() {
 
   useEffect(() => {
     fetchInstructors();
-    console.log("print feed: ", feed);
+    console.log("print instructors: ", instructors);
   }, []);
 
   return (
