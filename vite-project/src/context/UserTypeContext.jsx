@@ -17,7 +17,7 @@ export const UserTypeProvider = ({ children }) => {
 
     // export function
     const updateUserType = (newType) => {
-        setUser(newType);
+        setUserType(newType);
         localStorage.setItem('userType', JSON.stringify(newType));
         
         return newType;
