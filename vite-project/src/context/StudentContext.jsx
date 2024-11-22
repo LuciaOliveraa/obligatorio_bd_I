@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import { createContext, useContext, useEffect } from "react";
 
-const UserContext = createContext();
+const StudentContext = createContext();
 
-export function useUser() {
-    return useContext(UserContext);
+export function useStudent() {
+    return useContext(StudentContext);
 }
 
-export const UserProvider = ({ children }) => {
+export const StudentProvider = ({ children }) => {
     const initialState = {
         ci: '',
         name: '',
@@ -19,14 +19,14 @@ export const UserProvider = ({ children }) => {
         rent: []
     }
 
-    const [user, setUser] = useState(() => {
+    const [student, setStudent] = useState(() => {
         const storedUser = localStorage.getItem("user");
-        return storedUser ? JSON.parse(storedAuth) : initialState;
+        return storedUser ? JSON.parse(storedUser) : initialState;
     });
 
     // export function
-    const updateUser = (newUser) => {
-        setUser(newUser);
+    const updateStudent = (newUser) => {
+        setStudent(newUser);
         localStorage.setItem('user', JSON.stringify(newUser));
     }
 
@@ -47,19 +47,19 @@ export const UserProvider = ({ children }) => {
             rent: user?.rent
         };
 
-        updateUser(provisionalUser);
+        updateStudent(provisionalUser);
     }
 
     // export function
     const removeEnrollment = (exEnrollment) => {
         const newEnrollmentsList = user?.enrollments.filter((item) => item.id != exEnrollment.id);
-        updateFriends(newEnrollmentsList);
+        updateEnrollments(newEnrollmentsList);
     }
 
     // export function
     const addEnrollment = (newEnrollment) => {
         const newEnrollmentsList = [...user?.enrollments, newEnrollment];
-        updateFriends(newEnrollmentsList);
+        updateEnrollments(newEnrollmentsList);
     }
 
     const updateRent = (newRentList) => {
@@ -74,12 +74,12 @@ export const UserProvider = ({ children }) => {
             rent: newRentList
         };
 
-        updateUser(provisionalUser);
+        updateStudent(provisionalUser);
     }
 
     // export function
     const removeRent = (exRent) => {
-        const newRentsList = user?.rent.filter((item) => item != exEnrollment);
+        const newRentsList = user?.rent.filter((item) => item != exRent);
         updateRent(newRentsList);
     }
 
@@ -91,11 +91,11 @@ export const UserProvider = ({ children }) => {
 
 
     useEffect(() => {
-        console.log("User actualizado: ", user);
-    }, [user]);
+        console.log("User actualizado: ", student);
+    }, [student]);
 
     return (
-        <UserContext.Provider value={{user, updateUser, logOut, removeEnrollment, addEnrollment, removeRent, addRent}}>
+        <UserContext.Provider value={{student, updateStudent, logOut, removeEnrollment, addEnrollment, removeRent, addRent}}>
             {children}
         </UserContext.Provider>
     );

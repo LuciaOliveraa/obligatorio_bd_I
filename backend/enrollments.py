@@ -18,21 +18,40 @@ def enrollmentsRoutes(app):
         finally:
             cursor.close()
 
-        @app.route("/enrollments/<int:id>", methods=['GET'])
-        def getEnrollmentsByStudent():
-            try:
-                cursor = db.cursor(dictionary=True)
-                cursor.execute("SELECT * FROM enrollments WHERE student_ci=%s", (id,))
-                enrollments = cursor.fetchall()
+    @app.route("/enrollments/<int:id>", methods=['GET'])
+    def getEnrollmentsByStudent():
+        try:
+            cursor = db.cursor(dictionary=True)
+            cursor.execute("SELECT * FROM enrollments WHERE student_ci=%s", (id,))
+            enrollments = cursor.fetchall()
 
-                if not enrollments:
-                    return jsonify({"error": "  Enrollments not found"}), 404
+            if not enrollments:
+                return jsonify({"error": "  Enrollments not found"}), 404
 
-                return jsonify(enrollments), 200
-            except Error as error:
-                return jsonify({"error": str(error)}), 500
-            finally:
-                cursor.close()
+            return jsonify(enrollments), 200
+        except Error as error:
+            return jsonify({"error": str(error)}), 500
+        finally:
+            cursor.close()
+
+    @app.route("/enrollments/<int:id>", methods=['GET'])
+    def getEnrollmentsByLessonDate():
+        try:
+            cursor = db.cursor(dictionary=True)
+            lesson_id = request.json['lesson_id']
+            date = request.json['date']
+
+            cursor.execute("SELECT enrollments.students_ci, students.name, students.lastname FROM enrollments JOIN students on enrollments.students_ci = students.ci WHERE lesson_id=%s AND date=%s" , (lesson_id, date))
+            enrollments = cursor.fetchall()
+
+            if not enrollments:
+                return jsonify({"error": "  Enrollments not found"}), 404
+
+            return jsonify(enrollments), 200
+        except Error as error:
+            return jsonify({"error": str(error)}), 500
+        finally:
+            cursor.close()
 
     @app.route("/enrollments/new/<int:id>", methods=['POST'])
     def postEnrollment(id):
