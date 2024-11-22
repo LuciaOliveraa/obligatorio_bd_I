@@ -5,7 +5,7 @@ import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { useStudent } from "../../context/StudentContext";
 
 export default function Login() {
-  const { user, updateStudent } = useUser();
+  const { user, updateStudent } = useStudent();
   const [show, setShow] = useState(false);
 
   return (
