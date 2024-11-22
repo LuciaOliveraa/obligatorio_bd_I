@@ -17,7 +17,7 @@ import { EditModalLessons } from "../../components/EditModalLessons";
 
 export default function Administration() {
   const [visible, setVisible] = useState(false);
-  const [visibleActivities, setVisibleActivities] = useState(false);
+//  const [visibleActivities, setVisibleActivities] = useState(false);
   const [visibleInstructors, setVisibleInstructors] = useState(false);
   const [visibleShifts, setVisibleShifts] = useState(false);
   const [visibleLessons, setVisibleLessons] = useState(false);
@@ -31,15 +31,15 @@ export default function Administration() {
         <Instructors
           setVisibleInstructors={setVisibleInstructors}
         ></Instructors>
-        <Activities setVisibleActivities={setVisibleActivities}></Activities>
+        <Activities></Activities>
         <Shifts setVisibleShifts={setVisibleShifts}></Shifts>
         <Lessons setVisibleLessons={setVisibleLessons}></Lessons>
       </div>
 
       {visible && <EditModalStudent setVisible={setVisible} />}
-      {visibleActivities && (
+      {/* {visibleActivities && (
         <EditModalActivities setVisibleActivities={setVisibleActivities} />
-      )}
+      )} */}
       {visibleInstructors && (
         <EditModalInstructors setVisibleInstructors={setVisibleInstructors} />
       )}

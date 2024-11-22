@@ -4,7 +4,7 @@ import { IoIosAddCircleOutline as Add } from "react-icons/io";
 import { getActivities } from "../../services/activitiesService";
 import { useState, useEffect } from "react";
 
-export default function Activities({ setVisibleActivities }) {
+export default function Activities() {
   const [activities, setActivities] = useState([]); 
 
   const fetchActivities = async () => {
@@ -33,7 +33,6 @@ export default function Activities({ setVisibleActivities }) {
             ageMin={activity.age_min}
             price={activity.price}
             description={activity.description}
-            setVisibleActivities={setVisibleActivities}
           />
         ))}
       </div>
