@@ -15,7 +15,7 @@ export default function EquipmentCard({image,title}) {
                 <div class="card-content">
                     <p className='title'>{title}</p>
                 </div>
-                </div>
+            </div>
         </>
     )
 }

@@ -27,6 +27,17 @@ def getInstructor(id):
             return jsonify({"error": str(error)}), 500
         finally:
             cursor.close()
+
+def getInstructorLessons(id):
+        try :
+            cursor = db.cursor(dictionary=True)
+            cursor.execute("SELECT * FROM lessons where instructor_ci=%s", (id,))
+            instructorLessons = cursor.fetchall()
+            return jsonify(instructorLessons), 200
+        except Error as error:
+            return jsonify({"error": str(error)}), 500
+        finally:
+            cursor.close()
             
 
 def instructorsRoutes(app):

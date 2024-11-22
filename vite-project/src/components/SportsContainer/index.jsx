@@ -1,13 +1,15 @@
-import SportCard from "../SportCard"
+import SportCard from "../SportCard";
 import motorbikeImage from '../../assets/motorbike.png';
-import snowboardImage from '../../assets/skateboard.png'
-import skiImage from '../../assets/ski.png'
-import './SportsContainer.css'
+import snowboardImage from '../../assets/skateboard.png';
+import skiImage from '../../assets/ski.png';
+import './SportsContainer.css';
 import { getActivities } from "../../services/activitiesService";
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function SportsContainer() {
     const [activities, setActivities] = useState([]); 
+    const navigate = useNavigate();
 
     const activityImages = {
         "Moto de nieve": motorbikeImage,
@@ -37,6 +39,7 @@ export default function SportsContainer() {
                     image={activityImages[activity.name]}
                     title={activity.name}
                     description={activity.description}
+                    onClick={() => navigate(`/equipment/${activity.id}`)}
                 />
             ))}
         </div>

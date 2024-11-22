@@ -1,6 +1,8 @@
 import style from "./EditModalInstructors.module.css";
 
-export function EditModalInstructors({ setVisibleInstructors }) {
+export function EditModalInstructors({ setVisibleInstructors, currentValues }) {
+  const [formValues, setFormValues] = useState(currentValues);
+
   return (
     <div className={style.modal}>
       <div className={style.modalContent}>
