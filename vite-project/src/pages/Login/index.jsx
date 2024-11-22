@@ -2,10 +2,10 @@ import "./style.css";
 import ucuLogo from "../../assets/ucuLogo.png";
 import { useState } from "react";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
-import { useUser } from "../../context/StudentContext";
+import { useStudent } from "../../context/StudentContext";
 
 export default function Login() {
-  const { user, updateUser } = useUser();
+  const { user, updateStudent } = useUser();
   const [show, setShow] = useState(false);
 
   return (
