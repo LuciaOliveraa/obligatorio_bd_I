@@ -3,6 +3,8 @@ import Student from "../Student";
 import { IoMdAdd as Add } from "react-icons/io";
 import { useState } from "react";
 import { getStudents } from "../../services/studentsService";
+import { useEffect, useState } from "react";
+
 
 export default function Students({ setVisible }) {
   const [students, setStudents] = useState([]);
