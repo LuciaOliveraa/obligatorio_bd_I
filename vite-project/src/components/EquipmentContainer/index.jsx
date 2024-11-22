@@ -13,7 +13,7 @@ import './EquipmentContainer.css'
 export default function EquipmentContainer({ equipment }){
    
     const equipmentImages = {
-        "Ski (esquís, botas y bastones)" : completeKit,
+        "Set Ski (esquís, botas y bastones)" : completeKit,
         "Set snowboard (tabla y botas)" : halfKit,
         "Alquiler de moto de nieve (2 horas)": motorbikeImage,
         "Casco protector": helmetImage,
