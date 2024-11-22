@@ -1,10 +1,8 @@
 import "./Students.css";
 import Student from "../Student";
 import { IoMdAdd as Add } from "react-icons/io";
-import { useState } from "react";
 import { getStudents } from "../../services/studentsService";
 import { useEffect, useState } from "react";
-
 
 export default function Students({ setVisible }) {
   const [students, setStudents] = useState([]);
@@ -21,7 +19,7 @@ export default function Students({ setVisible }) {
 
   useEffect(() => {
     fetchStudents();
-    console.log("print students: ", feed);
+    console.log("print students: ", students);
   }, []);
 
   return (
