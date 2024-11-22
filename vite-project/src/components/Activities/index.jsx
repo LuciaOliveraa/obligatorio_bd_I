@@ -19,7 +19,7 @@ export default function Activities() {
 
   useEffect(() => {
     fetchActivities();
-  }, []);
+  }, [activities]);
 
 
   return (
@@ -29,6 +29,7 @@ export default function Activities() {
         {activities.map((activity) => (
           <Activity 
             key={activity.id}
+            id={activity.id}
             name={activity.name}
             ageMin={activity.age_min}
             price={activity.price}

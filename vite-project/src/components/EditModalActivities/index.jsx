@@ -1,5 +1,6 @@
 import style from "./EditModalActivities.module.css";
 import { useState } from "react";
+import { editActivity } from "../../services/activitiesService";
 
 export function EditModalActivities({ setVisible, currentValues }) {
   const [formValues, setFormValues] = useState(currentValues); 
@@ -12,6 +13,21 @@ export function EditModalActivities({ setVisible, currentValues }) {
     })
   }
   
+  const setActivity = async () => {
+    try {
+      const newActivity = {
+        age_min: Number(formValues.ageMin),
+        description: formValues.description,
+        name: formValues.name,
+        price: Number(formValues.price),
+      }
+      await editActivity(formValues.id, newActivity);
+      console.log(newActivity)
+      setVisible(false); 
+    } catch (error) {
+      console.error("Error editando la actividad", error);
+    }
+  }
   
   return (
     <div className={style.modal}>
@@ -24,7 +40,7 @@ export function EditModalActivities({ setVisible, currentValues }) {
               <input 
                 type="text" 
                 id="name"
-                value={formValues.name}
+                defaultValue={formValues.name}
                 onChange={handleInputChange}
               />
             </div>
@@ -32,8 +48,8 @@ export function EditModalActivities({ setVisible, currentValues }) {
               <label for="minAge"> Edad mín</label>
               <input 
                 type="number" 
-                id="minAge"
-                value={formValues.ageMin}
+                id="ageMin"
+                defaultValue={formValues.ageMin}
                 onChange={handleInputChange}
               />
             </div>
@@ -45,16 +61,16 @@ export function EditModalActivities({ setVisible, currentValues }) {
               <input 
                 type="number" 
                 id="price"
-                value={formValues.price}
+                defaultValue ={formValues.price}
                 onChange={handleInputChange}
               />
             </div>
             <div className={style.form}>
               <label for="description"> Descripción</label>
               <input 
-                type="text" 
-                id="description"
-                value={formValues.description}
+                type = "text" 
+                id = "description"
+                defaultValue ={formValues.description}
                 onChange={handleInputChange}
               />
             </div>
@@ -68,7 +84,7 @@ export function EditModalActivities({ setVisible, currentValues }) {
             >
               Cancelar{" "}
             </button>
-            <button className={style.saveEdit}>Guardar cambios </button>
+            <button className={style.saveEdit} onClick={setActivity}>Guardar cambios </button>
           </div>
         </div>
       </div>

@@ -4,6 +4,7 @@ import { EditModalActivities } from "../EditModalActivities";
 import { useState } from "react";
 
 export default function Activity({
+  id,
   name,
   description,
   ageMin,
@@ -40,7 +41,7 @@ export default function Activity({
       {modalVisible && 
         <EditModalActivities 
           setVisible={setModalVisible} 
-          currentValues={{ name, description, ageMin, price }}
+          currentValues={{ name, description, ageMin, price, id }}
         />
       }
     </div>
