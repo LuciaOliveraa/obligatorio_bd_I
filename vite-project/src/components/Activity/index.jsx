@@ -3,14 +3,8 @@ import { TbPencil as Pencil } from "react-icons/tb";
 import { EditModalActivities } from "../EditModalActivities";
 import { useState } from "react";
 
-export default function Activity({
-  id,
-  name,
-  description,
-  ageMin,
-  price
-}) {
-  const [modalVisible, setModalVisible] = useState(false)
+export default function Activity({ id, name, description, ageMin, price }) {
+  const [modalVisible, setModalVisible] = useState(false);
 
   return (
     <div className={style.infoandbuttons}>
@@ -38,12 +32,12 @@ export default function Activity({
           <Pencil className={style.pencil}></Pencil>
         </button>
       </div>
-      {modalVisible && 
-        <EditModalActivities 
-          setVisible={setModalVisible} 
+      {modalVisible && (
+        <EditModalActivities
+          setVisible={setModalVisible}
           currentValues={{ name, description, ageMin, price, id }}
         />
-      }
+      )}
     </div>
   );
 }

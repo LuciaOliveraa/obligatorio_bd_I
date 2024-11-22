@@ -4,7 +4,7 @@ import { IoMdAdd as Add } from "react-icons/io";
 import { getInstructors } from "../../services/instructorsService";
 import { useEffect, useState } from "react";
 
-export default function Instructors({ setVisibleInstructors }) {
+export default function Instructors() {
   const [instructors, setInstructors] = useState([]);
 
   const fetchInstructors = async () => {
@@ -36,16 +36,8 @@ export default function Instructors({ setVisibleInstructors }) {
             ci={instructor.ci}
             name={instructor.name}
             lastname={instructor.lastname}
-            setVisibleInstructors={setVisibleInstructors}
           />
         ))}
-
-        {/* <Instructor
-          ci="48671210"
-          name="Elba"
-          lastname="Lazo"
-          setVisibleInstructors={setVisibleInstructors}
-        />*/}
       </div>
     </div>
   );
