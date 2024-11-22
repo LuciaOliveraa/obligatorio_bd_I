@@ -40,7 +40,6 @@ export default function Students({ setVisible }) {
             birthdate={student.birthdate}
             email={student.email}
             phone_number={student.phone_number}
-            setVisible={setVisible}
           />;
         })}
       </div>

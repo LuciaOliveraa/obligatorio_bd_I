@@ -1,6 +1,7 @@
 import style from "./Student.module.css";
 import { TbPencil as Pencil } from "react-icons/tb";
 import { GoTrash as Trash } from "react-icons/go";
+import { EditModalStudent } from "../EditModalStudent";
 
 export default function Student({
   ci,
@@ -9,8 +10,9 @@ export default function Student({
   lastname,
   birthdate,
   phone_number,
-  setVisible,
 }) {
+  const [modalVisible, setModalVisible] = useState(false);
+
   return (
     <div className={style.infoandbuttons}>
       <div className={style.info}>
@@ -40,6 +42,12 @@ export default function Student({
           <Pencil className={style.pencil}></Pencil>
         </button>
       </div>
+      {modalVisible && (
+        <EditModalStudent
+          setModalVisible={setModalVisible}
+          values={[ci, email, name, lastname, birthdate, phone_number]}
+        />
+      )}
     </div>
   );
 }
