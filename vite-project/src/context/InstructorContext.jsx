@@ -34,10 +34,10 @@ export const InstructorProvider = ({ children }) => {
 
     const updateLessons = (newLessonsList) => {
         const provisionalUser = {
-            ci: user?.ci,
-            name: user?.name,
-            lastname: user?.lastname,
-            email: user?.email,
+            ci: instructor?.ci,
+            name: instructor?.name,
+            lastname: instructor?.lastname,
+            email: instructor?.email,
             lessons: newLessonsList
         };
 
@@ -45,51 +45,24 @@ export const InstructorProvider = ({ children }) => {
     }
 
     // export function
-    const removeLessons = (exLessons) => {
+    const removeLesson = (exLessons) => {
         const newLessonsList = instructor?.lessons.filter((item) => item.id != exLessons.id);
         updateLessons(newLessonsList);
     }
 
     // export function
-    const addEnrollment = (newEnrollment) => {
-        const newEnrollmentsList = [...user?.enrollments, newEnrollment];
-        updateEnrollments(newEnrollmentsList);
-    }
-
-    const updateRent = (newRentList) => {
-        const provisionalUser = {
-            ci: user?.ci,
-            name: user?.name,
-            lastname: user?.lastname,
-            birthdate: user?.birthdate,
-            email: user?.email,
-            phone_number: user?.phone_number,
-            enrollments: user?.enrollments,
-            rent: newRentList
-        };
-
-        updateUser(provisionalUser);
-    }
-
-    // export function
-    const removeRent = (exRent) => {
-        const newRentsList = user?.rent.filter((item) => item != exEnrollment);
-        updateRent(newRentsList);
-    }
-
-    // export function
-    const addRent = (newRent) => {
-        const newRentList = [...user?.rent, newRent];
-        updateRent(newRentList);
+    const addLesson = (newLesson) => {
+        const newLessonList = [...instructor?.lessons, newLesson];
+        updateEnrollments(newLessonList);
     }
 
 
     useEffect(() => {
-        console.log("User actualizado: ", user);
-    }, [user]);
+        console.log("User actualizado: ", instructor);
+    }, [instructor]);
 
     return (
-        <UserContext.Provider value={{user, updateUser, logOut, removeEnrollment, addEnrollment, removeRent, addRent}}>
+        <UserContext.Provider value={{instructor, updateUser, logOut, removeLesson, addLesson}}>
             {children}
         </UserContext.Provider>
     );

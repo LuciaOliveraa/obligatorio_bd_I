@@ -37,14 +37,14 @@ export const StudentProvider = ({ children }) => {
 
     const updateEnrollments = (newEnrollmentsList) => {
         const provisionalUser = {
-            ci: user?.ci,
-            name: user?.name,
-            lastname: user?.lastname,
-            birthdate: user?.birthdate,
-            email: user?.email,
-            phone_number: user?.phone_number,
+            ci: student?.ci,
+            name: student?.name,
+            lastname: student?.lastname,
+            birthdate: student?.birthdate,
+            email: student?.email,
+            phone_number: student?.phone_number,
             enrollments: newEnrollmentsList,
-            rent: user?.rent
+            rent: student?.rent
         };
 
         updateStudent(provisionalUser);
@@ -52,25 +52,25 @@ export const StudentProvider = ({ children }) => {
 
     // export function
     const removeEnrollment = (exEnrollment) => {
-        const newEnrollmentsList = user?.enrollments.filter((item) => item.id != exEnrollment.id);
+        const newEnrollmentsList = student?.enrollments.filter((item) => item.id != exEnrollment.id);
         updateEnrollments(newEnrollmentsList);
     }
 
     // export function
     const addEnrollment = (newEnrollment) => {
-        const newEnrollmentsList = [...user?.enrollments, newEnrollment];
+        const newEnrollmentsList = [...student?.enrollments, newEnrollment];
         updateEnrollments(newEnrollmentsList);
     }
 
     const updateRent = (newRentList) => {
         const provisionalUser = {
-            ci: user?.ci,
-            name: user?.name,
-            lastname: user?.lastname,
-            birthdate: user?.birthdate,
-            email: user?.email,
-            phone_number: user?.phone_number,
-            enrollments: user?.enrollments,
+            ci: student?.ci,
+            name: student?.name,
+            lastname: student?.lastname,
+            birthdate: student?.birthdate,
+            email: student?.email,
+            phone_number: student?.phone_number,
+            enrollments: student?.enrollments,
             rent: newRentList
         };
 
@@ -79,13 +79,13 @@ export const StudentProvider = ({ children }) => {
 
     // export function
     const removeRent = (exRent) => {
-        const newRentsList = user?.rent.filter((item) => item != exRent);
+        const newRentsList = student?.rent.filter((item) => item != exRent);
         updateRent(newRentsList);
     }
 
     // export function
     const addRent = (newRent) => {
-        const newRentList = [...user?.rent, newRent];
+        const newRentList = [...student?.rent, newRent];
         updateRent(newRentList);
     }
 
