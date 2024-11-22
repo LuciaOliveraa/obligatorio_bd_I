@@ -1,8 +1,27 @@
 import "./Students.css";
 import Student from "../Student";
 import { IoMdAdd as Add } from "react-icons/io";
+import { useState } from "react";
+import { getStudents } from "../../services/studentsService";
 
 export default function Students({ setVisible }) {
+  const [students, setStudents] = useState([]);
+
+  const fetchStudents = async () => {
+    try {
+      const data = await getStudents();
+      setStudents(data);
+      console.log("print students: ", data);
+    } catch (error) {
+      console.error("Error fetching students:", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchStudents();
+    console.log("print students: ", feed);
+  }, []);
+
   return (
     <div>
       <div className="students-and-add">
@@ -12,39 +31,18 @@ export default function Students({ setVisible }) {
         </button>
       </div>
       <div className="all-students">
-        <Student
-          setVisible={setVisible}
-          ci="25467891"
-          name="Agustin"
-          lastname="Fernandez"
-          birthdate="2004-05-08"
-          email="agustin.fernandez@correo.ucu.edu.uy"
-          phone_number="095478323"
-        />
-        <Student
-          ci="25467891"
-          name="Agustin"
-          lastname="Fernandez"
-          birthdate="2004-05-08"
-          email="agustin.fernandez@correo.ucu.edu.uy"
-          phone_number="095478323"
-        />
-        <Student
-          ci="25467891"
-          name="Agustin"
-          lastname="Fernandez"
-          birthdate="2004-05-08"
-          email="agustin.fernandez@correo.ucu.edu.uy"
-          phone_number="095478323"
-        />
-        <Student
-          ci="25467891"
-          name="Agustin"
-          lastname="Fernandez"
-          birthdate="2004-05-08"
-          email="agustin.fernandez@correo.ucu.edu.uy"
-          phone_number="095478323"
-        />
+        {students.map((student) => {
+          <Student
+            key={student.ci}
+            ci={student.ci}
+            name={student.name}
+            lastname={student.lastname}
+            birthdate={student.birthdate}
+            email={student.email}
+            phone_number={student.phone_number}
+            setVisible={setVisible}
+          />;
+        })}
       </div>
     </div>
   );
