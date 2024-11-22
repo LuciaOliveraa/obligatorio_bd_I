@@ -7,7 +7,7 @@ from mysql.connector import Error
 db = get_db_connection()
 
 def loginRoutes(app):
-    @app.route('/login', methods=['GET'])
+    @app.route('/login', methods=['POST'])
     def login():
         cursor = db.cursor(dictionary=True)
         user = request.json['user']
