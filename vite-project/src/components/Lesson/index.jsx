@@ -3,26 +3,25 @@ import { TbPencil as Pencil } from "react-icons/tb";
 import { GoTrash as Trash } from "react-icons/go";
 
 export default function Lesson({
-  instructor,
-  activity,
-  shift,
-  capacity,
-  setVisibleLessons,
+  instructorId,
+  activityId,
+  shiftId,
+  capacity
 }) {
   return (
     <div className={style.infoandbuttons}>
       <div className={style.info}>
         <span>
           <strong>Instructor: </strong>
-          {instructor}
+          {instructorId}
         </span>
         <span>
           <strong>Actividad: </strong>
-          {activity}
+          {activityId}
         </span>
         <span>
           <strong>Turno: </strong>
-          {shift}
+          {shiftId}
         </span>
         <span>
           <strong>Capacidad: </strong>

@@ -2,16 +2,18 @@ import style from "./Activities.module.css";
 import Activity from "../Activity";
 import { IoIosAddCircleOutline as Add } from "react-icons/io";
 import { getActivities } from "../../services/activitiesService";
-import { useState, useEffect } from "react";
+import { useState, useRef, useEffect } from "react";
 
 export default function Activities() {
-  const [activities, setActivities] = useState([]);
+  const activitiesRef = useRef([]); 
+  const [, forceUpdate] = useState(false); 
 
   const fetchActivities = async () => {
     try {
       const data = await getActivities();
-      setActivities(data);
-      console.log(data);
+      activitiesRef.current = data; 
+      forceUpdate((prev) => !prev); 
+      console.log("Activities", data);
     } catch (error) {
       console.error("Error obteniendo actividades", error);
     }
@@ -19,13 +21,13 @@ export default function Activities() {
 
   useEffect(() => {
     fetchActivities();
-  }, [activities]);
+  }, []);
 
   return (
     <div>
       <p className={style.activitiesTitle}>Actividades</p>
       <div className={style.allActivities}>
-        {activities.map((activity) => (
+        {activitiesRef.current.map((activity) => (
           <Activity
             key={activity.id}
             id={activity.id}
