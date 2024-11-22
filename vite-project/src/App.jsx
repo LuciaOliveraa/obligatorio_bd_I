@@ -38,11 +38,11 @@ function App() {
       <Router>
         <div className="app">
           <Routes>
-            <Route path="/*" element={<Navigate replace to="/login" />} />
-            <Route path="/login" element={<Login />} />
+            <Route path="/*" element={<Navigate replace to="/home" />} /> 
+            {/* <Route path="/login" element={<Login />} /> */}
             <Route path="/home" element={<HomePage></HomePage>} />
             <Route path="/schedule" element={<Schedule></Schedule>} />
-            <Route path="/equipment" element={<Equipment></Equipment>} />
+            <Route path="/equipment/:activityId" element={<Equipment/>} />
             <Route path="/summary" element={<Summary></Summary>} />
             <Route path="/admin" element={<Administration></Administration>} />
             <Route
