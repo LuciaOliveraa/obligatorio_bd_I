@@ -5,14 +5,13 @@ import { getActivities } from "../../services/activitiesService";
 import { useState, useRef, useEffect } from "react";
 
 export default function Activities() {
-  const activitiesRef = useRef([]); 
-  const [, forceUpdate] = useState(false); 
+  const [activities, setActivities] = useState([]); 
+  const [trigger, setTrigger] = useState(0); 
 
   const fetchActivities = async () => {
     try {
       const data = await getActivities();
-      activitiesRef.current = data; 
-      forceUpdate((prev) => !prev); 
+      setActivities(data); 
       console.log("Activities", data);
     } catch (error) {
       console.error("Error obteniendo actividades", error);
@@ -21,13 +20,13 @@ export default function Activities() {
 
   useEffect(() => {
     fetchActivities();
-  }, []);
+  }, [trigger]);
 
   return (
     <div>
       <p className={style.activitiesTitle}>Actividades</p>
       <div className={style.allActivities}>
-        {activitiesRef.current.map((activity) => (
+        {activities.map((activity) => (
           <Activity
             key={activity.id}
             id={activity.id}
@@ -35,6 +34,7 @@ export default function Activities() {
             ageMin={activity.age_min}
             price={activity.price}
             description={activity.description}
+            trigger = {setTrigger}
           />
         ))}
       </div>

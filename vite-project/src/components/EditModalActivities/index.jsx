@@ -2,7 +2,7 @@ import style from "./EditModalActivities.module.css";
 import { useState } from "react";
 import { editActivity } from "../../services/activitiesService";
 
-export function EditModalActivities({ setVisible, currentValues }) {
+export function EditModalActivities({ setVisible, currentValues, trigger }) {
   const [formValues, setFormValues] = useState(currentValues); 
 
   const handleInputChange = (e) => {
@@ -24,6 +24,7 @@ export function EditModalActivities({ setVisible, currentValues }) {
       await editActivity(formValues.id, newActivity);
       console.log(newActivity)
       setVisible(false); 
+      trigger((prev) => prev +1)
     } catch (error) {
       console.error("Error editando la actividad", error);
     }
@@ -42,6 +43,7 @@ export function EditModalActivities({ setVisible, currentValues }) {
                 id="name"
                 defaultValue={formValues.name}
                 onChange={handleInputChange}
+                disabled
               />
             </div>
             <div className={style.form}>
