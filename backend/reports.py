@@ -14,9 +14,9 @@ def reportsRoutes(app):
             
             reports = {}
             queries = {
-                "activity_revenue": "SELECT * FROM activity_revenue_view",
-                "activities_with_most_students": "SELECT * FROM activities_with_most_students",
-                "shifts_with_most_classes": "SELECT * FROM shifts_with_most_classes"
+                "activity_revenue": "SELECT * FROM activity_revenue_view LIMIT 1",
+                "activities_with_most_students": "SELECT * FROM activities_with_most_students LIMIT 1",
+                "shifts_with_most_classes": "SELECT * FROM shifts_with_most_classes LIMIT 1"
             }
 
             for key, query in queries.items():
@@ -45,7 +45,7 @@ def reportsRoutes(app):
     def getActivityRevenue():
         try:
             cursor = db.cursor(dictionary=True)
-            cursor.execute("SELECT * FROM activity_revenue_view")
+            cursor.execute("SELECT * FROM activity_revenue_view LIMIT 1")
             result = cursor.fetchall()
             return jsonify(result), 200
         except Error as error:
@@ -57,7 +57,7 @@ def reportsRoutes(app):
     def getActivitiesWithMostStudents():
         try:
             cursor = db.cursor(dictionary=True)
-            cursor.execute("SELECT * FROM activities_with_most_students")
+            cursor.execute("SELECT * FROM activities_with_most_students LIMIT 1")
             result = cursor.fetchall()
             return jsonify(result), 200
         except Error as error:
@@ -69,7 +69,7 @@ def reportsRoutes(app):
     def getShiftsWithMostClasses():
         try:
             cursor = db.cursor(dictionary=True)
-            cursor.execute("SELECT * FROM shifts_with_most_classes")
+            cursor.execute("SELECT * FROM shifts_with_most_classes LIMIT 1")
             results = cursor.fetchall()
 
             for shift in results:
