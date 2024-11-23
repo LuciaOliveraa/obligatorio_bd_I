@@ -53,6 +53,7 @@ def shiftsRoutes(app):
         cursor = db.cursor(dictionary=True)
         starting_time = request.json['starting_time']
         end_time = request.json['end_time']
+        name = request.json['name']
 
         try:
             starting_time_obj = datetime.strptime(starting_time, '%H:%M:%S')
@@ -61,8 +62,8 @@ def shiftsRoutes(app):
             return jsonify({"error": "The time format must be HH:MM:SS"}), 400
 
         try:
-            cursor.execute("INSERT INTO shifts (starting_time, end_time) VALUES (%s, %s)", 
-                        (starting_time, end_time))
+            cursor.execute("INSERT INTO shifts (name, starting_time, end_time) VALUES (%s, %s, %s)", 
+                        (name, starting_time, end_time))
             db.commit()
             return jsonify({"message": "Shift added successfully"}), 201
         except Error as error:
@@ -89,6 +90,7 @@ def shiftsRoutes(app):
         cursor = db.cursor(dictionary=True)
         starting_time = request.json['starting_time']
         end_time = request.json['end_time']
+        name = request.json['name']
 
         try:
             starting_time_obj = datetime.strptime(starting_time, '%H:%M:%S')
@@ -97,8 +99,8 @@ def shiftsRoutes(app):
             return jsonify({"error": "The time format must be HH:MM:SS"}), 400
 
         try:
-            cursor.execute("UPDATE shifts SET starting_time = %s, end_time = %s  WHERE id = %s",
-                        (starting_time, end_time, id))
+            cursor.execute("UPDATE shifts SET name = %s, starting_time = %s, end_time = %s  WHERE id = %s",
+                        (name, starting_time, end_time, id))
             db.commit()
             return jsonify({"message": "Shift updated successfully"}), 201
         except Error as error:

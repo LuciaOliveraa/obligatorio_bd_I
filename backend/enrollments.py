@@ -62,7 +62,7 @@ def enrollmentsRoutes(app):
         try: 
             # Obtiene datos de la clase a la que se quiere inscribir
             cursor.execute("""
-                SELECT shifts.starting_time, shifts.end_time, lessons.capacity, 
+                SELECT shifts.starting_time, shifts.end_time, lessons.capacity,
                     (SELECT COUNT(*) FROM enrollments WHERE lesson_id = %s) AS current_enrollments
                 FROM lessons
                 JOIN shifts ON lessons.shift_id = shifts.id
@@ -100,6 +100,41 @@ def enrollmentsRoutes(app):
                 
                 if not (new_end_time <= existing_start_time or new_start_time >= existing_end_time):
                     return jsonify({"error": "Schedule conflict: already enrolled in another class at the same time"}), 409
+
+
+            # Busca edad estudiante
+            cursor.execute("""
+                SELECT students.birthdate FROM enrollments JOIN students ON students.ci = enrollments.student_ci
+                        WHERE students.ci = %s
+                           """, (id))
+            
+            birthdate = cursor.fetchone()
+            
+            if not birthdate:
+                return jsonify({"error": "Birthdate not found"}), 404
+            
+            # Busca edad mínima 
+            cursor.execute("""
+                SELECT activities.age_min 
+                FROM lessons
+                JOIN activities ON lessons.activity_id = activities.id
+                WHERE lessons.id = %s
+            """, (lesson_id,))
+            age_min = cursor.fetchone()
+
+            if not age_min:
+                return {"message": "Actividad no encontrada para esta lección."}, 404
+
+            
+            birthdate = birthdate[0]
+            current_date = datetime.now().date()
+    
+            # Calculamos la edad
+            age = current_date.year - birthdate.year - ((current_date.month, current_date.day) < (birthdate.month, birthdate.day))
+            
+            # Maneja restricción edad de estudiante
+            if age < age_min:
+                return {"message": f"El estudiante no cumple con la edad mínima requerida ({age_min} años) para esta actividad."}, 400
 
 
             # Inscripción
