@@ -3,10 +3,34 @@ import ucuLogo from "../../assets/ucuLogo.png";
 import { useState } from "react";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { useStudent } from "../../context/StudentContext";
+import { loginAccount } from "../../services/loginService";
+import { useInstructor } from "../../context/InstructorContext";
+import { useUserType } from "../../context/UserTypeContext";
+import { useNavigate } from "react-router-dom";
 
 export default function Login() {
-  const { user, updateStudent } = useStudent();
+  const { student, updateStudent } = useStudent();
+  const { updateInstructor } = useInstructor();
+  const { userType, updateUserType } = useUserType();
+
   const [show, setShow] = useState(false);
+  const navigate = useNavigate();
+
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+
+  const login = async () => {
+    const userData = { username, password };
+
+    const success = await loginAccount(userData, updateStudent, userType, updateUserType);
+    console.log("resultado log in: ", success);
+    if (!success) {
+      navigate("/login");
+    }
+    if (success) {
+      navigate("/home");
+    }
+  }
 
   return (
     <div className="login">
@@ -21,8 +45,10 @@ export default function Login() {
             <input
               className="input"
               type="text"
-              placeholder="ingrese su usuario"
               id="usuarioInput"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+              placeholder="Ingrese su usuario"
             />
           </div>
         </div>
@@ -34,13 +60,15 @@ export default function Login() {
               type={show ? "text" : "password"}
               placeholder="********"
               id="passwordInput"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
             />
             <span onClick={() => setShow(!show)} className="passwordEye">
               {show ? <FaEyeSlash /> : <FaEye />}
             </span>
           </div>
         </div>
-        <button className="botonSiguiente"> Siguiente </button>
+        <button className="botonSiguiente" onClick={login}> Siguiente </button>
       </div>
     </div>
   );

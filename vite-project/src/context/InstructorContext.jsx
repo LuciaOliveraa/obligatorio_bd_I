@@ -62,8 +62,8 @@ export const InstructorProvider = ({ children }) => {
     }, [instructor]);
 
     return (
-        <UserContext.Provider value={{instructor, updateUser, logOut, removeLesson, addLesson}}>
+        <InstructorContext.Provider value={{instructor, updateUser, logOut, removeLesson, addLesson}}>
             {children}
-        </UserContext.Provider>
+        </InstructorContext.Provider>
     );
 }

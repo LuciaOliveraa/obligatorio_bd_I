@@ -95,8 +95,8 @@ export const StudentProvider = ({ children }) => {
     }, [student]);
 
     return (
-        <UserContext.Provider value={{student, updateStudent, logOut, removeEnrollment, addEnrollment, removeRent, addRent}}>
+        <StudentContext.Provider value={{student, updateStudent, logOut, removeEnrollment, addEnrollment, removeRent, addRent}}>
             {children}
-        </UserContext.Provider>
+        </StudentContext.Provider>
     );
 }

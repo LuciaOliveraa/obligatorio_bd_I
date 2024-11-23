@@ -12,6 +12,10 @@ import HomePage from "../src/pages/HomePage";
 import Schedule from "../src/pages/Schedule";
 import Summary from "../src/pages/Summary";
 import { UserPage } from "./pages/UserPage";
+import { UserTypeProvider } from "./context/UserTypeContext";
+import { StudentProvider } from "./context/StudentContext";
+import Instructor from "./components/Instructor";
+import { InstructorProvider } from "./context/InstructorContext";
 
 function App() {
   const user = {
@@ -35,23 +39,32 @@ function App() {
 
   return (
     <>
-      <Router>
-        <div className="app">
-          <Routes>
-            <Route path="/*" element={<Navigate replace to="/home" />} /> 
-            {/* <Route path="/login" element={<Login />} /> */}
-            <Route path="/home" element={<HomePage></HomePage>} />
-            <Route path="/schedule" element={<Schedule></Schedule>} />
-            <Route path="/equipment/:activityId" element={<Equipment/>} />
-            <Route path="/summary" element={<Summary></Summary>} />
-            <Route path="/admin" element={<Administration></Administration>} />
-            <Route
-              path="/user"
-              element={<UserPage user={instructor}></UserPage>}
-            />
-          </Routes>
-        </div>
-      </Router>
+    <UserTypeProvider>
+      <StudentProvider>
+        <InstructorProvider>
+
+          <Router>
+            <div className="app">
+              <Routes>
+                <Route path="/*" element={<Navigate replace to="/home" />} /> 
+                {/* <Route path="/login" element={<Login />} /> */}
+                <Route path="/home" element={<HomePage></HomePage>} />
+                <Route path="/schedule" element={<Schedule></Schedule>} />
+                <Route path="/equipment/:activityId" element={<Equipment/>} />
+                <Route path="/summary" element={<Summary></Summary>} />
+                <Route path="/admin" element={<Administration></Administration>} />
+                <Route
+                  path="/user"
+                  element={<UserPage user={instructor}></UserPage>}
+                />
+              </Routes>
+            </div>
+          </Router>
+
+        </InstructorProvider>
+      </StudentProvider>
+    </UserTypeProvider>
+      
     </>
   );
 }

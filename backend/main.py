@@ -1,5 +1,6 @@
 from flask import Flask
 from flask_cors import CORS
+import mysql.connector
 from students import studentsRoutes
 from instructors import instructorsRoutes
 from activities import activitiesRoutes
@@ -12,6 +13,13 @@ from login import loginRoutes
 
 app = Flask(__name__)
 CORS(app, origins='http://localhost:5173')
+
+db = mysql.connector.connect(
+            host="localhost",
+            user="root",  #admin
+            password="rootpassword", 
+            database="base_datos"
+        )
 
 @app.route("/")
 def prueba():
