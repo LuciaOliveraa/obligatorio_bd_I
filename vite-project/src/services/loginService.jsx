@@ -30,12 +30,23 @@ export const loginAccount = async (account, updateUser, userType, updateUserType
                 enrollments: userData.enrollments,
                 rent: userData.rents
             };
+            updateUser(newUser);
+
+            return true;
         }
 
-        
-        updateUser(newUser);
+        if (userType == "instructor") {
+          const newUser = {
+              id: userData.instructor.ci,
+              name: userData.instructor.name,
+              lastname: userData.instructor.lastname,
+              email: userData.student.email,
+              lessons: userData.lessons
+          };
+          updateUser(newUser);
 
-        return true;
+          return true;
+      } 
 
       } 
     } catch (error) {
