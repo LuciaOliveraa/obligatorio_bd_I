@@ -1,4 +1,3 @@
-
 export const getShifts = async() => {
     try {
         const response = await fetch (`http://localhost:8080/shifts`, {
@@ -53,7 +52,7 @@ export const deleteShift = async(id) => {
 
 export const editShift = async(id, editedShift) => {
     try {
-        const response = await fetch (`http://localhost:8080/activities/edit/${id}`, {
+        const response = await fetch (`http://localhost:8080/shifts/edit/${id}`, {
             method: "PUT",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(editedShift)

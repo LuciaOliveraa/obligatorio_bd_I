@@ -1,0 +1,107 @@
+.modal {
+  width: 100%;
+  min-height: 100%;
+  position: fixed;
+  display: flex;
+  align-items: center;
+  place-content: center !important;
+  align-content: center;
+  background-color: rgba(0, 0, 0, 0.582);
+  top: 0;
+  z-index: 30;
+  transition: 1s;
+}
+
+.modalContent {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  align-content: center;
+  background-color: white;
+  width: 800px;
+  height: 350px;
+  border-radius: 20px;
+}
+
+.title {
+  margin-top: 2rem;
+  font-weight: 900;
+  font-size: 35px;
+}
+
+.editInfo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 2rem;
+  margin-top: 1rem;
+}
+
+.formRow {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 90%;
+}
+
+.form {
+  width: 310px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-top: 0.5rem;
+}
+
+.form label {
+  font-size: 20px;
+  font-weight: 800;
+}
+.form input {
+  height: 40px;
+  width: 300px;
+  border: 2px solid rgb(81, 81, 203);
+  border-radius: 25px;
+  padding: 1rem;
+}
+
+.saveCancel {
+  display: flex;
+  flex-direction: row;
+  width: 60%;
+  justify-content: space-between;
+}
+.cancelEdit {
+  background-color: rgb(246, 248, 255);
+  height: 47px;
+  color: rgb(85, 85, 85);
+  border: 1px solid grey;
+  margin-top: 3rem;
+  border-radius: 20px;
+  width: 200px;
+  transition: 1s;
+}
+
+.saveEdit {
+  background-color: rgb(53 98 224);
+  height: 47px;
+  color: white;
+  margin-top: 3rem;
+  border-radius: 20px;
+  width: 200px;
+  transition: 0.5s;
+}
+
+.cancelEdit:hover {
+  background-color: rgb(224, 226, 233);
+  transform: scale(1.1);
+  transition: 0.5s;
+}
+
+.saveEdit:hover {
+  background-color: rgb(55, 91, 191);
+  transform: scale(1.1);
+  transition: 0.5s;
+}
