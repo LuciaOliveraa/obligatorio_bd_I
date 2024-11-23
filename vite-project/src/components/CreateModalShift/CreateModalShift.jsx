@@ -1,24 +1,12 @@
-import style from "./EditModalShifts.module.css";
-import { editShift } from "../../services/shiftsService";
+import style from "./CreateModalShifts.module.css";
+import { addShift } from "../../services/shiftsService";
 import { useState } from "react";
 
-
-const formatTime = (time) => {
-  const [hours, minutes] = time.split(":");
-  const normalizedHours = hours.padStart(2, "0");
-  return `${normalizedHours}:${minutes}`;
-};
-
-export function EditModalShifts({ setVisible, currentValues, trigger }) {
-  const [formValues, setFormValues] = useState({
-    ...currentValues,
-    startsAt: formatTime(currentValues.startsAt.slice(0, 5)), 
-    endsAt: formatTime(currentValues.endsAt.slice(0, 5)),
-  });
+export function CreateModalShifts({ setVisible, trigger }) {
+  const [formValues, setFormValues] = useState([]);
 
   const handleInputChange = (e) => {
     const { id, value } = e.target;
-    const formattedValue = formatTime(value); 
     setFormValues({
       ...formValues,
       [id]: formattedValue,
@@ -27,14 +15,12 @@ export function EditModalShifts({ setVisible, currentValues, trigger }) {
   
   const setShift = async () => {
     try {
-      const formattedStart = `${formValues.startsAt}:00`; // Recorta a HH:mm
-      const formattedEnd =  `${formValues.endsAt}:00`;
-
-      const newShift = {
-        starting_time: formattedStart,
-        end_time: formattedEnd,
+        const newShift = {
+        starting_time: formValues.startsAt,
+        end_time: formValues.endsAt,
       }
-      await editShift(formValues.id, newShift);
+      
+      await addShift(newShift);
       console.log(newShift)
       setVisible(false); 
       trigger((prev) => prev +1)
@@ -54,7 +40,6 @@ export function EditModalShifts({ setVisible, currentValues, trigger }) {
               <input  
                 type="time" 
                 id="startsAt" 
-                defaultValue={formValues.startsAt}
                 onChange={handleInputChange} 
               />
             </div>
@@ -63,7 +48,6 @@ export function EditModalShifts({ setVisible, currentValues, trigger }) {
               <input  
                 type="time" 
                 id="endsAt" 
-                defaultValue={formValues.endsAt} 
                 onChange={handleInputChange} 
               />
             </div>
