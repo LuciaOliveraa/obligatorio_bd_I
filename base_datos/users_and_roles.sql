@@ -1,6 +1,6 @@
 use base_datos;
 
-DROP USER 'data_manager';
+DROP USER IF EXISTS 'data_manager';
 
 CREATE ROLE 'data_manager';
 GRANT SELECT, INSERT, UPDATE, DELETE ON base_datos.* TO 'data_manager';
