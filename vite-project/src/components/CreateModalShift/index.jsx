@@ -15,9 +15,9 @@ export function CreateModalShifts({ setVisible, trigger }) {
   
   const setShift = async () => {
     try {
-        const newShift = {
-        starting_time: formValues.startsAt,
-        end_time: formValues.endsAt,
+      const newShift = {
+        starting_time: `${formValues.startsAt}:00`,
+        end_time: `${formValues.endsAt}:00`,
         name: formValues.name, 
       }
       

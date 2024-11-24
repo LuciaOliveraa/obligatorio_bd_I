@@ -12,7 +12,7 @@ export const getInstructors = async () => {
 
 export const getInstructor = async (id) => {
   try {
-    const response = await fetch(`http://localhost:8080/instructors${id}`, {
+    const response = await fetch(`http://localhost:8080/instructors/${id}`, {
       method: "GET",
     });
     const data = await response.json();

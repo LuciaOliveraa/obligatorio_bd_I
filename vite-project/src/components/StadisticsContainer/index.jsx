@@ -43,7 +43,7 @@ export default function StadisticsContainer() {
                 />
                 <StadisticCard 
                     title='Turno con más clases dictadas'
-                    winner={shiftsWithMostClasses[0]?.shift_id}
+                    winner={shiftsWithMostClasses[0]?.shift_name}
                     info={`con un total de ${shiftsWithMostClasses[0]?.total_classes} clases`}
                 />
             </div>
