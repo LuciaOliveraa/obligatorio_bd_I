@@ -98,10 +98,8 @@ CREATE TABLE base_datos.enrollments(
 
 CREATE TABLE base_datos.lessonTracking(
     lesson_id integer not null,
-    date date not null,
-    original_date date not null,
+    date date,
     dictated TINYINT(1) DEFAULT 0,
     FOREIGN KEY (lesson_id) REFERENCES base_datos.lessons(id) ON DELETE CASCADE,
-    FOREIGN KEY (date) REFERENCES base_datos.enrollments(date) ON DELETE SET NULL,
-    PRIMARY KEY (lesson_id, original_date)
+    PRIMARY KEY (lesson_id, date)
 )
