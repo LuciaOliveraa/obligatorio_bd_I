@@ -47,7 +47,7 @@ export function CreateModalStudent({ setVisible, trigger }) {
     <>
       <div className={style.modal}>
         <div className={style.modalContent}>
-          <h1 className={style.title}> Editar alumno</h1>
+          <h1 className={style.title}> Añadir alumno</h1>
           <div className={style.editInfo}>
             <div className={style.formRow}>
               <div className={style.form}>

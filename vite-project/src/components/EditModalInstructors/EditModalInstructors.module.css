@@ -20,7 +20,7 @@
   align-content: center;
   background-color: white;
   width: 800px;
-  height: 350px;
+  height: 450px;
   border-radius: 20px;
 }
 
@@ -105,4 +105,10 @@
   background-color: rgb(55, 91, 191);
   transform: scale(1.1);
   transition: 0.5s;
+}
+
+input:disabled {
+  opacity: 0.6;
+  cursor: not-allowed; 
+  background-color: #f0f0f0; 
 }

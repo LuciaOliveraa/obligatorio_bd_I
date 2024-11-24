@@ -15,24 +15,8 @@ export default function StadisticsContainer() {
           setActivityWithMostStudents(data.activities_with_most_students);
           setActivityRevenue(data.activity_revenue);
           setShiftsWithMostClasses(data.shifts_with_most_classes);
-          console.log(data)
-          console.log(activityRevenue[0].activity_name)
         } catch (error) {
           console.error("Error obteniendo reportes", error);
-        }
-    };
-
-    const fetchShift = async (shiftId) => {
-        try {
-          const data = await getShift(shiftId);
-          setShiftsWithMostClasses((prev) => 
-            prev.map((shift) => 
-                shift.shift_id === shiftId ? { ...shift, name: data.name } : shift
-            )
-            );
-          
-        } catch (error) {
-          console.error("Error obteniendo turno ", error);
         }
     };
 
@@ -40,9 +24,6 @@ export default function StadisticsContainer() {
         fetchReports();
     }, []); 
 
-    useEffect(() => {
-        fetchShift(shiftsWithMostClasses[0]?.shift_id)
-    }, []);
 
     return (
         <div className={style.allContainer}>
@@ -62,7 +43,7 @@ export default function StadisticsContainer() {
                 />
                 <StadisticCard 
                     title='Turno con más clases dictadas'
-                    winner={shiftsWithMostClasses[0]?.name}
+                    winner={shiftsWithMostClasses[0]?.shift_id}
                     info={`con un total de ${shiftsWithMostClasses[0]?.total_classes} clases`}
                 />
             </div>

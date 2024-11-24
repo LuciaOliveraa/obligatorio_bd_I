@@ -3,9 +3,19 @@ import { TbPencil as Pencil } from "react-icons/tb";
 import { GoTrash as Trash } from "react-icons/go";
 import { EditModalInstructors } from "../EditModalInstructors";
 import { useState } from "react";
+import { deleteInstructor } from "../../services/instructorsService";
 
-export default function Instructor({ ci, name, lastname }) {
+export default function Instructor({ ci, name, lastname, email, trigger }) {
   const [modalVisible, setModalVisible] = useState(false);
+
+  const eraseInstructor = async () => {
+    try {
+      await deleteInstructor(ci);
+      trigger((prev) => prev +1)
+    } catch (error) {
+      console.error("Error eliminando instructor", error);
+    }
+  }
 
   return (
     <>
@@ -21,7 +31,7 @@ export default function Instructor({ ci, name, lastname }) {
           </span>
         </div>
         <div className="buttons">
-          <button className={style.deletebutton}>
+          <button className={style.deletebutton} onClick={eraseInstructor}>
             <Trash className={style.trash}></Trash>
           </button>
           <button
@@ -36,8 +46,9 @@ export default function Instructor({ ci, name, lastname }) {
       </div>
       {modalVisible && (
         <EditModalInstructors
-          setVisibleInstructors={setModalVisible}
-          values={[ci, name, lastname]}
+          setVisible={setModalVisible}
+          currentValues={{ci, name, lastname, email}}
+          trigger = {trigger}
         />
       )}
     </>
