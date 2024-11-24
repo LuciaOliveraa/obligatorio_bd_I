@@ -94,7 +94,7 @@ def lessonsRoutes(app):
 
 
             cursor.execute("UPDATE lessons SET instructor_ci = %s, activity_id = %s, shift_id = %s, capacity = %s WHERE id = %s",
-                        (instructor_ci, activity_id, shift_id, capacity, id))
+                        (instructor_ci, activity_id, shift_id, capacity, id,))
             db.commit()
             return jsonify({"message": "Lesson updated successfully"}), 201
         except Error as error:

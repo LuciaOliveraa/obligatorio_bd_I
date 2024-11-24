@@ -3,6 +3,9 @@ import Navbar from "../../components/NavBar";
 import { GoTrash as Trash } from "react-icons/go";
 
 export function UserPage({ user }) {
+
+  
+
   return (
     <div>
       <Navbar></Navbar>
