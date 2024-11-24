@@ -1,6 +1,9 @@
 import style from "./EditModalLessons.module.css";
+import { useState } from "react";
 
-export function EditModalLessons({ setVisibleLessons }) {
+export function EditModalLessons({ setVisible, currentValues, trigger }) {
+  const [formValues, setFormValues] = useState(currentValues); 
+
   return (
     <div className={style.modal}>
       <div className={style.modalContent}>

@@ -10,6 +10,10 @@ export default function Activity({ id, name, description, ageMin, price, trigger
     <div className={style.infoandbuttons}>
       <div className={style.info}>
         <span>
+          <strong>ID: </strong>
+          {id}
+        </span>
+        <span>
           <strong>Actividad: </strong>
           {name}
         </span>

@@ -47,7 +47,7 @@ function App() {
             <div className="app">
               <Routes>
                 <Route path="/*" element={<Navigate replace to="/home" />} /> 
-                {/* <Route path="/login" element={<Login />} /> */}
+                <Route path="/login" element={<Login />} />
                 <Route path="/home" element={<HomePage></HomePage>} />
                 <Route path="/schedule" element={<Schedule></Schedule>} />
                 <Route path="/equipment/:activityId" element={<Equipment/>} />
