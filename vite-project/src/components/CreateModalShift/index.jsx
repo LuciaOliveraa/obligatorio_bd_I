@@ -26,14 +26,14 @@ export function CreateModalShifts({ setVisible, trigger }) {
       setVisible(false); 
       trigger((prev) => prev +1)
     } catch (error) {
-      console.error("Error editando turno", error);
+      console.error("Error añadiendo turno", error);
     }
   }
   
   return (
     <div className={style.modal}>
       <div className={style.modalContent}>
-        <h1 className={style.title}> Editar turno</h1>
+        <h1 className={style.title}> Añadir turno</h1>
         <div className={style.editInfo}>
           <div className={style.formRow}>
             <div className={style.form}>
