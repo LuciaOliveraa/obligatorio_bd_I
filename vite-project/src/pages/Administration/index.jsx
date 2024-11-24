@@ -9,11 +9,18 @@ import { useState } from "react";
 import "./Administration.css";
 import Shifts from "../../components/Shifts";
 import Lessons from "../../components/Lessons";
+import { useUserType } from "../../context/UserTypeContext";
 
 export default function Administration() {
 
+  const { userType } = useUserType();
+
+  const [ isAdmin, setIsAdmin ] = useState(userType == "admin");
+
   return (
-    <div className="admin-page">
+    <>
+    { isAdmin ?
+      <div className="admin-page">
       <Navbar></Navbar>
       <div className="admin-container">
         <StadisticsContainer />
@@ -24,6 +31,15 @@ export default function Administration() {
         <Lessons />
       </div>
 
-    </div>
+    </div> :
+    
+    <div className="admin-page">
+      <Navbar></Navbar>
+      <div className="admin-container">
+        <span> No tienes acceso a esta pestaña </span>
+      </div>
+
+    </div>}
+    </>
   );
 }
