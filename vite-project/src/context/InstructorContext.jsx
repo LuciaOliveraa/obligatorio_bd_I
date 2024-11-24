@@ -23,7 +23,7 @@ export const InstructorProvider = ({ children }) => {
 
     // export function
     const updateInstructor = (newUser) => {
-        setUser(newUser);
+        setInstructor(newUser);
         localStorage.setItem('user', JSON.stringify(newUser));
     }
 
