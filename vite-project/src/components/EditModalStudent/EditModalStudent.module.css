@@ -1,13 +1,14 @@
 .modal {
-  width: 100%;
-  min-height: 100%;
+  width: 100vw; 
+  height: 100vh; 
+  min-height: 100vh; 
   position: fixed;
+  top: 0;
+  left: 0; 
   display: flex;
   align-items: center;
-  place-content: center !important;
-  align-content: center;
+  justify-content: center; 
   background-color: rgba(0, 0, 0, 0.582);
-  top: 0;
   z-index: 30;
   transition: 1s;
 }
@@ -19,7 +20,7 @@
   align-content: center;
   background-color: white;
   width: 800px;
-  height: 450px;
+  height: 500px;
   border-radius: 20px;
 }
 
@@ -104,4 +105,10 @@
   background-color: rgb(55, 91, 191);
   transform: scale(1.1);
   transition: 0.5s;
+}
+
+input:disabled {
+  opacity: 0.6;
+  cursor: not-allowed; 
+  background-color: #f0f0f0; 
 }

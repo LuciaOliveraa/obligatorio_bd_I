@@ -3,7 +3,7 @@ import Shift from "../Shift";
 import { IoMdAdd as Add } from "react-icons/io";
 import { getShifts } from "../../services/shiftsService";
 import { useState, useEffect } from "react";
-import { CreateModalShifts } from "../CreateModalShift/CreateModalShift";
+import { CreateModalShifts } from "../CreateModalShift";
 
 export default function Shifts() {
   const [shifts, setShifts] = useState([]); 

@@ -3,16 +3,19 @@ import { TbPencil as Pencil } from "react-icons/tb";
 import { GoTrash as Trash } from "react-icons/go";
 import { EditModalStudent } from "../EditModalStudent";
 import { useState } from "react";
+import { deleteStudent } from "../../services/studentsService";
 
-export default function Student({
-  ci,
-  email,
-  name,
-  lastname,
-  birthdate,
-  phone_number,
-}) {
+export default function Student({ci, email, name, lastname, birthdate, phone_number, trigger}) {
   const [modalVisible, setModalVisible] = useState(false);
+
+  const eraseStudent = async () => {
+    try {
+      await deleteStudent(ci);
+      trigger((prev) => prev +1)
+    } catch (error) {
+      console.error("Error eliminando alumno", error);
+    }
+  }
 
   return (
     <div className={style.infoandbuttons}>
@@ -31,13 +34,13 @@ export default function Student({
         </span>
       </div>
       <div className="buttons">
-        <button className={style.deletebutton}>
+        <button className={style.deletebutton} onClick={eraseStudent}>
           <Trash className={style.trash}></Trash>
         </button>
         <button
           className={style.editbutton}
           onClick={() => {
-            setVisible(true);
+            setModalVisible(true);
           }}
         >
           <Pencil className={style.pencil}></Pencil>
@@ -45,8 +48,9 @@ export default function Student({
       </div>
       {modalVisible && (
         <EditModalStudent
-          setModalVisible={setModalVisible}
-          values={[ci, email, name, lastname, birthdate, phone_number]}
+          setVisible={setModalVisible}
+          currentValues={{ci, email, name, lastname, birthdate, phone_number}}
+          trigger = {trigger}
         />
       )}
     </div>

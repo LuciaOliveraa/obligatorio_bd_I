@@ -12,7 +12,6 @@ export default function Activities() {
     try {
       const data = await getActivities();
       setActivities(data); 
-      console.log("Activities", data);
     } catch (error) {
       console.error("Error obteniendo actividades", error);
     }
