@@ -1,45 +1,31 @@
 import style from "./Lesson.module.css";
 import { TbPencil as Pencil } from "react-icons/tb";
-import { GoTrash as Trash } from "react-icons/go";
-import { getInstructor } from "../../services/instructorsService";
-import { useState, useEffect } from "react";
+import { EditModalLessons } from "../EditModalLessons";
+import { useState } from "react";
 
 export default function Lesson({
   instructorId,
   activityId,
   shiftId,
-  capacity
+  capacity,
+  id, 
+  trigger
 }) {
-  const [instructor, setInstructor] = useState({}); 
-
-  const fetchInstructor = async () => {
-    try {
-        const data = await getInstructor(instructorId); 
-        // setInstructor(data.instructor); 
-        console.log("instructor info", data)
-    } catch (error) {
-        console.error("Error obteniendo instructor", error)
-    }
-  }
-
-  useEffect(() => {
-    fetchInstructor();
-  }, []);
-
+  const [modalVisible, setModalVisible] = useState(false); 
 
   return (
     <div className={style.infoandbuttons}>
       <div className={style.info}>
         <span>
-          <strong>Instructor: </strong>
+          <strong>ID instructor: </strong>
           {instructorId}
         </span>
         <span>
-          <strong>Actividad: </strong>
+          <strong>ID actividad: </strong>
           {activityId}
         </span>
         <span>
-          <strong>Turno: </strong>
+          <strong>ID turno: </strong>
           {shiftId}
         </span>
         <span>
@@ -48,9 +34,6 @@ export default function Lesson({
         </span>
       </div>
       <div className="buttons">
-        <button className={style.deletebutton}>
-          <Trash className={style.trash}></Trash>
-        </button>
         <button
           className={style.editbutton}
           onClick={() => {
@@ -60,6 +43,13 @@ export default function Lesson({
           <Pencil className={style.pencil}></Pencil>
         </button>
       </div>
+      {modalVisible && (
+        <EditModalActivities
+          setVisible={setModalVisible}
+          currentValues={{ id, instructorId, shiftId, activityId, capacity }}
+          trigger = {trigger}
+        />
+      )}
     </div>
   );
 }

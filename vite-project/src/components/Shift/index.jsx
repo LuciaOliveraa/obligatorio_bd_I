@@ -21,6 +21,10 @@ export default function Shift({ startsAt, endsAt, id, trigger}) {
     <div className={style.infoandbuttons}>
       <div className={style.info}>
         <span>
+          <strong>ID: </strong>
+          {id}
+        </span>
+        <span>
           <strong>Horario incio: </strong>
           {startsAt}
         </span>

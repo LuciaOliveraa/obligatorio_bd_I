@@ -5,14 +5,14 @@ import { getLessons } from "../../services/lessonsService";
 import { useState, useEffect } from "react";
 import { getInstructor } from "../../services/instructorsService";
 
-export default function Lessons({ setVisibleLessons }) {
+export default function Lessons() {
   const [lessons, setLessons] = useState([]); 
+  const [trigger, setTrigger] = useState(0); 
 
   const fetchLessons = async () => {
     try {
         const data = await getLessons(); 
         setLessons(data); 
-        console.log(data); 
     } catch (error) {
         console.error("Error obteniendo clases", error)
     }
@@ -20,7 +20,7 @@ export default function Lessons({ setVisibleLessons }) {
 
   useEffect(() => {
     fetchLessons();
-  }, []);
+  }, [trigger]);
 
   return (
     <div>
@@ -34,6 +34,7 @@ export default function Lessons({ setVisibleLessons }) {
             shiftId = {lesson.shift_id}
             activityId = {lesson.activity_id}
             capacity = {lesson.capacity}
+            trigger = {setTrigger}
           />
         ))}
       </div>
