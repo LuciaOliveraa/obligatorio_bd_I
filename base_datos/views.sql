@@ -43,6 +43,7 @@ ORDER BY
 CREATE VIEW shifts_with_most_classes AS
 SELECT 
     s.id AS shift_id,
+    s.name AS shift_name,
     s.starting_time AS shift_start_time,
     s.end_time AS shift_end_time,
     COUNT(l.id) AS total_classes
