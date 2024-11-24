@@ -13,6 +13,14 @@ def loginRoutes(app):
         user = request.json['user']
         password = request.json['password']
 
+        # data = request.json  # Asegúrate de usar request.json para obtener datos JSON
+        # if not data:
+        #     return jsonify({"error": "Invalid input"}), 400
+        
+        # # Procesa los datos y responde
+        # user = data.get("username")
+        # password = data.get("password")
+
         try:
             cursor.execute("SELECT * FROM login WHERE user = %s", (user,))
             login_data = cursor.fetchone()

@@ -34,7 +34,7 @@ def enrollmentsRoutes(app):
         finally:
             cursor.close()
 
-    @app.route("/enrollments/<int:id>", methods=['GET'])
+    @app.route("/enrollments-lesson-date", methods=['GET'])
     def getEnrollmentsByLessonDate():
         try:
             cursor = db.cursor(dictionary=True)
