@@ -23,7 +23,7 @@ END;
 
 
 CREATE TRIGGER validate_email_admin
-BEFORE INSERT ON base_datos.instructors
+BEFORE INSERT ON base_datos.administrators
 FOR EACH ROW
 BEGIN
     IF NEW.email NOT LIKE '%@admin.ucu.edu.uy' THEN
