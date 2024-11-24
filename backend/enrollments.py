@@ -34,14 +34,14 @@ def enrollmentsRoutes(app):
         finally:
             cursor.close()
 
-    @app.route("/enrollments-lesson-date", methods=['GET'])
-    def getEnrollmentsByLessonDate():
+    @app.route("/enrollments/<int:lessonId>/<date>", methods=['GET'])
+    def getEnrollmentsByLessonDate(lessonId, date):
         try:
             cursor = db.cursor(dictionary=True)
-            lesson_id = request.json['lesson_id']
-            date = request.json['date']
 
-            cursor.execute("SELECT enrollments.students_ci, students.name, students.lastname FROM enrollments JOIN students on enrollments.students_ci = students.ci WHERE lesson_id=%s AND date=%s" , (lesson_id, date))
+            date = datetime.strptime(date, "%Y-%m-%d").date()
+
+            cursor.execute("SELECT enrollments.students_ci, students.name, students.lastname FROM enrollments JOIN students on enrollments.students_ci = students.ci WHERE lesson_id=%s AND date=%s" , (lessonId, date,))
             enrollments = cursor.fetchall()
 
             if not enrollments:
@@ -67,7 +67,7 @@ def enrollmentsRoutes(app):
                 FROM lessons
                 JOIN shifts ON lessons.shift_id = shifts.id
                 WHERE lessons.id = %s
-            """, (lesson_id, lesson_id))
+            """, (lesson_id, lesson_id,))
             lesson_data = cursor.fetchone()
 
             if not lesson_data:
@@ -106,7 +106,7 @@ def enrollmentsRoutes(app):
             cursor.execute("""
                 SELECT students.birthdate FROM enrollments JOIN students ON students.ci = enrollments.student_ci
                         WHERE students.ci = %s
-                           """, (id))
+                           """, (id,))
             
             birthdate = cursor.fetchone()
             
