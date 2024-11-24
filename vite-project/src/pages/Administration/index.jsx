@@ -16,8 +16,6 @@ import { EditModalShifts } from "../../components/EditModalShifts";
 import { EditModalLessons } from "../../components/EditModalLessons";
 
 export default function Administration() {
-  //  const [visibleActivities, setVisibleActivities] = useState(false);
-  // const [visibleShifts, setVisibleShifts] = useState(false);
   const [visibleLessons, setVisibleLessons] = useState(false);
 
   return (
@@ -32,10 +30,7 @@ export default function Administration() {
         <Lessons setVisibleLessons={setVisibleLessons}></Lessons>
       </div>
 
-      {/* {visibleActivities && (
-        <EditModalActivities setVisibleActivities={setVisibleActivities} />
-      )} */}
-      {/* {visibleShifts && <EditModalShifts setVisibleShifts={setVisibleShifts} />} */}
+
       {visibleLessons && (
         <EditModalLessons setVisibleLessons={setVisibleLessons} />
       )}

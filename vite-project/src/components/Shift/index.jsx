@@ -13,7 +13,7 @@ export default function Shift({ startsAt, endsAt, id, trigger}) {
       await deleteShift(id);
       trigger((prev) => prev +1)
     } catch (error) {
-      console.error("Error editando turno", error);
+      console.error("Error eliminando turno", error);
     }
   }
 

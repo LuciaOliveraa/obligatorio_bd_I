@@ -1,17 +1,9 @@
-import style from "./EditModalStudent.module.css";
-import { editStudent } from "../../services/studentsService";
+import style from "./CreateModalStudents.module.css";
+import { addStudent } from "../../services/studentsService";
 import { useState } from "react";
 
-export function EditModalStudent({ setVisible, currentValues, trigger }) {
-  const formatDate = (dateString) => {
-    const date = new Date(dateString);
-    return date.toISOString().split("T")[0]; //devuelve solo 'YYYY-MM-DD'
-  };
-
-  const [formValues, setFormValues] = useState({
-    ...currentValues,
-    birthdate: formatDate(currentValues.birthdate),
-  });
+export function CreateModalStudent({ setVisible, trigger }) {
+  const [formValues, setFormValues] = useState({});
 
   const handleInputChange = (e) => {
     const { id, value } = e.target;
@@ -21,20 +13,33 @@ export function EditModalStudent({ setVisible, currentValues, trigger }) {
     });
   };
 
-  const setStudent = async () => {
+  const validateForm = () => {
+    const { ci, name, lastname, email, birthdate, phone_number } = formValues;
+    if (!ci || !name || !lastname || !email || !birthdate || !phone_number) {
+      alert("Por favor, completa todos los campos.");
+      return false;
+    }
+    return true;
+  };
+  
+  const newStudent = async () => {
+    if (!validateForm()) return; 
+
     try {
       const newStudent = {
+        ci: Number(formValues.ci),
         name: formValues.name,
         lastname: formValues.lastname,
+        email: formValues.email,
         birthdate: formValues.birthdate,
         phone_number: Number(formValues.phone_number),
       };
-      await editStudent(formValues.ci, newStudent);
+      await addStudent(newStudent);
       console.log(newStudent);
       setVisible(false);
       trigger((prev) => prev +1)
     } catch (error) {
-      console.error("Error editando alumno", error);
+      console.error("Error añadiendo alumno", error);
     }
   };
 
@@ -51,7 +56,6 @@ export function EditModalStudent({ setVisible, currentValues, trigger }) {
                   type="text"
                   id="name"
                   onChange={handleInputChange}
-                  defaultValue={formValues.name}
                 ></input>
               </div>
               <div className={style.form}>
@@ -59,7 +63,6 @@ export function EditModalStudent({ setVisible, currentValues, trigger }) {
                 <input
                   type="text"
                   id="lastname"
-                  defaultValue={formValues.lastname}
                   onChange={handleInputChange}
                 ></input>
               </div>
@@ -69,10 +72,8 @@ export function EditModalStudent({ setVisible, currentValues, trigger }) {
                 <label for="ci"> CI</label>
                 <input
                   type="text"
-                  id="cedIdentidad"
-                  defaultValue={formValues.ci}
+                  id="ci"
                   onChange={handleInputChange}
-                  disabled
                 ></input>
               </div>
               <div className={style.form}>
@@ -80,7 +81,6 @@ export function EditModalStudent({ setVisible, currentValues, trigger }) {
                 <input
                   type="date"
                   id="birthdate"
-                  defaultValue={formValues.birthdate}
                   onChange={handleInputChange}
                 ></input>
               </div>
@@ -91,9 +91,8 @@ export function EditModalStudent({ setVisible, currentValues, trigger }) {
                 <input
                   type="email"
                   id="email"
-                  defaultValue={formValues.email}
                   onChange={handleInputChange}
-                  disabled
+                
                 ></input>
               </div>
               <div className={style.form}>
@@ -101,7 +100,6 @@ export function EditModalStudent({ setVisible, currentValues, trigger }) {
                 <input
                   type="text"
                   id="phone_number"
-                  defaultValue={formValues.phone_number}
                   onChange={handleInputChange}
                 ></input>
               </div>
@@ -115,7 +113,7 @@ export function EditModalStudent({ setVisible, currentValues, trigger }) {
               >
                 Cancelar{" "}
               </button>
-              <button className={style.saveEdit} onClick={setStudent}>Guardar cambios </button>
+              <button className={style.saveEdit} onClick={newStudent}>Agregar </button>
             </div>
           </div>
         </div>

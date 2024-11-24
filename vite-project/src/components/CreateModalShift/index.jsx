@@ -9,7 +9,7 @@ export function CreateModalShifts({ setVisible, trigger }) {
     const { id, value } = e.target;
     setFormValues({
       ...formValues,
-      [id]: formattedValue,
+      [id]: value,
     });
   };
   
@@ -18,6 +18,7 @@ export function CreateModalShifts({ setVisible, trigger }) {
         const newShift = {
         starting_time: formValues.startsAt,
         end_time: formValues.endsAt,
+        name: formValues.name, 
       }
       
       await addShift(newShift);
@@ -52,6 +53,17 @@ export function CreateModalShifts({ setVisible, trigger }) {
               />
             </div>
           </div>
+          <div className={style.formRow}>
+            <div className={style.form}>
+              <label for="start"> Nombre</label>
+              <input  
+                type="text" 
+                id="name" 
+                onChange={handleInputChange} 
+              />
+            </div>
+            
+          </div>
           <div className={style.saveCancel}>
             <button
               className={style.cancelEdit}
@@ -61,7 +73,7 @@ export function CreateModalShifts({ setVisible, trigger }) {
             >
               Cancelar{" "}
             </button>
-            <button className={style.saveEdit} onClick={setShift}>Guardar cambios </button>
+            <button className={style.saveEdit} onClick={setShift}>Agregar </button>
           </div>
         </div>
       </div>

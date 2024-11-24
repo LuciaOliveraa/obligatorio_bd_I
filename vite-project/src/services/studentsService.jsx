@@ -36,7 +36,7 @@ export const addStudent = async (newStudent) => {
   }
 };
 
-export const deleteSudent = async (id) => {
+export const deleteStudent = async (id) => {
   try {
     const response = await fetch(
       `http://localhost:8080/students/delete/${id}`,
