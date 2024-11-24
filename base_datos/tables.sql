@@ -30,7 +30,7 @@ CREATE TABLE base_datos.login(
 
 CREATE TABLE base_datos.administrators(
     email varchar(60),
-    FOREIGN KEY (email) REFERENCES base_datos.login(user) ON DELETE CASCADE,
+    FOREIGN KEY (email) REFERENCES base_datos.login(user) ON DELETE CASCADE ON UPDATE CASCADE,
     PRIMARY KEY (email)
 );
 
@@ -42,7 +42,7 @@ CREATE TABLE base_datos.students(
     birthdate date not null,
     email varchar(60),
     phone_number integer(9),
-    FOREIGN KEY (email) REFERENCES base_datos.login(user) ON DELETE SET NULL,
+    FOREIGN KEY (email) REFERENCES base_datos.login(user) ON DELETE SET NULL ON UPDATE CASCADE,
     PRIMARY KEY (ci)
 );
 
@@ -52,7 +52,7 @@ CREATE TABLE base_datos.instructors (
     name varchar(20) not null,
     lastname varchar(20) not null,
     email varchar(60),
-    FOREIGN KEY (email) REFERENCES base_datos.login(user) ON DELETE SET NULL,
+    FOREIGN KEY (email) REFERENCES base_datos.login(user) ON DELETE SET NULL ON UPDATE CASCADE,
     PRIMARY KEY (ci)
 );
 
@@ -96,3 +96,12 @@ CREATE TABLE base_datos.enrollments(
     PRIMARY KEY (student_ci, lesson_id, date)
 );
 
+CREATE TABLE base_datos.lessonTracking(
+    lesson_id integer not null,
+    date date not null,
+    original_date date not null,
+    dictated TINYINT(1) DEFAULT 0,
+    FOREIGN KEY (lesson_id) REFERENCES base_datos.lessons(id) ON DELETE CASCADE,
+    FOREIGN KEY (date) REFERENCES base_datos.enrollments(date) ON DELETE SET NULL,
+    PRIMARY KEY (lesson_id, original_date)
+)
