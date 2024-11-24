@@ -22,7 +22,7 @@ export const InstructorProvider = ({ children }) => {
     });
 
     // export function
-    const updateUser = (newUser) => {
+    const updateInstructor = (newUser) => {
         setUser(newUser);
         localStorage.setItem('user', JSON.stringify(newUser));
     }
@@ -41,7 +41,7 @@ export const InstructorProvider = ({ children }) => {
             lessons: newLessonsList
         };
 
-        updateUser(provisionalUser);
+        updateInstructor(provisionalUser);
     }
 
     // export function
@@ -62,7 +62,7 @@ export const InstructorProvider = ({ children }) => {
     }, [instructor]);
 
     return (
-        <InstructorContext.Provider value={{instructor, updateUser, logOut, removeLesson, addLesson}}>
+        <InstructorContext.Provider value={{instructor, updateInstructor, logOut, removeLesson, addLesson}}>
             {children}
         </InstructorContext.Provider>
     );

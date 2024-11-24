@@ -20,9 +20,11 @@ export default function Login() {
   const [password, setPassword] = useState('');
 
   const login = async () => {
-    const userData = { username, password };
+    const userData = { 
+      user: username, 
+      password: password };
 
-    const success = await loginAccount(userData, updateStudent, userType, updateUserType);
+    const success = await loginAccount(userData, updateStudent, updateInstructor, userType, updateUserType);
     console.log("resultado log in: ", success);
     if (!success) {
       navigate("/login");

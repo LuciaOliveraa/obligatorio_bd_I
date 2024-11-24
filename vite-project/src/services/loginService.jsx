@@ -1,9 +1,12 @@
 const url = "http://localhost:8080";
 
-export const loginAccount = async (account, updateUser, userType, updateUserType) => {
+export const loginAccount = async (account, updateStudent, updateInstructor, userType, updateUserType) => {
     try {
       const response = await fetch( url+"/login", {
         method: "POST",
+        headers: {
+          'Content-Type': 'application/json'
+        },
         body: JSON.stringify(account),
       });
 
@@ -30,7 +33,7 @@ export const loginAccount = async (account, updateUser, userType, updateUserType
                 enrollments: userData.enrollments,
                 rent: userData.rents
             };
-            updateUser(newUser);
+            updateStudent(newUser);
 
             return true;
         }
@@ -40,10 +43,10 @@ export const loginAccount = async (account, updateUser, userType, updateUserType
               id: userData.instructor.ci,
               name: userData.instructor.name,
               lastname: userData.instructor.lastname,
-              email: userData.student.email,
+              email: userData.instructor.email,
               lessons: userData.lessons
           };
-          updateUser(newUser);
+          updateInstructor(newUser);
 
           return true;
       } 
