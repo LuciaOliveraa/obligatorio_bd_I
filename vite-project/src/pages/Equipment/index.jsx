@@ -4,13 +4,13 @@ import './Equipment.css'
 import { MdNavigateNext as Next} from "react-icons/md";
 import { useParams } from "react-router-dom";
 import useFetchEquipmentByActivity from '../../hooks/useFetchEquipmentByActivity'
-import { useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
-export default function Equipment() {
+export default function Equipment({rent, setRent}) {
   const { activityId } = useParams();  
   const { equipment, loading, error } = useFetchEquipmentByActivity(activityId);
-  const location = useLocation();
-  const { enrollment, setEnrollment, rent, setRent } = location.state || {};
+
+  const navigate = useNavigate();
 
   if (loading) return <p>Cargando equipos...</p>;
   if (error) return <p>{error}</p>;
@@ -21,9 +21,13 @@ export default function Equipment() {
       <div className="equipment-container">
         <h1 className="title is-3">Seleccione el equipamiento</h1>
         <div className="button-div">
-          <button className="button next-button">Siguiente<Next className="next"></Next></button>
+          <button className="button next-button"
+            onClick={() => {navigate(`/schedule`)}}
+          >
+            Siguiente<Next className="next"></Next>
+          </button>
         </div>
-        <EquipmentContainer equipment={equipment}/>
+        <EquipmentContainer equipment={equipment} rent={rent} setRent={setRent}/>
       </div>
     </div>
   );

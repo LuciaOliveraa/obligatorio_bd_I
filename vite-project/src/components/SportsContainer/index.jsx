@@ -7,7 +7,7 @@ import { getActivities } from "../../services/activitiesService";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
-export default function SportsContainer({enrollment, setEnrollment, rent, setRent}) {
+export default function SportsContainer({enrollment, setEnrollment}) {
     const [activities, setActivities] = useState([]); 
     const navigate = useNavigate();
 
@@ -42,13 +42,11 @@ export default function SportsContainer({enrollment, setEnrollment, rent, setRen
                     onClick={() => {
                         setEnrollment((prev) => ({
                             ...prev,
+                            activityId: activity.id, 
                             activityName: activity.name, 
                         }));
-                        console.log("enrollment actualizado", enrollment)
              
-                        navigate(`/equipment/${activity.id}`, {
-                            state: { enrollment, setEnrollment, rent, setRent}, 
-                        });
+                        navigate(`/equipment/${activity.id}`);
                     }}
                 />
             ))}

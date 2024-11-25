@@ -1,15 +1,30 @@
 import Navbar from "../../components/NavBar";
 import { ScheduleItem } from "../../components/ScheduleItem";
 import "./style.css";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { getLessonByActivity } from "../../services/lessonsService";
+import { getActivities } from "../../services/activitiesService";
 
-export default function Schedule() {
+export default function Schedule({enrollment, setEnrollment}) {
   const [selectedDate, setSelectedDate] = useState('');
+  const [lessons, setLessons] = useState([]); 
 
   const handleChange = (e) => {
     setSelectedDate(e.target.value);
   };
 
+  const fetchLessons = async () => {
+    try {
+      const data = await getActivities(enrollment.activityId); 
+      console.log(data)
+      setLessons(data)
+    } catch (error) {
+      console.error("Error obteniendo turnos por actividad")
+    }
+  }
+
+
+  
   return (
     <div className="schedule">
       <Navbar />
