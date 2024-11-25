@@ -16,3 +16,20 @@
   font-size: 25px;
   color: #780000
 }
+
+#settingsIcon {
+  transition: 0.5s;
+}
+
+#settingsIcon:hover {
+  color: rgb(111, 161, 240);
+  transition: 0.3s;
+  font-size: 35;
+  rotate: 15deg;
+  transform: scale(1.08);
+}
+
+.settingsButtonDiv {
+  display: flex;
+  align-self: flex-end;
+}
