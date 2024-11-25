@@ -10,6 +10,7 @@ from lessons import lessonsRoutes
 from enrollments import enrollmentsRoutes
 from reports import reportsRoutes
 from login import loginRoutes
+from rents import rentRoutes
 
 app = Flask(__name__)
 CORS(app, origins='http://localhost:5173')
@@ -34,6 +35,7 @@ lessonsRoutes(app)
 enrollmentsRoutes(app)
 reportsRoutes(app)
 loginRoutes(app)
+rentRoutes(app)
 
 if __name__ == "__main__":
     app.run(port=8080)
