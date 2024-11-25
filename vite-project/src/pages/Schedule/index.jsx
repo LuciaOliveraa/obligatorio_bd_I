@@ -105,7 +105,8 @@ export default function Schedule({enrollment, setEnrollment}) {
                     shift: shift,
                     time: ` ${shift?.starting_time} a ${shift?.end_time}`,
                     instructorName: instructor.name,
-                    date: selectedDate
+                    date: selectedDate,
+                    lessonId: lesson.id
                 }));
 
                 navigate(`/summary`);

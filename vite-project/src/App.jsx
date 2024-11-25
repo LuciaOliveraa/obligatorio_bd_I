@@ -64,7 +64,7 @@ function App() {
                 <Route path="/home" element={<HomePage setEnrollment={setEnrollment} enrollment={enrollment}/>} />
                 <Route path="/schedule" element={<Schedule setEnrollment={setEnrollment} enrollment={enrollment}/>} />
                 <Route path="/equipment/:activityId" element={<Equipment rent={rent} setRent={setRent} />} />
-                <Route path="/summary" element={<Summary enrollment={enrollment} rent={rent}></Summary>} />
+                <Route path="/summary" element={<Summary enrollment={enrollment} rent={rent} setEnrollment={setEnrollment} setRent={setRent}></Summary>} />
                 <Route path="/admin" element={<Administration></Administration>} />
                 <Route
                   path="/user"

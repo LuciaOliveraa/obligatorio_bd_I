@@ -2,11 +2,13 @@ import { useEffect, useState } from "react";
 import Navbar from "../../components/NavBar";
 import { SummaryInfo } from "../../components/SummaryInfo";
 import "./style.css";
+import { Navigate, useNavigate } from "react-router-dom";
+import { getLessonByActivity, getLessonId } from "../../services/lessonsService";
 
-export default function Summary({enrollment, rent}) {
-
+export default function Summary({enrollment, rent, setEnrollment, setRent}) {
+  const navigate = useNavigate();
   const [price, setPrice] = useState(0);
-  const [equipment, setEquipment] = useState([]);
+  const [equipment, setEquipment] = useState("");
 
   const equipmentPrice = () => {
     let prices = 0;
@@ -23,10 +25,13 @@ export default function Summary({enrollment, rent}) {
   }
 
   const equipmentNames = () => {
+    let names = "";
     if (rent?.equipment?.length > 0) {
       for (const item of rent.equipment) {
-        setEquipment([...equipment, item.name]);
+        names += item.name + ", ";
+        console.log("equipment name: ", item.name);
       }
+      setEquipment(names);
     } else {
       setEquipment(" - ");
     }
@@ -38,6 +43,24 @@ export default function Summary({enrollment, rent}) {
     equipmentPrice();
   }, [])
 
+  const handleCancel = () => {
+    setEnrollment({});
+    setRent({});
+
+    navigate("/home");
+  }
+
+  const findLesson = async () => {
+    const activity_id = enrollment.activityId;
+    const shift_id = enrollment.shift.id;
+    const lessonId = await getLessonId()
+
+    return lessonId;
+  }
+
+  const handleInscription = () => {
+
+  }
 
   return (
     <div className="summary">
@@ -50,6 +73,9 @@ export default function Summary({enrollment, rent}) {
           instructor={enrollment?.instructorName}
           equipamiento={equipment}
           costoTotal={price}
+
+          cancel={handleCancel}
+          inscription={handleInscription}
         />
       </div>
     </div>

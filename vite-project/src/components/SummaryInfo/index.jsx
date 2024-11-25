@@ -1,7 +1,8 @@
 import "./style.css";
-import { Navigate } from "react-router-dom";
 
-export function SummaryInfo(props ) {
+
+export function SummaryInfo(props) {
+  
 
   return (
     <div className="summaryBox">
@@ -25,8 +26,8 @@ export function SummaryInfo(props ) {
       </div>
       <p className="costo"> Costo total: ${props?.costoTotal}</p>
       <div className="botones">
-        <button className="botonCancelarLogin"> Cancelar </button>
-        <button className="botonSiguienteLogin"> Confirmar inscripción </button>
+        <button className="botonCancelarLogin" onClick={props?.cancel}> Cancelar </button>
+        <button className="botonSiguienteLogin" onClick={props?.inscription}> Confirmar inscripción </button>
       </div>
     </div>
   );
