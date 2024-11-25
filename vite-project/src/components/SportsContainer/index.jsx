@@ -6,8 +6,10 @@ import './SportsContainer.css';
 import { getActivities } from "../../services/activitiesService";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { useUserType } from "../../context/UserTypeContext";
 
 export default function SportsContainer({enrollment, setEnrollment}) {
+    const { userType } = useUserType();
     const [activities, setActivities] = useState([]); 
     const navigate = useNavigate();
 
@@ -34,7 +36,7 @@ export default function SportsContainer({enrollment, setEnrollment}) {
     return (
         <div className="card-container">
             {activities?.map((activity) => (
-                <SportCard 
+                userType == "student" ? (<SportCard 
                     key={activity.id}
                     image={activityImages[activity.name]}
                     title={activity.name}
@@ -48,6 +50,13 @@ export default function SportsContainer({enrollment, setEnrollment}) {
              
                         navigate(`/equipment/${activity.id}`);
                     }}
+                />) :
+
+                <SportCard 
+                    key={activity.id}
+                    image={activityImages[activity.name]}
+                    title={activity.name}
+                    description={activity.description}
                 />
             ))}
         </div>
