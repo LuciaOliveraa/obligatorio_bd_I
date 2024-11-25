@@ -40,7 +40,7 @@ export default function EquipmentContainer({ equipment, setRent, rent }){
           // Actualiza el array de selección
           const updatedSelection = isSelected
             ? prev.filter((item) => item.id !== equipmentItem.id) // Quita el equipo
-            : [...prev, { id: equipmentItem.id, name: equipmentItem.description }]; // Agrega el equipo como { id, name }
+            : [...prev, { id: equipmentItem.id, name: equipmentItem.description, equipmentPrice: equipmentItem.price }]; // Agrega el equipo como { id, name }
     
           // Actualiza el estado global rent
           setRent((prevRent) => ({

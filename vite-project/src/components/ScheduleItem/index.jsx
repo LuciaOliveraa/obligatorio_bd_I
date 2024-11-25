@@ -2,7 +2,7 @@ import "./style.css";
 
 export function ScheduleItem(props) {
   return (
-    <div className="boxHorario">
+    <div className="boxHorario" onClick={props.onClick}>
       <h1> {props.nombreHorario}</h1>
       <div className="infoSummary">
         <p>

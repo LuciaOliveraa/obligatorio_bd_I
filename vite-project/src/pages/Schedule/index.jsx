@@ -6,6 +6,7 @@ import { getLessonByActivity } from "../../services/lessonsService";
 import { getActivities } from "../../services/activitiesService";
 import { getInstructors } from "../../services/instructorsService";
 import { getShifts } from "../../services/shiftsService";
+import { useNavigate } from "react-router-dom";
 
 export default function Schedule({enrollment, setEnrollment}) {
   const [selectedDate, setSelectedDate] = useState('');
@@ -14,18 +15,19 @@ export default function Schedule({enrollment, setEnrollment}) {
   const [instructors, setInstructors] = useState([]); 
   const [shifts, setShifts] = useState([]); 
 
+  const navigate = useNavigate();
+
   const handleChange = (e) => {
     setSelectedDate(e.target.value);
   };
 
   const fetchLessons = async () => {
     try {
+      console.log("enrollment en schedule: ", enrollment);
       const data = await getLessonByActivity(enrollment.activityId); 
-      console.log(data)
-      console.log(enrollment)
-      fetchActivities();
-      fetchInstructors(); 
-      fetchShifts();  
+      console.log("respuesta getLessonByActivity ",data);
+      console.log(enrollment);
+
       setLessons(data);
       console.log("lessons", data); 
     } catch (error) {
@@ -34,7 +36,10 @@ export default function Schedule({enrollment, setEnrollment}) {
   }
 
   useEffect(() => {
-    fetchLessons(); 
+    fetchLessons();
+    fetchActivities();
+    fetchInstructors(); 
+    fetchShifts();
   }, [])
 
   const fetchActivities = async () => {
@@ -89,10 +94,22 @@ export default function Schedule({enrollment, setEnrollment}) {
             return (
             <ScheduleItem 
               key={lesson.id}
-              nombreHorario={shift.name}
-              instructor={instructor.instructor.name}
-              modalidad={lesson.capacity}
-              horario={` ${shift.starting_time} a ${shift.end_time}`}
+              nombreHorario={shift?.name}
+              instructor={instructor?.name}
+              modalidad={lesson?.capacity}
+              horario={` ${shift?.starting_time} a ${shift?.end_time}`}
+
+              onClick={() => {
+                setEnrollment((prev) => ({
+                    ...prev,
+                    shift: shift,
+                    time: ` ${shift?.starting_time} a ${shift?.end_time}`,
+                    instructorName: instructor.name,
+                    date: selectedDate
+                }));
+
+                navigate(`/summary`);
+            }}
             />
           )})}
        
