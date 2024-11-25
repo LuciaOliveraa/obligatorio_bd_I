@@ -52,9 +52,9 @@ function App() {
               <Routes>
                 <Route path="/*" element={<Navigate replace to="/login" />} /> 
                 <Route path="/login" element={<Login  />} />
-                <Route path="/home" element={<HomePage setRent={setRent} setEnrollment={setEnrollment} rent={rent} enrollment={enrollment}/>}/>} />
-                <Route path="/schedule" element={<Schedule></Schedule>} />
-                <Route path="/equipment/:activityId" element={<Equipment/>} />
+                <Route path="/home" element={<HomePage setEnrollment={setEnrollment} enrollment={enrollment}/>} />
+                <Route path="/schedule" element={<Schedule setEnrollment={setEnrollment} enrollment={enrollment}/>} />
+                <Route path="/equipment/:activityId" element={<Equipment rent={rent} setRent={setRent} />} />
                 <Route path="/summary" element={<Summary></Summary>} />
                 <Route path="/admin" element={<Administration></Administration>} />
                 <Route

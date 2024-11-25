@@ -4,7 +4,9 @@ CREATE VIEW activity_revenue_view AS
 SELECT 
     a.id AS activity_id,
     a.name AS activity_name,
-    SUM(a.price) + IFNULL(SUM(eq.price), 0)  AS total_revenue 
+    COUNT(e.student_ci) * a.price AS activity_revenue,
+    IFNULL(SUM(eq.price), 0) AS equipment_revenue,
+    (COUNT(e.student_ci) * a.price + IFNULL(SUM(eq.price), 0)) AS total_revenue
 FROM 
     base_datos.activities a
 LEFT JOIN 
@@ -12,13 +14,14 @@ LEFT JOIN
 LEFT JOIN 
     base_datos.enrollments e ON l.id = e.lesson_id
 LEFT JOIN 
-    base_datos.rent r ON r.student_ci = e.student_ci
+    base_datos.rent r ON e.student_ci = r.student_ci
 LEFT JOIN 
-    base_datos.equipment eq ON eq.id = r.equipment_id
+    base_datos.equipment eq ON r.equipment_id = eq.id
 GROUP BY 
-    a.id, a.name
+    a.id, a.name, a.price
 ORDER BY 
     total_revenue DESC;
+
     
 
 
@@ -46,14 +49,17 @@ SELECT
     s.name AS shift_name,
     s.starting_time AS shift_start_time,
     s.end_time AS shift_end_time,
-    COUNT(l.id) AS total_classes
+    COUNT(lt.lesson_id) AS total_dictated_classes
 FROM 
     base_datos.shifts s
 LEFT JOIN 
     base_datos.lessons l ON s.id = l.shift_id
+LEFT JOIN 
+    base_datos.lessonTracking lt ON l.id = lt.lesson_id AND lt.dictated = 1
 GROUP BY 
-    s.id, s.starting_time, s.end_time
+    s.id, s.name, s.starting_time, s.end_time
 ORDER BY 
-    total_classes DESC;
+    total_dictated_classes DESC;
+
 
 

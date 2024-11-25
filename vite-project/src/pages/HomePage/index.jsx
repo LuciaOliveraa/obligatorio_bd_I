@@ -3,7 +3,7 @@ import "./HomePage.css";
 import SportCard from "../../components/SportCard";
 import SportsContainer from "../../components/SportsContainer";
 
-export default function HomePage({setRent, setEnrollment, rent, enrollment}) {
+export default function HomePage({setEnrollment, enrollment}) {
   // const [enrollment, setEnrollment] = useState({}); 
   // const [rent, setRent] = useState({}); 
 
@@ -13,7 +13,10 @@ export default function HomePage({setRent, setEnrollment, rent, enrollment}) {
       <div className="home-container">
         <h1 className="title is-2">Actividades 2024</h1>
         <p className="selection-p">Seleccione una actividad</p>
-        <SportsContainer />
+        <SportsContainer 
+          setEnrollment={setEnrollment} 
+          enrollment={enrollment} 
+        />
       </div>
     </div>
   );

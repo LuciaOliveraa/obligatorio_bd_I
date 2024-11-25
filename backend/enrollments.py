@@ -103,15 +103,23 @@ def enrollmentsRoutes(app):
 
 
             # Busca edad estudiante
-            cursor.execute("""
-                SELECT students.birthdate FROM enrollments JOIN students ON students.ci = enrollments.student_ci
-                        WHERE students.ci = %s
-                           """, (id,))
+            # cursor.execute("""
+            #     SELECT students.birthdate FROM enrollments JOIN students ON students.ci = enrollments.student_ci
+            #             WHERE students.ci = %s
+            #                """, (id,))
             
+            # birthdate = cursor.fetchone()
+            cursor.execute("""
+                SELECT birthdate 
+                FROM students 
+                WHERE ci = %s
+            """, (id,))
             birthdate = cursor.fetchone()
+
             
             if not birthdate:
                 return jsonify({"error": "Birthdate not found"}), 404
+
             
             # Busca edad mínima 
             cursor.execute("""
@@ -120,13 +128,17 @@ def enrollmentsRoutes(app):
                 JOIN activities ON lessons.activity_id = activities.id
                 WHERE lessons.id = %s
             """, (lesson_id,))
+            
             age_min = cursor.fetchone()
+            age_min = age_min['age_min']
+
 
             if not age_min:
                 return {"message": "Actividad no encontrada para esta lección."}, 404
 
             
-            birthdate = birthdate[0]
+            # birthdate = birthdate[0]
+            birthdate = birthdate['birthdate']
             current_date = datetime.now().date()
     
             # Calculamos la edad
@@ -134,7 +146,7 @@ def enrollmentsRoutes(app):
             
             # Maneja restricción edad de estudiante
             if age < age_min:
-                return {"message": f"El estudiante no cumple con la edad mínima requerida ({age_min} años) para esta actividad."}, 400
+                return ({"error": f"El estudiante no cumple con la edad mínima requerida ({age_min} años) para esta actividad."}), 400
 
 
             # Inscripción

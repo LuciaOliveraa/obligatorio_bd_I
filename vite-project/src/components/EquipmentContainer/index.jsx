@@ -9,9 +9,11 @@ import snowboardImage from '../../assets/snowboardTable.png'
 import completeKit from '../../assets/skis_boots_poles.png'
 import halfKit from '../../assets/snowboard_boots.png'
 import './EquipmentContainer.css'
+import { useState, useEffect } from "react"
 
-export default function EquipmentContainer({ equipment }){
-   
+export default function EquipmentContainer({ equipment, setRent, rent }){
+    const [selectedEquipment, setSelectedEquipment] = useState([]); 
+
     const equipmentImages = {
         "Set Ski (esquís, botas y bastones)" : completeKit,
         "Set snowboard (tabla y botas)" : halfKit,
@@ -26,14 +28,39 @@ export default function EquipmentContainer({ equipment }){
         "Tabla de snowboard" : snowboardImage,
         "Botas de snowboard" : bootsImage
     }; 
+    useEffect(() => {
+        console.log("rent actualizado:", rent);
+    }, [rent]);
+
+    const handleEquipmentClick = (equipmentItem) => {
+        setSelectedEquipment((prev) => {
+          // Verifica si ya está seleccionado
+          const isSelected = prev.some((item) => item.id === equipmentItem.id);
+    
+          // Actualiza el array de selección
+          const updatedSelection = isSelected
+            ? prev.filter((item) => item.id !== equipmentItem.id) // Quita el equipo
+            : [...prev, { id: equipmentItem.id, name: equipmentItem.description }]; // Agrega el equipo como { id, name }
+    
+          // Actualiza el estado global rent
+          setRent((prevRent) => ({
+            ...prevRent,
+            equipment: updatedSelection, // Guarda el array actualizado
+          }));
+    
+          return updatedSelection;
+        });
+      };
 
     return (
         <div className="card-container">
             {equipment.map((equipmentItem) => (
                 <EquipmentCard
-                key={equipmentItem.id}
-                image={equipmentImages[equipmentItem.description]}  
-                title={equipmentItem.description}
+                    key={equipmentItem.id}
+                    image={equipmentImages[equipmentItem.description]}  
+                    title={equipmentItem.description}
+                    isSelected={selectedEquipment.some((item) => item.id === equipmentItem.id)}
+                    onClick={() => handleEquipmentClick(equipmentItem)}
                 />
       ))}
         </div>
