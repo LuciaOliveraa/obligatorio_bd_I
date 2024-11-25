@@ -8,6 +8,7 @@ import { useInstructor } from "../../context/InstructorContext";
 import { getLessons } from "../../services/lessonsService";
 import { deleteEnrollment } from "../../services/enrollmentsService";
 import { getAllEquipment } from "../../services/equipmentService";
+import { deleteRent } from "../../services/rentsService";
 
 export function UserPage() {
   const { userType } = useUserType();
@@ -27,12 +28,12 @@ export function UserPage() {
     }
   }, [userType, student, instructor]);
 
-  const deleteEnrollmentHandler = async (enrollmentId, enrollment, removeEnrollment) => {
-    await deleteEnrollment(enrollmentId, enrollment, removeEnrollment);
+  const deleteEnrollmentHandler = async (id, enrollment, removeEnrollment) => {
+    await deleteEnrollment(id, enrollment, removeEnrollment);
   }
 
-  const deleteRentHandler = async (rentId, rent, removeRent) => {
-
+  const deleteRentHandler = async (id, rent, removeRent) => {
+    await deleteRent(id, rent, removeRent);
   }
 
   // Visualización enrollments
