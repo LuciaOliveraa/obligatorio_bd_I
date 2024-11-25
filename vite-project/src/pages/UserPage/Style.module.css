@@ -2,7 +2,7 @@
   font-size: 38px;
   font-weight: 700px;
   font-weight: bold;
-  border-bottom: 2px solid rgb(37, 76, 175);
+  /* border-bottom: 2px solid rgb(37, 76, 175); */
 }
 
 .pageContent {
@@ -55,6 +55,21 @@
   overflow: hidden;
 }
 
+.titleBox {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  padding-bottom: 5px; 
+  border-bottom: 2px solid rgb(37, 76, 175); 
+}
+
+.settingsIcon {
+  display: flex;
+  align-self: flex-end;
+}
+
 .classItem {
   background-color: rgba(123, 165, 219, 0.513);
   margin: 0.5rem;
@@ -69,4 +84,16 @@
 
 .trashIcon {
   font-weight: bold;
+}
+
+#settingsIcon {
+  transition: 0.5s;
+}
+
+#settingsIcon:hover {
+  color: rgb(111, 161, 240);
+  transition: 0.3s;
+  font-size: 35;
+  rotate: 15deg;
+  transform: scale(1.08);
 }

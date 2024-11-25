@@ -40,7 +40,7 @@ export const loginAccount = async (account, updateStudent, updateInstructor, use
 
         if (userType == "instructor") {
           const newUser = {
-              id: userData.instructor.ci,
+              id: userData.instructor?.ci,
               name: userData.instructor.name,
               lastname: userData.instructor.lastname,
               email: userData.instructor.email,
