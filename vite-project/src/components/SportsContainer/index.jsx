@@ -33,7 +33,7 @@ export default function SportsContainer({enrollment, setEnrollment, rent, setRen
 
     return (
         <div className="card-container">
-            {activities.map((activity) => (
+            {activities?.map((activity) => (
                 <SportCard 
                     key={activity.id}
                     image={activityImages[activity.name]}

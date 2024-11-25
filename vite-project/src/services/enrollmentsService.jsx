@@ -26,12 +26,21 @@ export const getEnrollments = async() => {
 //     }
 // }
 
-export const deleteEnrollment = async(id) => {
+export const deleteEnrollment = async(id, enrollment, removeEnrollment) => {
+    const en = {
+        lesson_id: enrollment.lesson_id,
+        date: enrollment.date
+    }
+
     try {
         const response = await fetch (`http://localhost:8080/enrollments/delete/${id}`, {
-            method: "DELETE"
+            method: "DELETE",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(en)
         }) 
         const data = await response.json();
+
+        removeEnrollment(enrollment);
         return data; 
     } catch (error) {
         console.log('Error eliminando inscripción', error)
