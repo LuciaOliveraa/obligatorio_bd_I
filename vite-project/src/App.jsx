@@ -16,8 +16,12 @@ import { UserTypeProvider } from "./context/UserTypeContext";
 import { StudentProvider } from "./context/StudentContext";
 import Instructor from "./components/Instructor";
 import { InstructorProvider } from "./context/InstructorContext";
+import { useState } from "react";
 
 function App() {
+  const [enrollment, setEnrollment] = useState({}); 
+  const [rent, setRent] = useState({}); 
+
   const user = {
     name: "Julián",
     age: 25,
@@ -46,9 +50,9 @@ function App() {
           <Router>
             <div className="app">
               <Routes>
-                <Route path="/*" element={<Navigate replace to="/home" />} /> 
-                <Route path="/login" element={<Login />} />
-                <Route path="/home" element={<HomePage></HomePage>} />
+                <Route path="/*" element={<Navigate replace to="/login" />} /> 
+                <Route path="/login" element={<Login  />} />
+                <Route path="/home" element={<HomePage setRent={setRent} setEnrollment={setEnrollment} rent={rent} enrollment={enrollment}/>}/>} />
                 <Route path="/schedule" element={<Schedule></Schedule>} />
                 <Route path="/equipment/:activityId" element={<Equipment/>} />
                 <Route path="/summary" element={<Summary></Summary>} />
