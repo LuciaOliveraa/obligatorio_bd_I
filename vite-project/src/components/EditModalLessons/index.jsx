@@ -1,8 +1,35 @@
 import style from "./EditModalLessons.module.css";
 import { useState } from "react";
+import { editLesson } from "../../services/lessonsService";
 
 export function EditModalLessons({ setVisible, currentValues, trigger }) {
   const [formValues, setFormValues] = useState(currentValues); 
+
+  const handleInputChange = (e) => {
+    const {id,value} = e.target; 
+    setFormValues({
+      ...formValues,
+      [id]: value, 
+    })
+  }
+
+  const setLesson = async () => {
+    try {
+      const newLesson = {
+        activity_id: Number(formValues.activityId),
+        capacity: Number(formValues.capacity), 
+        instructor_ci: Number(formValues.instructorId), 
+        shift_id: Number(formValues.shiftId), 
+      };
+      await editLesson(formValues.id, newLesson);
+      console.log("edited lesson", newLesson);
+      setVisible(false);
+      trigger((prev) => prev +1)
+    } catch (error) {
+      console.error("Error editando clase", error);
+    }
+  };
+
 
   return (
     <div className={style.modal}>
@@ -11,23 +38,45 @@ export function EditModalLessons({ setVisible, currentValues, trigger }) {
         <div className={style.editInfo}>
           <div className={style.formRow}>
             <div className={style.form}>
-              <label for="name"> Instructor</label>
-              <input type="text" id="name"></input>
+              <label for="instructorId"> ID instructor</label>
+              <input 
+                type="text" 
+                id="instructorId"
+                defaultValue={formValues.instructorId}
+                onChange={handleInputChange}
+              />
             </div>
             <div className={style.form}>
-              <label for="minAge"> Actividad</label>
-              <input type="text" id="minAge"></input>
+              <label for="activityId"> ID actividad</label>
+              <input 
+                type="text" 
+                id="activityId"
+                defaultValue={formValues.activityId}
+                onChange={handleInputChange}
+                disabled
+              />
             </div>
           </div>
 
           <div className={style.formRow}>
             <div className={style.form}>
-              <label for="shift"> Turno</label>
-              <input type="text" id="shift"></input>
+              <label for="shiftId"> ID turno</label>
+              <input 
+                type="text" 
+                id="shiftId"
+                defaultValue={formValues.shiftId}
+                onChange={handleInputChange}
+              />
             </div>
             <div className={style.form}>
               <label for="capacity"> Capacidad</label>
-              <input type="number" id="capacity"></input>
+              <input 
+                type="number" 
+                id="capacity"
+                defaultValue={formValues.capacity}
+                onChange={handleInputChange}
+                disabled
+              />
             </div>
           </div>
           <div className={style.saveCancel}>
@@ -39,7 +88,7 @@ export function EditModalLessons({ setVisible, currentValues, trigger }) {
             >
               Cancelar{" "}
             </button>
-            <button className={style.saveEdit}>Guardar cambios </button>
+            <button className={style.saveEdit} onClick={setLesson}>Guardar cambios </button>
           </div>
         </div>
       </div>

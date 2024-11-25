@@ -36,7 +36,7 @@ export default function Administration() {
     <div className="admin-page">
       <Navbar></Navbar>
       <div className="admin-container">
-        <span> No tienes acceso a esta pestaña </span>
+        <span className="error"> No tienes acceso a esta pestaña </span>
       </div>
 
     </div>}

@@ -7,7 +7,7 @@ import { getActivities } from "../../services/activitiesService";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
-export default function SportsContainer() {
+export default function SportsContainer({enrollment, setEnrollment, rent, setRent}) {
     const [activities, setActivities] = useState([]); 
     const navigate = useNavigate();
 
@@ -39,7 +39,17 @@ export default function SportsContainer() {
                     image={activityImages[activity.name]}
                     title={activity.name}
                     description={activity.description}
-                    onClick={() => navigate(`/equipment/${activity.id}`)}
+                    onClick={() => {
+                        setEnrollment((prev) => ({
+                            ...prev,
+                            activityName: activity.name, 
+                        }));
+                        console.log("enrollment actualizado", enrollment)
+             
+                        navigate(`/equipment/${activity.id}`, {
+                            state: { enrollment, setEnrollment, rent, setRent}, 
+                        });
+                    }}
                 />
             ))}
         </div>
