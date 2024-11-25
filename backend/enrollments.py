@@ -41,7 +41,7 @@ def enrollmentsRoutes(app):
 
             date = datetime.strptime(date, "%Y-%m-%d").date()
 
-            cursor.execute("SELECT enrollments.students_ci, students.name, students.lastname FROM enrollments JOIN students on enrollments.students_ci = students.ci WHERE lesson_id=%s AND date=%s" , (lessonId, date,))
+            cursor.execute("SELECT enrollments.student_ci, students.name, students.lastname FROM enrollments JOIN students on enrollments.student_ci = students.ci WHERE lesson_id=%s AND date=%s" , (lessonId, date,))
             enrollments = cursor.fetchall()
 
             if not enrollments:

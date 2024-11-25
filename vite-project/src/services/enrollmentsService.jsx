@@ -11,6 +11,31 @@ export const getEnrollments = async() => {
     }
 }
 
+export const getStudentEnrollments = async (studentId) => {
+    try {
+        const response = await fetch(`http://localhost:8080/enrollments/${studentId}`, {
+            method: "GET"
+        });
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        console.log("Error obteniendo inscripciones del estudiante", error);
+    }
+};
+
+export const getEnrollmentsByLessonDate = async (lessonId, date) => {
+    try {
+        const response = await fetch(`http://localhost:8080/enrollments/${lessonId}/${date}`, {
+            method: "GET"
+        });
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        console.log("Error obteniendo inscripciones por lección y fecha", error);
+    }
+};
+
+
 // export const addEnrollment = async(newEnrollment) => {
 //     try {
 //         const response = await fetch (`http://localhost:8080/enrollments/add`, {
