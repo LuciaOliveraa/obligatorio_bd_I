@@ -4,10 +4,13 @@ import './Equipment.css'
 import { MdNavigateNext as Next} from "react-icons/md";
 import { useParams } from "react-router-dom";
 import useFetchEquipmentByActivity from '../../hooks/useFetchEquipmentByActivity'
+import { useLocation } from "react-router-dom";
 
 export default function Equipment() {
   const { activityId } = useParams();  
   const { equipment, loading, error } = useFetchEquipmentByActivity(activityId);
+  const location = useLocation();
+  const { enrollment, setEnrollment, rent, setRent } = location.state || {};
 
   if (loading) return <p>Cargando equipos...</p>;
   if (error) return <p>{error}</p>;

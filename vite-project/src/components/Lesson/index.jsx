@@ -14,42 +14,56 @@ export default function Lesson({
   const [modalVisible, setModalVisible] = useState(false); 
 
   return (
-    <div className={style.infoandbuttons}>
-      <div className={style.info}>
-        <span>
+    <div className={style.lessonInfo}>
+      <div className={style.info1}>
+        <div className={style.info}>
+          <span>
           <strong>ID instructor: </strong>
-          {instructorId}
-        </span>
-        <span>
-          <strong>ID actividad: </strong>
-          {activityId}
-        </span>
-        <span>
-          <strong>ID turno: </strong>
-          {shiftId}
-        </span>
-        <span>
-          <strong>Capacidad: </strong>
-          {capacity}
-        </span>
+            {instructorId}
+          </span>
+          <span>
+            <strong>ID actividad: </strong>
+            {activityId}
+          </span>
+          <span>
+            <strong>ID turno: </strong>
+            {shiftId}
+          </span>
+          <span>
+            <strong>Capacidad: </strong>
+            {capacity}
+          </span>
+        </div>
+        <div className="buttons">
+          <button
+            className={style.editbutton}
+            onClick={() => {
+              setModalVisible(true);
+            }}
+          >
+            <Pencil className={style.pencil}></Pencil>
+          </button>
+        </div>
+        
       </div>
-      <div className="buttons">
-        <button
-          className={style.editbutton}
-          onClick={() => {
-            setVisibleLessons(true);
-          }}
-        >
-          <Pencil className={style.pencil}></Pencil>
-        </button>
+      <div className={style.info2}>
+      <div className={style.form}>
+              <label for="date"> Filtrar inscripciones por fecha </label>
+              <input 
+                type="date" 
+                id="date"
+              />
+            </div>
       </div>
-      {modalVisible && (
-        <EditModalActivities
-          setVisible={setModalVisible}
-          currentValues={{ id, instructorId, shiftId, activityId, capacity }}
-          trigger = {trigger}
-        />
-      )}
+      
+        {modalVisible && (
+          <EditModalLessons
+            setVisible={setModalVisible}
+            currentValues={{ id, instructorId, shiftId, activityId, capacity }}
+            trigger = {trigger}
+          />
+        )}
     </div>
+    
   );
 }
