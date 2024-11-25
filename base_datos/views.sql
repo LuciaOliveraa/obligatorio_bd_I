@@ -4,9 +4,9 @@ CREATE VIEW activity_revenue_view AS
 SELECT 
     a.id AS activity_id,
     a.name AS activity_name,
-    IFNULL(SUM(e.lesson_fee), 0) AS activity_revenue,
+    COUNT(e.student_ci) * a.price AS activity_revenue,
     IFNULL(SUM(eq.price), 0) AS equipment_revenue,
-    (IFNULL(SUM(e.lesson_fee), 0) + IFNULL(SUM(eq.price), 0)) AS total_revenue
+    (COUNT(e.student_ci) * a.price + IFNULL(SUM(eq.price), 0)) AS total_revenue
 FROM 
     base_datos.activities a
 LEFT JOIN 
@@ -18,7 +18,7 @@ LEFT JOIN
 LEFT JOIN 
     base_datos.equipment eq ON r.equipment_id = eq.id
 GROUP BY 
-    a.id, a.name
+    a.id, a.name, a.price
 ORDER BY 
     total_revenue DESC;
 
