@@ -1,9 +1,11 @@
 import './EquipmentCard.css'
 
-export default function EquipmentCard({image,title}) {
+export default function EquipmentCard({image, title, isSelected, onClick}) {
     return (
         <>
-            <div class="card custom-card">
+            <div className={`card custom-card ${isSelected ? "selected" : ""}`}
+                onClick={onClick}
+            >
                 <div class="card-image">
                     <figure class="image is-4by3">
                     <img

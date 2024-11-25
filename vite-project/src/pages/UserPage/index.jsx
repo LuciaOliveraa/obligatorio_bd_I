@@ -8,12 +8,16 @@ import { useInstructor } from "../../context/InstructorContext";
 import { getLessons } from "../../services/lessonsService";
 import { deleteEnrollment } from "../../services/enrollmentsService";
 import { getAllEquipment } from "../../services/equipmentService";
+import { deleteRent } from "../../services/rentsService";
+import { LogOutModal } from "../../components/LogOutModal";
+import { SettingOutlined } from "@ant-design/icons";
 
 export function UserPage() {
   const { userType } = useUserType();
   const { student, removeEnrollment, removeRent } = useStudent();
   const { instructor } = useInstructor();
 
+  const [visibleLogOut, setVisibleLogOut] = useState(false);
   const [ user, setUser ] = useState({});
   const [ isAdmin, setIsAdmin ] = useState(userType == "admin");
   const [ lessons, setLessons ] = useState([]);
@@ -27,12 +31,12 @@ export function UserPage() {
     }
   }, [userType, student, instructor]);
 
-  const deleteEnrollmentHandler = async (enrollmentId, enrollment, removeEnrollment) => {
-    await deleteEnrollment(enrollmentId, enrollment, removeEnrollment);
+  const deleteEnrollmentHandler = async (id, enrollment, removeEnrollment) => {
+    await deleteEnrollment(id, enrollment, removeEnrollment);
   }
 
-  const deleteRentHandler = async (rentId, rent, removeRent) => {
-
+  const deleteRentHandler = async (id, rent, removeRent) => {
+    await deleteRent(id, rent, removeRent);
   }
 
   // Visualización enrollments
@@ -72,7 +76,16 @@ export function UserPage() {
       { !isAdmin ? 
       <div className={style.pageContent}>
         <div className={style.box}>
-          <p className={style.title}> Mis Datos</p>
+          <div className={style.titleBox}>
+            <p className={style.title}> Mis Datos</p>
+            <SettingOutlined
+              id={style.settingsIcon}
+              style={{ fontSize: "26px", marginLeft: "10px" }}
+              onClick={() => {
+                setVisibleLogOut(true);
+              }}
+            />
+          </div>
           <div className={style.boxContent}>
             <div className={style.userData}>
 
@@ -166,7 +179,14 @@ export function UserPage() {
                 </div>
                 </>)
               }
+
             </div>
+
+
+            {visibleLogOut && (
+              <LogOutModal setVisibleLogOut={setVisibleLogOut} />
+            )}
+
           </div>
         </div>
       </div> :
