@@ -4,11 +4,15 @@ import { SummaryInfo } from "../../components/SummaryInfo";
 import "./style.css";
 import { Navigate, useNavigate } from "react-router-dom";
 import { getLessonByActivity, getLessonId } from "../../services/lessonsService";
+import { useStudent } from "../../context/StudentContext";
+import { postEnrollment } from "../../services/EnrollmentsService";
+import { postRent } from "../../services/rentsService";
 
 export default function Summary({enrollment, rent, setEnrollment, setRent}) {
   const navigate = useNavigate();
   const [price, setPrice] = useState(0);
   const [equipment, setEquipment] = useState("");
+  const { student, addRent, addEnrollment } = useStudent();
 
   const equipmentPrice = () => {
     let prices = 0;
@@ -50,16 +54,24 @@ export default function Summary({enrollment, rent, setEnrollment, setRent}) {
     navigate("/home");
   }
 
-  const findLesson = async () => {
-    const activity_id = enrollment.activityId;
-    const shift_id = enrollment.shift.id;
-    const lessonId = await getLessonId()
+  const handleInscription = async () => {
+    const lesson_id = enrollment.lessonId;
+    const date = enrollment.date;
+    const student_ci = student.id;
+    console.log("ci student", student);
 
-    return lessonId;
+    await postEnrollment(student_ci, lesson_id, date, addEnrollment);
+
+    if (rent?.equipment?.length > 0) {
+      handleRent(date, student_ci);
+    }
+    navigate("/home");
   }
 
-  const handleInscription = () => {
-
+  const handleRent = async (date, student_ci) => {
+    for (const item of rent.equipment) {
+      await postRent(student_ci, date, item.id, addRent);
+    }
   }
 
   return (

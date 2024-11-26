@@ -6,7 +6,7 @@ import { useUserType } from "../../context/UserTypeContext";
 import { useStudent } from "../../context/StudentContext";
 import { useInstructor } from "../../context/InstructorContext";
 import { getLessons } from "../../services/lessonsService";
-import { deleteEnrollment } from "../../services/enrollmentsService";
+import { deleteEnrollmentFetch } from "../../services/EnrollmentsService";
 import { getAllEquipment } from "../../services/equipmentService";
 import { deleteRent } from "../../services/rentsService";
 import { LogOutModal } from "../../components/LogOutModal";
@@ -32,7 +32,7 @@ export function UserPage() {
   }, [userType, student, instructor]);
 
   const deleteEnrollmentHandler = async (id, enrollment, removeEnrollment) => {
-    await deleteEnrollment(id, enrollment, removeEnrollment);
+    await deleteEnrollmentFetch(id, enrollment, removeEnrollment);
   }
 
   const deleteRentHandler = async (id, rent, removeRent) => {

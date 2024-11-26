@@ -58,7 +58,7 @@ export const postEnrollment = async (student_ci, lesson_id, date, addEnrollment)
     }
 
     try {
-        const response = await fetch (`http://localhost:8080/enrollments/new/${id}`, {
+        const response = await fetch (`http://localhost:8080/enrollments/new/${student_ci}`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(en)
@@ -72,15 +72,17 @@ export const postEnrollment = async (student_ci, lesson_id, date, addEnrollment)
         }
 
         addEnrollment(enrollment);
+
+        console.log("post enrollment response: ", data);
         return data; 
     } catch (error) {
-        console.log('Error eliminando inscripción', error)
+        console.log('Error añadiendo inscripción', error)
     }
 
 }
 
 
-export const deleteEnrollment = async(id, enrollment, removeEnrollment) => {
+export const deleteEnrollmentFetch = async(id, enrollment, removeEnrollment) => {
     const en = {
         lesson_id: enrollment.lesson_id,
         date: enrollment.date
