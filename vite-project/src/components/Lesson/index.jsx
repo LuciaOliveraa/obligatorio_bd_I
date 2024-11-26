@@ -5,7 +5,7 @@ import { IoMdAdd as Add } from "react-icons/io";
 import { FaCheck as Check} from "react-icons/fa6";
 import { EditModalLessons } from "../EditModalLessons";
 import { useState, useEffect } from "react";
-import { getEnrollmentsByLessonDate, deleteEnrollment } from "../../services/EnrollmentsService";
+import { getEnrollmentsByLessonDate, deleteEnrollmentFetch } from "../../services/EnrollmentsService";
 import { useStudent } from "../../context/StudentContext";
 import { CreateModalEnrollment } from "../CreateModalEnrollment";
 import { updateLesson } from "../../services/lessonsService";

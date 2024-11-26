@@ -9,7 +9,7 @@ export function useStudent() {
 
 export const StudentProvider = ({ children }) => {
     const initialState = {
-        ci: '',
+        id: '',
         name: '',
         lastname: '',
         birthdate: '',
@@ -37,7 +37,7 @@ export const StudentProvider = ({ children }) => {
 
     const updateEnrollments = (newEnrollmentsList) => {
         const provisionalUser = {
-            ci: student?.ci,
+            id: student?.id,
             name: student?.name,
             lastname: student?.lastname,
             birthdate: student?.birthdate,
@@ -64,7 +64,7 @@ export const StudentProvider = ({ children }) => {
 
     const updateRent = (newRentList) => {
         const provisionalUser = {
-            ci: student?.ci,
+            id: student?.id,
             name: student?.name,
             lastname: student?.lastname,
             birthdate: student?.birthdate,
