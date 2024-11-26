@@ -9,10 +9,6 @@ import { getEnrollmentsByLessonDate, deleteEnrollmentFetch } from "../../service
 import { useStudent } from "../../context/StudentContext";
 import { CreateModalEnrollment } from "../CreateModalEnrollment";
 import { updateLesson } from "../../services/lessonsService";
-import { getActivities } from "../../services/activitiesService";
-import { getInstructors } from "../../services/instructorsService";
-import { getShifts } from "../../services/shiftsService";
-import { getActivity } from "../../services/activitiesService";
 
 export default function Lesson({
   instructorId,
@@ -27,9 +23,6 @@ export default function Lesson({
   const [selectedDate, setSelectedDate] = useState("");
   const [enrollments, setEnrollments] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [activities, setActivities] = useState([]); 
-  const [instructors, setInstructors] = useState([]); 
-  const [shifts, setShifts] = useState([]); 
 
   const {removeEnrollment} = useStudent(); 
 
@@ -77,20 +70,6 @@ export default function Lesson({
       console.error("Error marcando la clase como dictada")
     }
   }
-
-  // const setActivityInfo = async() => {
-  //   try {
-  //     const data = await getActivity(activityId)
-  //     setActivity(data); 
-  //   } catch (error) {
-  //     console.error("Error obteniendo actividades")
-  //   }
-  // }
-
-  
-  // useEffect(() => {
-  //   setActivityInfo();
-  // }, [])
 
   return (
     <div className={style.lessonInfo}>

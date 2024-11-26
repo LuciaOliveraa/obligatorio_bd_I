@@ -83,7 +83,7 @@ export function EditModalLessons({ setVisible, currentValues, trigger }) {
             <button
               className={style.cancelEdit}
               onClick={() => {
-                setVisibleLessons(false);
+                setVisible(false);
               }}
             >
               Cancelar{" "}
