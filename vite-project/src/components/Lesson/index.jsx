@@ -1,9 +1,12 @@
 import style from "./Lesson.module.css";
 import { TbPencil as Pencil } from "react-icons/tb";
 import { GoTrash as Trash } from "react-icons/go"; 
+import { IoMdAdd as Add } from "react-icons/io";
 import { EditModalLessons } from "../EditModalLessons";
 import { useState } from "react";
 import { getEnrollmentsByLessonDate, deleteEnrollment } from "../../services/EnrollmentsService";
+import { useStudent } from "../../context/StudentContext";
+import { CreateModalEnrollment } from "../CreateModalEnrollment";
 
 export default function Lesson({
   instructorId,
@@ -14,9 +17,12 @@ export default function Lesson({
   trigger,
 }) {
   const [modalVisible, setModalVisible] = useState(false);
+  const [modalEnrollmentVisible, setModalEnrollmentVisible] = useState(false);
   const [selectedDate, setSelectedDate] = useState("");
   const [enrollments, setEnrollments] = useState([]);
   const [loading, setLoading] = useState(false);
+
+  const {removeEnrollment} = useStudent(); 
 
   const handleDateChange = async (event) => {
     const date = event.target.value;
@@ -39,13 +45,17 @@ export default function Lesson({
     }
   };
 
+
   const eraseEnrollment = async (enrollment) => {
     try {
-      await deleteEnrollment(enrollment.id, enrollment, (enr) => {
-        setEnrollments((prev) =>
-          prev.filter((e) => e.id !== enr.id)
-        );
-      });
+      const newEnrollment = {
+        lesson_id: id, 
+        date: selectedDate, 
+      }
+      await deleteEnrollment(enrollment.student_ci, newEnrollment, removeEnrollment);
+      setEnrollments((prevEnrollments) => 
+        prevEnrollments.filter((item) => item.student_ci !== enrollment.student_ci)
+      );
     } catch (error) {
       console.error("Error eliminando inscripción:", error);
     }
@@ -91,6 +101,18 @@ export default function Lesson({
             onChange={handleDateChange}
           />
         </div>
+        <div>
+          {selectedDate && (
+            <div>
+              <button
+                className={style.addButton}
+                onClick={() => setModalEnrollmentVisible(true)}
+              >
+                <Add className={style.add} />
+              </button>
+            </div>
+          )}
+        </div>
       </div>
 
       {loading ? (
@@ -100,7 +122,7 @@ export default function Lesson({
           <ul>
             {enrollments.map((enrollment) => (
               <li key={enrollment.id}>
-                <strong>Estudiante:</strong> {enrollment.name} {enrollment.lastname}
+                {enrollment.name} {enrollment.lastname}
                 <button
                   className={style.deletebutton}
                   onClick={() => eraseEnrollment(enrollment)}
@@ -120,6 +142,14 @@ export default function Lesson({
           setVisible={setModalVisible}
           currentValues={{ id, instructorId, shiftId, activityId, capacity }}
           trigger={trigger}
+        />
+      )}
+      {modalEnrollmentVisible && (
+        <CreateModalEnrollment
+          setVisible={setModalEnrollmentVisible}
+          trigger={trigger}
+          lesson_id={id}
+          date={selectedDate}
         />
       )}
     </div>
