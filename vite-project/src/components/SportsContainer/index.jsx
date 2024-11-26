@@ -33,10 +33,12 @@ export default function SportsContainer({enrollment, setEnrollment}) {
         fetchActivities();
     }, []);
 
+   
     return (
         <div className="card-container">
             {activities?.map((activity) => (
-                userType == "student" ? (<SportCard 
+                (userType == "student") ? 
+                (<SportCard 
                     key={activity.id}
                     image={activityImages[activity.name]}
                     title={activity.name}
@@ -44,20 +46,21 @@ export default function SportsContainer({enrollment, setEnrollment}) {
                     onClick={() => {
                         setEnrollment((prev) => ({
                             ...prev,
-                            activityId: activity.id, 
-                            activityName: activity.name, 
+                            activityId: activity.id,
+                            activityName: activity.name,
+                            activityPrice: activity.price
                         }));
-             
+
                         navigate(`/equipment/${activity.id}`);
                     }}
-                />) :
-
-                <SportCard 
+                />) 
+                :
+                (<SportCard 
                     key={activity.id}
                     image={activityImages[activity.name]}
                     title={activity.name}
                     description={activity.description}
-                />
+                />)
             ))}
         </div>
     )

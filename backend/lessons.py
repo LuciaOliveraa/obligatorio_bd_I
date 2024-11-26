@@ -49,6 +49,21 @@ def lessonsRoutes(app):
         finally:
             cursor.close()
 
+    
+    @app.route("/lessons/<instructorCI>/<activityId>/<shiftId>/<capacity>", methods=['GET'])
+    def getLessonId(instructorCI, activityId, shiftId, capacity):
+        cursor = db.cursor(dictionary=True)
+
+        try:
+            cursor = db.cursor(dictionary=True)
+            cursor.execute("SELECT id FROM lessons where instructor_ci=%s, activity_id=%s, shift_id=%s, capacity=%s", (instructorCI, activityId, shiftId, capacity))
+            lessonId = cursor.fetchone()
+            return jsonify(lessonId), 200
+        except Error as error:
+            return jsonify({"error": str(error)}), 500
+        finally:
+            cursor.close()
+
 
     @app.route("/lessons/edit/<int:id>", methods=['PUT'])
     def editLesson(id):
