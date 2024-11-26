@@ -60,3 +60,22 @@ export const editLesson = async(id, editedLesson) => {
         console.log('Error editando clase', error)
     }
 }
+
+export const updateLesson = async(id, date) => {
+    const en = {
+        lesson_id: id,
+        date: date
+    }
+
+    try {
+        const response = await fetch (`http://localhost:8080/lessonTrack/update`, {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(en)
+        }) 
+        const data = await response.json();
+        return data; 
+    } catch (error) {
+        console.log('Error editando clase', error)
+    }
+}
