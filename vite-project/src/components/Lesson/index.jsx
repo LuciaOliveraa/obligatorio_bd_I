@@ -3,7 +3,7 @@ import { TbPencil as Pencil } from "react-icons/tb";
 import { GoTrash as Trash } from "react-icons/go"; 
 import { EditModalLessons } from "../EditModalLessons";
 import { useState } from "react";
-import { getEnrollmentsByLessonDate, deleteEnrollment } from "../../services/EnrollmentsService";
+import { getEnrollmentsByLessonDate, deleteEnrollmentFetch } from "../../services/EnrollmentsService";
 
 export default function Lesson({
   instructorId,
@@ -41,7 +41,7 @@ export default function Lesson({
 
   const eraseEnrollment = async (enrollment) => {
     try {
-      await deleteEnrollment(enrollment.id, enrollment, (enr) => {
+      await deleteEnrollmentFetch(enrollment.id, enrollment, (enr) => {
         setEnrollments((prev) =>
           prev.filter((e) => e.id !== enr.id)
         );
