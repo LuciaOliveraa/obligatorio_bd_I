@@ -1,9 +1,12 @@
 import style from "./CreateModalEnrollment.module.css";
-import { addInstructor } from "../../services/instructorsService";
 import { useState } from "react";
+import { postEnrollment } from "../../services/EnrollmentsService";
+import { useStudent } from "../../context/StudentContext";
 
 export function CreateModalEnrollment({ setVisible, trigger, date, lesson_id }) {
   const [formValues, setFormValues] = useState([]);
+
+  const {addEnrollment} = useStudent(); 
 
   const handleInputChange = (e) => {
     const { id, value } = e.target;
@@ -13,22 +16,15 @@ export function CreateModalEnrollment({ setVisible, trigger, date, lesson_id }) 
     });
   };
   
-//   const setInstructor = async () => {
-//     try {
-//         const newInstructor = {
-//             name: formValues.name,
-//             lastname: formValues.lastname,
-//             email: formValues.email,
-//             ci: Number(formValues.ci), 
-//         }
-//         await addInstructor(newInstructor);
-//         console.log("nuevo ins", newInstructor)
-//         setVisible(false); 
-//         trigger((prev) => prev +1)
-//     } catch (error) {
-//         console.error("Error añadiendo instructor", error);
-//     }
-//   }
+  const setEnrollment = async () => {
+    try {
+        await postEnrollment(formValues.ci, lesson_id, date, addEnrollment);
+        setVisible(false); 
+        trigger((prev) => prev +1)
+    } catch (error) {
+        console.error("Error añadiendo inscripción", error);
+    }
+  }
   
   return (
     <div className={style.modal}>
@@ -54,7 +50,7 @@ export function CreateModalEnrollment({ setVisible, trigger, date, lesson_id }) 
             >
               Cancelar{" "}
             </button>
-            <button className={style.saveEdit} >Agregar </button>
+            <button className={style.saveEdit} onClick={setEnrollment}>Agregar </button>
           </div>
         </div>
       </div>

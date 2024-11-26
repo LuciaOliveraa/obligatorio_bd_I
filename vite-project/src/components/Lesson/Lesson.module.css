@@ -125,3 +125,29 @@
   transform: scale(1.1);
   transition: 0.5s;
 }
+
+.checkButton {
+  background-color: #56ab91;
+  border-radius: 50px;
+  padding: 10px;
+  transition: 0.5s;
+  width: 40px;
+  height: 40px;
+}
+
+.checkButton:hover {
+  background-color: #88d4ab;
+  transform: scale(1.1);
+  transition: 0.5s;
+}
+
+.check {
+  font-size: 15px;
+  color: white;
+}
+
+.addCheck {
+  display: flex;
+  flex-direction: row;
+  gap: 5px; 
+}
