@@ -25,9 +25,9 @@ En este proyecto, como estudiantes de segundo año de ingeniería informática, 
 
 # Principales tecnologías utilizadas
 
-  - SQL
-  - python
-  - Node.js
+  - Base de datos relacional MySQL
+  - Backend Python con framework Flask. Endpoints RESTful
+  - Frontend React, Node.js
 
 # Ideas a futuro
 
