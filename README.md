@@ -23,9 +23,28 @@ En este proyecto, como estudiantes de segundo año de ingeniería informática, 
   - Para iniciar el proyecto, utilizar el comando "npm run dev"
   - Clickear sobre el enlace impreso en la consola "http://localhost:5173/" y se dirigirá a la página del proyecto.
 
-# Tecnologías utilizadas
+# Principales tecnologías utilizadas
 
   - SQL
   - python
   - Node.js
-  - 
+
+# Ideas a futuro
+
+  - Sistema de notificaciones que comunique al estudiante cuando se modifican los datos de una clase a la que está inscripto, para que este decida si darse de baja o no.
+  - Implementación del SOFT DELETE en algunas tablas de la base de datos, para mantener datos estadísticos o de resguardo para posibles reportes.
+  - Sistema de autenticación mediante un token para aumentar la seguridad de la aplicación; por ejemplo JWT.
+
+# Reflexiones
+
+Durante la realización del proyecto, se estimuló el desarrollo distintas habilidades por medio de la prueba y el error, dado el tiempo disponible para su realización (en paralelo a otros proyectos del semestre transcurriendo en las mismas fechas) y conocimientos previos que presentábamos al comienzo de su ejecución, nos encontramos orgullosos del resultado alcanzado; sin embargo, consideramos que siempre se puede mejorar y que este es solo el comienzo.
+
+Habilidades trabajadas:
+  - el diseño integral de una aplicación
+  - atención al detalle
+  - resolución dinámica y creativa de problemas
+  - el trabajo en equipo
+  - la repartición de tareas
+  - la organización temporal
+  - la comunicación interpersonal
+  - entre otras
